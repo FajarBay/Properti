@@ -52,7 +52,7 @@
 			<div class="container">
 				<div class="row align-items-center justify-content-between d-flex">
 					<div id="logo">
-						<a href="index.html"><img src="assets/img/logo.png" alt="" title="" /></a>
+						<a href="index.html"><img src="assets/img/logo-nav.png" alt="" title="" /></a>
 					</div>
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
@@ -76,7 +76,7 @@
 			<div class="row d-flex text-center align-items-center justify-content-center">
 				<div class="about-content col-lg-12">
 					<p class="text-white link-nav"><a href="index.html">Home </a>
-						<span class="lnr lnr-arrow-right"></span> <a href="contact.html">
+						<span class="lnr lnr-arrow-right"></span> <a href="/contact">
 							Contact Us</a></p>
 					<h1 class="text-white">
 						Contact Us
@@ -90,50 +90,70 @@
 	<!-- Start contact-page Area -->
 	<section class="contact-page-area section-gap">
 		<div class="container">
-			<div class="map-wrap" style="width:100%; height: 445px;" id="map"></div>
-			<div class="row mt-80">
-				<div class="col-lg-3">
+			<div class="row d-flex justify-content-center">
+				<div class="col-md-10 header-text">
+					<h1>For More Information</h1>
+					<p>
+						Hubungi kami untuk mendapatkan informasi lebih lanjut
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
 					<div class="contact_info">
 						<div class="info_item">
 							<i class="lnr lnr-home"></i>
-							<h6>California, United States</h6>
-							<p>Santa monica bullevard</p>
+							<h3>D.I. Yogyakarta, Indonesia</h3>
+							<p>Karanggayam</p>
 						</div>
 						<div class="info_item">
 							<i class="lnr lnr-phone-handset"></i>
-							<h6><a href="#">00 (440) 9865 562</a></h6>
+							<h3><a href="sms:+6283897710862" style="color: #222222;">+62 838 9771 0862</a></h3>
 							<p>Mon to Fri 9am to 6 pm</p>
 						</div>
 						<div class="info_item">
 							<i class="lnr lnr-envelope"></i>
-							<h6><a href="#">support@colorlib.com</a></h6>
+							<h3><a href="mailto:proper@gmail.com" style="color: #222222;">proper@gmail.com</a></h3>
 							<p>Send us your query anytime!</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-9">
-					<form class="row contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
-							</div>
-							<div class="form-group">
-								<input type="email" class="form-control" id="email" name="email" placeholder="Enter email address">
-							</div>
-							<div class="form-group">
-								<input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<textarea class="form-control" name="message" id="message" rows="1" placeholder="Enter Message"></textarea>
-							</div>
-						</div>
-						<div class="col-md-12 text-right">
-							<button type="submit" value="submit" class="btn primary-btn">Send Message</button>
-						</div>
-					</form>
+				<div class="col-lg-6 about-right no-padding">
+					<img class="img-fluid" src="assets/img/logo1.png" alt="">
 				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="testomial-area section-gap">
+		<div class="container">
+		<div class="row">
+				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
+					<div class="single-testimonial item">
+						<img class="mx-auto rounded-circle" src="assets/img/trust.jpg" alt="">
+						<p class="desc">
+							Iklan yang ditampilkan terpercaya
+						</p>
+						<h4>Iklan Terpercaya</h4>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
+					<div class="single-testimonial item">
+						<img class="mx-auto rounded-circle" src="assets/img/online.jpg" alt="">
+						<p class="desc">
+							Layanan online selama 24 jam
+						</p>
+						<h4>24 Jam Support</h4>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
+					<div class="single-testimonial item">
+						<img class="mx-auto rounded-circle" src="assets/img/nego.jpg" alt="">
+						<p class="desc">
+							Fitur nego untuk menawar harga
+						</p>
+						<h4>Fitur Nego</h4>
+					</div>
 			</div>
 		</div>
 	</section>
@@ -143,60 +163,53 @@
 	<footer class="footer-area section-gap">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>About Us</h6>
+						<h6>Proper <i class="fa fa-cubes" aria-hidden="true"></i></h6>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
+							Sistem Informasi Penjualan Properti
 						</p>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>Newsletter</h6>
-						<p>Stay update with our latest</p>
-						<div class="" id="mc_embed_signup">
-							<form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-							 method="get" class="form-inline">
-								<div class="d-flex flex-row">
-									<input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-									 required="" type="email">
-
-									<button class="click-btn btn btn-default"><i class="lnr lnr-arrow-right" aria-hidden="true"></i></button>
-									<div style="position: absolute; left: -5000px;">
-										<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-									</div>
-								</div>
-								<div class="info"></div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="single-footer-widget mail-chimp">
-						<h6 class="mb-20">Instragram Feed</h6>
-						<ul class="instafeed d-flex flex-wrap">
-							<li><img src="assets/img/i1.jpg" alt=""></li>
-							<li><img src="assets/img/i2.jpg" alt=""></li>
-							<li><img src="assets/img/i3.jpg" alt=""></li>
-							<li><img src="assets/img/i4.jpg" alt=""></li>
-							<li><img src="assets/img/i5.jpg" alt=""></li>
-							<li><img src="assets/img/i6.jpg" alt=""></li>
-							<li><img src="assets/img/i7.jpg" alt=""></li>
-							<li><img src="assets/img/i8.jpg" alt=""></li>
+						<h6 class="mb-20">Informasi <b style="font-size:14px">Properti</b></h6>
+						<ul class="nav-menui">
+							<li><a href="">Perumahan</a></li>
+							<li><a href="">Pertanahan</a></li>
+							<li><a href="">Apartement</a></li>
+							<li><a href="">Kos-kosan</a></li>
+							<li><a href="">Pertokoan</a></li>
 						</ul>
 					</div>
 				</div>
-				<div class="col-lg-2 col-md-6 col-sm-6">
+				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>Follow Us</h6>
-						<p>Let us be social</p>
-						<div class="footer-social d-flex align-items-center">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-dribbble"></i></a>
-							<a href="#"><i class="fa fa-behance"></i></a>
-						</div>
+						<h6>Web <b style="font-size:14px">Information</b></h6>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-phone-handset"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Phone Number</b>
+								<p>+62 838 9771 0862</p>
+							</div>
+						</ul>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-envelope"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Email Address</b>
+								<p>Email :<a href="mailto:proper@gmail.com"> proper@gmail.com</a></p>
+							</div>
+						</ul>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-home"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Location</b>
+								<p>D.I. Yogyakarta, Indonesia</p>
+							</div>
+						</ul>
 					</div>
 				</div>
 			</div>

@@ -1586,11 +1586,20 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 12px;
   text-transform: uppercase;
   outline: none; }
+
+  .nav-menui a {
+    text-decoration: none;
+    display: inline-block;
+    color: #777777;
+    outline: none; }
 .nav-menu:last-child a {
   padding-right: 15px; }
 
 .nav-menu li:hover > a,
 .nav-menu > .menu-active > a {
+  color: #ea6c5d; }
+.nav-menui li:hover > a,
+.nav-menui > .menu-active > a {
   color: #ea6c5d; }
 
 .nav-menu > li {
@@ -1727,22 +1736,22 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #fff; }
 
 .section-gap {
-  padding: 120px 0px; }
+  padding: 50px 0px; }
   @media (max-width: 1024px) {
     .section-gap {
-      padding: 80px 0px; } }
+      padding: 40px 0px; } }
   @media (max-width: 992px) {
     .section-gap {
-      padding: 60px 0px; } }
+      padding: 40px 0px; } }
 
 .section-gap-bottom {
-  padding-bottom: 120px; }
+  padding-bottom: 50px; }
   @media (max-width: 1024px) {
     .section-gap-bottom {
-      padding-bottom: 80px; } }
+      padding-bottom: 40px; } }
   @media (max-width: 992px) {
     .section-gap-bottom {
-      padding-bottom: 60px; } }
+      padding-bottom: 40px; } }
 
 .section-title {
   padding-bottom: 30px; }
@@ -2117,7 +2126,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 .desc .middle {
   padding-bottom: 5px; }
   .desc .middle p {
-    width: 33%; }
+    width: 100%; }
     @media (max-width: 1024px) and (min-width: 992px) {
       .desc .middle p {
         font-size: 11px; } }
@@ -2267,7 +2276,6 @@ body.mobile-nav-active #mobile-nav-toggle {
   .testomial-area .owl-dots {
     text-align: center;
     bottom: 5px;
-    margin-top: 80px;
     width: 100%;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -2287,12 +2295,14 @@ body.mobile-nav-active #mobile-nav-toggle {
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
+    visibility: hidden;
     transition: all 0.3s ease 0s; }
   .testomial-area .owl-dot.active {
     -webkit-transition: all 0.3s ease 0s;
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
+    visibility: hidden;
     background: #ea6c5d; }
   @media (max-width: 414px) {
     .testomial-area .active-tstimonial-carusel {
@@ -3248,7 +3258,7 @@ h6 {
     margin-bottom: 30px; } }
 
 .footer-text {
-  padding-top: 80px; }
+  padding-top: 40px; }
   @media (max-width: 991px) {
     .footer-text {
       padding-top: 0px; } }

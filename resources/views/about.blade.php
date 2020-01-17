@@ -51,7 +51,7 @@
 			<div class="container">
 				<div class="row align-items-center justify-content-between d-flex">
 					<div id="logo">
-						<a href="index.html"><img src="assets/img/logo.png" alt="" title="" /></a>
+						<a href="/utama"><img src="assets/img/logo-nav.png" alt="" title="" /></a>
 					</div>
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
@@ -88,32 +88,22 @@
 	<!-- Start About Area -->
 	<section class="about-area section-gap bg-white">
 		<div class="container">
+			<div class="row d-flex justify-content-center">
+				<div class="col-md-10 header-text">
+					<h1>About Proper <span> <i class="fa fa-cubes"></i></span></h1>
+				</div>
+			</div>
 			<div class="row d-flex justify-content-end align-items-center">
+				<div class="col-lg-6 about-right no-padding">
+					<img class="img-fluid" src="assets/img/logo1.png" alt="">
+				</div>
 				<div class="col-lg-6">
 					<div class="single-about">
-						<h4>Why Choose Us</h4>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-							Ut enim ad.
-						</p>
+					<p>Proper merupakan Sistem Informasi berbasis web yang memberikan informasi-informasi 
+						serta perikanan tentang Properti</p><br>
+					<p>Untuk saat ini properti yang ada dalam <b>PROPER</b> terapat 5 jenis yaitu : 
+					Pertanahan, Perumahan, Pertokoan, Apartement, dan Kos-kosan.</p>
 					</div>
-					<div class="single-about">
-						<h4>Our Properties</h4>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-							Ut enim ad.
-						</p>
-					</div>
-					<div class="single-about">
-						<h4>legal notice</h4>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-							Ut enim ad.
-						</p>
-					</div>
-				</div>
-				<div class="col-lg-6 about-right no-padding">
-					<img class="img-fluid" src="assets/img/about-img.jpg" alt="">
 				</div>
 			</div>
 		</div>
@@ -123,83 +113,33 @@
 	<!-- Start testomial Area -->
 	<section class="testomial-area section-gap">
 		<div class="container">
-			<div class="row d-flex justify-content-center">
-				<div class="col-md-10 header-text">
-					<h1>Feedback from our real clients</h1>
-					<p>
-						It won’t be a bigger problem to find one video game lover in your neighbor. Since the introduction of Virtual Game,
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="active-testimonial-carusel">
+		<div class="row">
+				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
 					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/t1.png" alt="">
+						<img class="mx-auto rounded-circle" src="assets/img/trust.jpg" alt="">
 						<p class="desc">
-							Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker, projector,
-							hardware and more. laptop
+							Iklan yang ditampilkan terpercaya
 						</p>
-						<h4>Helena Phillips</h4>
-						<p>
-							CEO at Facebook
-						</p>
-					</div>
-					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/t2.png" alt="">
-						<p class="desc">
-							It won’t be a bigger problem to find one video game lover in your neighbor. Since the introduction of Virtual Game, it has
-							been achieving great heights so far.
-						</p>
-						<h4>Cordelia Barton</h4>
-						<p>
-							CEO at Twitter
-						</p>
-					</div>
-					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/t3.png" alt="">
-						<p class="desc">
-							About 64% of all on-line teens say that do things online that they wouldn’t want their parents to know about. 11% of all
-							adult internet users visit dating websites.
-						</p>
-						<h4>Carrie Reese</h4>
-						<p>
-							CEO at Google
-						</p>
-					</div>
-					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/t1.png" alt="">
-						<p class="desc">
-							Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker, projector,
-							hardware and more. laptop
-						</p>
-						<h4>Helena Phillips</h4>
-						<p>
-							CEO at Facebook
-						</p>
-					</div>
-					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/t2.png" alt="">
-						<p class="desc">
-							It won’t be a bigger problem to find one video game lover in your neighbor. Since the introduction of Virtual Game, it has
-							been achieving great heights so far.
-						</p>
-						<h4>Cordelia Barton</h4>
-						<p>
-							CEO at Twitter
-						</p>
-					</div>
-					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/t3.png" alt="">
-						<p class="desc">
-							About 64% of all on-line teens say that do things online that they wouldn’t want their parents to know about. 11% of all
-							adult internet users visit dating websites.
-						</p>
-						<h4>Carrie Reese</h4>
-						<p>
-							CEO at Google
-						</p>
+						<h4>Iklan Terpercaya</h4>
 					</div>
 				</div>
+				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
+					<div class="single-testimonial item">
+						<img class="mx-auto rounded-circle" src="assets/img/online.jpg" alt="">
+						<p class="desc">
+							Layanan online selama 24 jam
+						</p>
+						<h4>24 Jam Support</h4>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
+					<div class="single-testimonial item">
+						<img class="mx-auto rounded-circle" src="assets/img/nego.jpg" alt="">
+						<p class="desc">
+							Fitur nego untuk menawar harga
+						</p>
+						<h4>Fitur Nego</h4>
+					</div>
 			</div>
 		</div>
 	</section>
@@ -209,60 +149,53 @@
 	<footer class="footer-area section-gap">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>About Us</h6>
+						<h6>Proper <i class="fa fa-cubes" aria-hidden="true"></i></h6>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
+							Sistem Informasi Penjualan Properti
 						</p>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>Newsletter</h6>
-						<p>Stay update with our latest</p>
-						<div class="" id="mc_embed_signup">
-							<form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-							 method="get" class="form-inline">
-								<div class="d-flex flex-row">
-									<input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-									 required="" type="email">
-
-									<button class="click-btn btn btn-default"><i class="lnr lnr-arrow-right" aria-hidden="true"></i></button>
-									<div style="position: absolute; left: -5000px;">
-										<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-									</div>
-								</div>
-								<div class="info"></div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="single-footer-widget mail-chimp">
-						<h6 class="mb-20">Instragram Feed</h6>
-						<ul class="instafeed d-flex flex-wrap">
-							<li><img src="assets/img/i1.jpg" alt=""></li>
-							<li><img src="assets/img/i2.jpg" alt=""></li>
-							<li><img src="assets/img/i3.jpg" alt=""></li>
-							<li><img src="assets/img/i4.jpg" alt=""></li>
-							<li><img src="assets/img/i5.jpg" alt=""></li>
-							<li><img src="assets/img/i6.jpg" alt=""></li>
-							<li><img src="assets/img/i7.jpg" alt=""></li>
-							<li><img src="assets/img/i8.jpg" alt=""></li>
+						<h6 class="mb-20">Informasi <b style="font-size:14px">Properti</b></h6>
+						<ul class="nav-menui">
+							<li><a href="">Perumahan</a></li>
+							<li><a href="">Pertanahan</a></li>
+							<li><a href="">Apartement</a></li>
+							<li><a href="">Kos-kosan</a></li>
+							<li><a href="">Pertokoan</a></li>
 						</ul>
 					</div>
 				</div>
-				<div class="col-lg-2 col-md-6 col-sm-6">
+				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>Follow Us</h6>
-						<p>Let us be social</p>
-						<div class="footer-social d-flex align-items-center">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-dribbble"></i></a>
-							<a href="#"><i class="fa fa-behance"></i></a>
-						</div>
+						<h6>Web <b style="font-size:14px">Information</b></h6>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-phone-handset"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Phone Number</b>
+								<p>+62 838 9771 0862</p>
+							</div>
+						</ul>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-envelope"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Email Address</b>
+								<p>Email :<a href="mailto:proper@gmail.com"> proper@gmail.com</a></p>
+							</div>
+						</ul>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-home"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Location</b>
+								<p>D.I. Yogyakarta, Indonesia</p>
+							</div>
+						</ul>
 					</div>
 				</div>
 			</div>

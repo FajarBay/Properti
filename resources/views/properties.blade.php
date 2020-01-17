@@ -52,7 +52,7 @@
 			<div class="container">
 				<div class="row align-items-center justify-content-between d-flex">
 					<div id="logo">
-						<a href="index.html"><img src="assets/img/logo.png" alt="" title="" /></a>
+						<a href="index.html"><img src="assets/img/logo-nav.png" alt="" title="" /></a>
 					</div>
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
@@ -70,21 +70,80 @@
 	<!-- End Header Area -->
 
 	<!-- start banner Area -->
-	<section class="banner-area relative" id="home">
+	<section class="home-banner-area relative" id="home">
 		<div class="overlay overlay-bg"></div>
 		<div class="container">
-			<div class="row d-flex text-center align-items-center justify-content-center">
-				<div class="about-content col-lg-12">
-					<p class="text-white link-nav"><a href="index.html">Home </a>
-						<span class="lnr lnr-arrow-right"></span> <a href="properties.html">
-							Properties</a></p>
-					<h1 class="text-white">
-						Properties
-					</h1>
+			<div class="row fullscreen align-items-end justify-content-center">
+				<div class="banner-content col-lg-12 col-md-12">
+				<h1>PROPERTY <b>ADVERTISEMENTS</b></h1>
+					<div class="search-field">
+						<form class="search-form" action="#">
+							<div class="row">
+								<div class="col-lg-12 d-flex align-items-center justify-content-center toggle-wrap">
+									<div class="row">
+										<div class="col">
+											<h4 class="search-title">Search Properties For</h4>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-6 col-xs-6">
+									<select name="location" class="app-select form-control" required>
+										<option data-display="Choose locations">Choose locations</option>
+										<option value="1">Jakarta</option>
+										<option value="2">Bandung</option>
+										<option value="3">Yogyakarta</option>
+										<option value="4">Semarang</option>
+									</select>
+								</div>
+								<div class="col-lg-3 col-md-6 col-xs-6">
+									<select name="property-type" class="app-select form-control" required>
+										<option data-display="Property Type">Property Type</option>
+										<option value="1">Perumahan</option>
+										<option value="2">Pertanahan</option>
+										<option value="3">Apartement</option>
+										<option value="3">Kos-kosan</option>
+										<option value="3">Pertokoan</option>
+									</select>
+								</div>
+								<div class="col-lg-3 col-md-6 col-xs-6">
+									<select name="bedroom" class="app-select form-control" required>
+										<option data-display="Bedrooms">Bedrooms</option>
+										<option value="1">One</option>
+										<option value="2">Two</option>
+										<option value="3">Three</option>
+										<option value="3">Four</option>
+									</select>
+								</div>
+								<div class="col-lg-3 col-md-6 col-xs-6">
+									<select name="bedroom" class="app-select form-control" required>
+										<option data-display="Short by">Short by</option>
+										<option value="1">Terbaru</option>
+										<option value="2">Harga Tertinggi</option>
+										<option value="3">Harga Terendah</option>
+									</select>
+								</div>
+								<div class="col-lg-12 range-wrap d-flex">
+									<b class="mt-10 mb-0">Rentang Harga</b>
+								</div>
+								<div class="col-lg-3 range-wrap d-flex">
+									<input type="input" class="form-control app-select" name="min" placeholder="Min">
+								</div>
+								<div class="col-lg-3 range-wrap">
+									<input type="input" class="form-control app-select" name="max" placeholder="Max">
+								</div>
+								<div class="col-lg-6 d-flex justify-content-end">
+									<button type="submit" class="primary-btn">Search Properties<span class="lnr lnr-arrow-right"></span></button>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+	<!-- End banner Area -->
+
+	<!-- start banner Area -->
 	<!-- End banner Area -->
 
 	<!-- Start property Area -->
@@ -92,13 +151,38 @@
 		<div class="container">
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-10 header-text">
-					<h1>Properties in Various Cities</h1>
+					<h1>Rekomendadi <b>Properti</b></h1>
 					<p>
-						Who are in extremely love with eco friendly system.
+						Rekomendadi properti untuk anda hari ini
 					</p>
 				</div>
 			</div>
 			<div class="row">
+				<div class="col-lg-4">
+					<div class="single-property">
+						<div class="images">
+							<img class="img-fluid mx-auto d-block" src="assets/img/s2.jpg" alt="">
+							<span>For Sale</span>
+						</div>
+
+						<div class="desc">
+							<div class="top d-flex justify-content-between">
+								<h4><a href="#">Rumah Baru</a></h4>
+							</div>
+							<div class="middle">
+								<div class="d-flex justify-content-start">
+									<p>Harga : Rp 350.000.000	</p>>
+								</div>
+								<div class="d-flex justify-content-start">
+									<p>Alamat : Yogyakarta, Indonesia</p>
+								</div>
+							</div>
+							<div class="bottom d-flex justify-content-start">
+								<p>Rumah</p>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="col-lg-4">
 					<div class="single-property">
 						<div class="images">
@@ -108,55 +192,18 @@
 
 						<div class="desc">
 							<div class="top d-flex justify-content-between">
-								<h4><a href="#">04 Bed Duplex</a></h4>
-								<h4>$3.5M</h4>
+								<h4><a href="#">Kos Putri</a></h4>
 							</div>
 							<div class="middle">
 								<div class="d-flex justify-content-start">
-									<p>Bed: 04</p>
-									<p>Bath: 03</p>
-									<p>Area: 750sqm</p>
+									<p>Harga : Rp 8.000.000	</p>
 								</div>
 								<div class="d-flex justify-content-start">
-									<p>Pool: <span class="gr">Yes</span></p>
-									<p>Internet: <span class="rd">No</span></p>
-									<p>Cleaning: <span class="rd">No</span></p>
+									<p>Alamat : Yogyakarta, Indonesia</p>
 								</div>
 							</div>
 							<div class="bottom d-flex justify-content-start">
-								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="single-property">
-						<div class="images">
-							<img class="img-fluid mx-auto d-block" src="assets/img/s2	.jpg" alt="">
-							<span>For Sale</span>
-						</div>
-
-						<div class="desc">
-							<div class="top d-flex justify-content-between">
-								<h4><a href="#">04 Bed Duplex</a></h4>
-								<h4>$3.5M</h4>
-							</div>
-							<div class="middle">
-								<div class="d-flex justify-content-start">
-									<p>Bed: 04</p>
-									<p>Bath: 03</p>
-									<p>Area: 750sqm</p>
-								</div>
-								<div class="d-flex justify-content-start">
-									<p>Pool: <span class="gr">Yes</span></p>
-									<p>Internet: <span class="rd">No</span></p>
-									<p>Cleaning: <span class="rd">No</span></p>
-								</div>
-							</div>
-							<div class="bottom d-flex justify-content-start">
-								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
+								<p>Kos</p>
 							</div>
 						</div>
 					</div>
@@ -165,29 +212,22 @@
 					<div class="single-property">
 						<div class="images">
 							<img class="img-fluid mx-auto d-block" src="assets/img/s3.jpg" alt="">
-							<span>For Sale</span>
+							<span>For Rent</span>
 						</div>
 
 						<div class="desc">
 							<div class="top d-flex justify-content-between">
-								<h4><a href="#">04 Bed Duplex</a></h4>
-								<h4>$3.5M</h4>
+								<h4><a href="#">Kos Putra</a></h4>
 							</div>
 							<div class="middle">
-								<div class="d-flex justify-content-start">
-									<p>Bed: 04</p>
-									<p>Bath: 03</p>
-									<p>Area: 750sqm</p>
+								<div class="justify-content-start">
+									<p>Harga : Rp 5.000.000	</p>
 								</div>
-								<div class="d-flex justify-content-start">
-									<p>Pool: <span class="gr">Yes</span></p>
-									<p>Internet: <span class="rd">No</span></p>
-									<p>Cleaning: <span class="rd">No</span></p>
-								</div>
+								<div class="justify-content-start">
+									<p>Alamat : Yogyakarta, Indonesia</p>
 							</div>
 							<div class="bottom d-flex justify-content-start">
-								<p><span class="lnr lnr-heart"></span> 15 Likes</p>
-								<p><span class="lnr lnr-bubble"></span> 02 Comments</p>
+								<p>Kos</p>
 							</div>
 						</div>
 					</div>
@@ -202,9 +242,9 @@
 		<div class="container">
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-10 header-text">
-					<h1>Properties in Various Cities</h1>
+					<h1>Properti Berdasarkan <b>Kota</b></h1>
 					<p>
-						Who are in extremely love with eco friendly system.
+						Pilih kota untuk mencari properti
 					</p>
 				</div>
 			</div>
@@ -213,9 +253,9 @@
 					<div class="content">
 						<a href="#" target="_blank">
 							<div class="content-overlay"></div>
-							<img class="content-image img-fluid d-block mx-auto" src="assets/img/p1.jpg" alt="">
+							<img class="content-image img-fluid d-block mx-auto" src="assets/img/jakarta.jpg" alt="">
 							<div class="content-details fadeIn-bottom">
-								<h3 class="content-title">San Fransisco Properties</h3>
+								<h3 class="content-title">Jakarta</h3>
 							</div>
 						</a>
 					</div>
@@ -224,9 +264,9 @@
 					<div class="content">
 						<a href="#" target="_blank">
 							<div class="content-overlay"></div>
-							<img class="content-image img-fluid d-block mx-auto" src="assets/img/p2.jpg" alt="">
+							<img class="content-image img-fluid d-block mx-auto" src="assets/img/bandung.jpg" alt="">
 							<div class="content-details fadeIn-bottom">
-								<h3 class="content-title">New York Properties</h3>
+								<h3 class="content-title">Bandung</h3>
 							</div>
 						</a>
 					</div>
@@ -235,9 +275,9 @@
 							<div class="content">
 								<a href="#" target="_blank">
 									<div class="content-overlay"></div>
-									<img class="content-image img-fluid d-block mx-auto" src="assets/img/p3.jpg" alt="">
+									<img class="content-image img-fluid d-block mx-auto" src="assets/img/jogja.jpeg" alt="">
 									<div class="content-details fadeIn-bottom">
-										<h3 class="content-title">Boston Properties</h3>
+										<h3 class="content-title">Yogyakarta</h3>
 									</div>
 								</a>
 							</div>
@@ -246,9 +286,9 @@
 							<div class="content">
 								<a href="#" target="_blank">
 									<div class="content-overlay"></div>
-									<img class="content-image img-fluid d-block mx-auto" src="assets/img/p4.jpg" alt="">
+									<img class="content-image img-fluid d-block mx-auto" src="assets/img/semarang.jpg" alt="">
 									<div class="content-details fadeIn-bottom">
-										<h3 class="content-title">Elay Properties</h3>
+										<h3 class="content-title">Semarang</h3>
 									</div>
 								</a>
 							</div>
@@ -264,60 +304,53 @@
 	<footer class="footer-area section-gap">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>About Us</h6>
+						<h6>Proper <i class="fa fa-cubes" aria-hidden="true"></i></h6>
 						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
+							Sistem Informasi Penjualan Properti
 						</p>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-6">
-					<div class="single-footer-widget">
-						<h6>Newsletter</h6>
-						<p>Stay update with our latest</p>
-						<div class="" id="mc_embed_signup">
-							<form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-							 method="get" class="form-inline">
-								<div class="d-flex flex-row">
-									<input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
-									 required="" type="email">
-
-									<button class="click-btn btn btn-default"><i class="lnr lnr-arrow-right" aria-hidden="true"></i></button>
-									<div style="position: absolute; left: -5000px;">
-										<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-									</div>
-								</div>
-								<div class="info"></div>
-							</form>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="single-footer-widget mail-chimp">
-						<h6 class="mb-20">Instragram Feed</h6>
-						<ul class="instafeed d-flex flex-wrap">
-							<li><img src="assets/img/i1.jpg" alt=""></li>
-							<li><img src="assets/img/i2.jpg" alt=""></li>
-							<li><img src="assets/img/i3.jpg" alt=""></li>
-							<li><img src="assets/img/i4.jpg" alt=""></li>
-							<li><img src="assets/img/i5.jpg" alt=""></li>
-							<li><img src="assets/img/i6.jpg" alt=""></li>
-							<li><img src="assets/img/i7.jpg" alt=""></li>
-							<li><img src="assets/img/i8.jpg" alt=""></li>
+						<h6 class="mb-20">Informasi <b style="font-size:14px">Properti</b></h6>
+						<ul class="nav-menui">
+							<li><a href="">Perumahan</a></li>
+							<li><a href="">Pertanahan</a></li>
+							<li><a href="">Apartement</a></li>
+							<li><a href="">Kos-kosan</a></li>
+							<li><a href="">Pertokoan</a></li>
 						</ul>
 					</div>
 				</div>
-				<div class="col-lg-2 col-md-6 col-sm-6">
+				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>Follow Us</h6>
-						<p>Let us be social</p>
-						<div class="footer-social d-flex align-items-center">
-							<a href="#"><i class="fa fa-facebook"></i></a>
-							<a href="#"><i class="fa fa-twitter"></i></a>
-							<a href="#"><i class="fa fa-dribbble"></i></a>
-							<a href="#"><i class="fa fa-behance"></i></a>
-						</div>
+						<h6>Web <b style="font-size:14px">Information</b></h6>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-phone-handset"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Phone Number</b>
+								<p>+62 838 9771 0862</p>
+							</div>
+						</ul>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-envelope"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Email Address</b>
+								<p>Email :<a href="mailto:proper@gmail.com"> proper@gmail.com</a></p>
+							</div>
+						</ul>
+						<ul class="instafeed d-flex flex-wrap">
+							<div class="mr-20 ml-10">
+							<i class="lnr lnr-home"></i>
+							</div>
+							<div><b style="font-size:16px; color:#fff">Location</b>
+								<p>D.I. Yogyakarta, Indonesia</p>
+							</div>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -336,7 +369,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
 	<script src="assets/js/vendor/bootstrap.min.js"></script>
 	<script src="assets/js/jquery.ajaxchimp.min.js"></script>
-	<script src="assets/s/jquery.nice-select.min.js"></script>
+	<script src="assets/js/jquery.nice-select.min.js"></script>
 	<script src="assets/js/jquery.sticky.js"></script>
 	<script src="assets/js/ion.rangeSlider.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

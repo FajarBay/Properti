@@ -10,7 +10,7 @@
                     @if(Session::has('message'))
                         <div class="alert alert-danger">{{Session::get('message')}}</div>
                     @endif
-                    <form method="POST" action="{{ route('verify') }}">
+                    <form method="POST" action="{{ url('verify') }}">
                         @csrf
 
 
@@ -41,7 +41,7 @@
                 </div>
                 <div class="card-footer">
                     <a href="">Reduest new code</a>
-                    <input type="hidden" name="phone" value="{{request()->phone}}">
+                    <input type="submit" name="phone" value="{{request()->phone}}">
                 </div>
             </div>
         </div>

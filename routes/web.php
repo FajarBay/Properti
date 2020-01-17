@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('utama');
 });
 
 Route::get('/utama', function () {
@@ -28,11 +28,16 @@ Route::get('/contact', function () {
     return view('contact');
 });
 
+Route::get('/coba', function () {
+    return view('coba');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/verify','VerifyController@getVerify')->name('getverify');
 Route::post('/verify','VerifyController@postVerify')->name('verify');
+Route::post('/verify','VerifyController@SendOTP')->name('send');
 
 // Route::post('/login/custom', [
 //     'uses' => 'LoginControl@login',
@@ -44,6 +49,24 @@ Route::group(['middleware' => 'auth'], function(){
         return view('home');
     })->name('home');
     Route::get('/dashboard', function(){
-        return view('dashboard');
+        return view('customer/dashboard');
     })->name('dashboard');
+    Route::get('/iklan', function(){
+        return view('customer/iklan');
+    })->name('iklan');
+    Route::get('/grafik', function(){
+        return view('customer/grafik');
+    })->name('grafik');
+    Route::get('/chatAdmin', function(){
+        return view('customer/chatAdmin');
+    })->name('chatAdmin');
+    Route::get('/chatCustomer', function(){
+        return view('customer/chatCustomer');
+    })->name('chatCustomer');
+    Route::get('/penjualan', function(){
+        return view('customer/penjualan');
+    })->name('penjualan');
+    Route::get('/pembelian', function(){
+        return view('customer/pembelian');
+    })->name('pembelian');
 });

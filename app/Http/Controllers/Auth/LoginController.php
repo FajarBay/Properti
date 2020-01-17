@@ -52,9 +52,9 @@ class LoginController extends Controller
                 if($user->active && $this->attemptLogin($request)){
                     $user = User::where('email', $user->email)->first();
                     if($user->is_admin()){
-                    return redirect()->route('dashboard');
+                    return redirect()->route('home');
                 }
-                return redirect()->route('home');
+                return redirect()->route('dashboard');
                 }
               
                else{
