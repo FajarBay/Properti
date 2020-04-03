@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.cusBase')
 
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Forms - Ready Bootstrap Dashboard</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-    <link rel="stylesheet" href="asset/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="asset/css/ready.css">
-    <link rel="stylesheet" href="asset/css/demo.css">
-</head>
-
-<body>
+@section('content')
     <div class="wrapper">
         <div class="main-header">
             <div class="logo-header">
@@ -21,20 +10,28 @@
 				</button>
             </div>
             <nav class="navbar navbar-header navbar-expand-lg">
-
+                <div class="container-fluid">
+                    <ul class="navbar-nav topbar-nav md-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" role="button">
+                                Daftar Iklan
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </div>
         <div class="sidebar">
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="asset/img/profile.jpg">
+                        <img src="assets/img/blog/c5.jpg">
                     </div>
                     <div class="info">
-                        <a class="" href="dashboard">
+                        <a class="" href="cek">
                             <span>
-									Hizrian
-									<span class="user-level">Administrator</span>
+                                Fajar Bayu
+									<span class="user-level">Pengguna</span>
                             </span>
                         </a>
                         <div class="clearfix"></div>
@@ -48,15 +45,15 @@
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a href="Iklan">
+                        <a href="iklan">
                             <i class="la la-tags"></i>
                             <p>Daftar Iklan</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="grafik">
-                            <i class="la la-bar-chart"></i>
-                            <p>Grafik Transakasi</p>
+                            <i class="la la-shopping-cart"></i>
+                            <p>Pesanan</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -71,12 +68,12 @@
                             <ul class="nav">
                                 <li>
                                     <a href="chatAdmin">
-                                        <span class="link-collapse">Admin Message</span>
+                                        <span class="link-collapse">Pesan Admin</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="chatCustomer">
-                                        <span class="link-collapse">Customers Message</span>
+                                        <span class="link-collapse">Pesan</span>
                                     </a>
                                 </li>
                             </ul>
@@ -84,7 +81,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="pembelian">
-                            <i class="la la-shopping-cart"></i>
+                            <i class="la la-dollar"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -95,10 +92,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
                             <i class="la la-power-off"></i>
-                            <p>Logout</p>
+                            <p>Keluar</p>
                         </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -106,13 +109,12 @@
         <div class="main-panel">
             <div class="content">
                 <div class="container-fluid">
-                    <h4 class="page-title">Tabel Iklan</h4>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-title">Daftar Iklan Anda
-                                        <a href="Tambah.html">
+                                        <a href="/properti2">
                                             <button class="btn btn-success">+ Tambah</button>
                                         </a>
                                     </div>
@@ -122,85 +124,57 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">No</th>
-                                                <th scope="col">Judul</th>
+                                                <th scope="col">Nama</th>
                                                 <th scope="col">Kategori</th>
-                                                <th scope="col">Status</th>
                                                 <th scope="col">Terjual</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $no = 1; @endphp
+                                            @foreach($data as $d)
                                             <tr>
-                                                <td>1</td>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
+                                                <td>{{$no++}}</td>
+                                                <td>{{$d->nama_prop}}</td>
                                                 <td>
+                                                    {{$d->kategori->nama_kat}}
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    if ($d->sold == 0) {
+                                                        echo "Belum Terjual";
+                                                    }else{
+                                                        echo "Terjual";
+                                                    }
+                                                ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        if($d->status == 0){
+                                                        echo "Menunggu";
+                                                        }else {
+                                                        echo "Aktif";
+                                                        }
+                                                    ?>   
+                                                </td>
+                                                {{-- <td>
                                                     <select class="form-control form-control-sm" id="smallSelect" style="width: auto;">
                                                         <option value="Belum Terjual">Belum Terjual</option>
                                                         <option value="Belum Terjual">Terjual</option>
                                                     </select>
-                                                </td>
+                                                </td> --}}
                                                 <td>
-                                                    <a href="Tambah.html">
+                                                    <a href="{{route('iklan.show', $d->id)}}">
                                                         <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-warning btn-xs">Edit</button>
-                                                    </a>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-danger btn-xs">Delete</button>
                                                     </a>
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Jacob</td>
-                                                <td>Thornton</td>
-                                                <td>@fat</td>
-                                                <td>
-                                                    <select class="form-control form-control-sm" id="smallSelect" style="width: auto;">
-                                                        <option value="Belum Terjual">Belum Terjual</option>
-                                                        <option value="Belum Terjual">Terjual</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-warning btn-xs">Edit</button>
-                                                    </a>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-danger btn-xs">Delete</button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td colspan="2">Larry the Bird</td>
-                                                <td>@twitter</td>
-                                                <td>
-                                                    <select class="form-control form-control-sm" id="smallSelect" style="width: auto;">
-                                                        <option value="Belum Terjual">Belum Terjual</option>
-                                                        <option value="Belum Terjual">Terjual</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-warning btn-xs">Edit</button>
-                                                    </a>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-danger btn-xs">Delete</button>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="card-body">
+                                    {{ $data->links("pagination::bootstrap-4") }}
+                                    {{-- <div class="card-body">
                                         <p class="demo">
                                             <ul class="pagination pg-danger">
                                                 <li class="page-item">
@@ -220,7 +194,7 @@
                                                 </li>
                                             </ul>
                                         </p>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -245,42 +219,4 @@
             </footer>
         </div>
     </div>
-    </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
-                    <p>
-                        <b>We'll let you know when it's done</b></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-<script src="asset/js/core/jquery.3.2.1.min.js"></script>
-<script src="asset/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<script src="asset/js/core/popper.min.js"></script>
-<script src="asset/js/core/bootstrap.min.js"></script>
-<script src="asset/js/plugin/chartist/chartist.min.js"></script>
-<script src="asset/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
-<script src="asset/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-<script src="asset/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
-<script src="asset/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
-<script src="asset/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
-<script src="asset/js/plugin/chart-circle/circles.min.js"></script>
-<script src="asset/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-<script src="asset/js/ready.min.js"></script>
-
-</html>
+    @endsection

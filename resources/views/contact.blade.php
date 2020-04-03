@@ -39,10 +39,27 @@
 			<div class="menu-top container">
 				<div class="d-flex justify-content-end align-items-center">
 					<ul class="list">
-                    <li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
-						<li><a href="#">Sell / Rent Property</a></li>
-                        <li><a href="{{ route('login') }}">login</a></li>
-                        <li><a href="{{ route('register') }}">register</a></li>
+						<li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
+						<li><a href="/iklan">Jual / Sewa Properti</a></li>
+						@guest
+                        <li><a href="{{ route('login') }}">masuk</a></li>
+						@if (Route::has('register'))
+                        <li><a href="{{ route('register') }}">daftar </a></li>
+						@endif
+						@else
+						<li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+						<li><a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Keluar') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+						</li>
+                        @endguest
+						<ul class="hidden"></ul>
 					</ul>
 				</div>
 			</div>
@@ -56,10 +73,10 @@
 					</div>
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
-                            <li><a href="/utama">home</a></li>
-							<li><a href="/properties">properties</a></li>
-							<li><a href="/about">about</a></li>
-							<li class="menu-active"><a href="/contact">Contact</a></li>
+                            <li><a href="/utama">utama</a></li>
+							<li><a href="/properties">iklan</a></li>
+							<li><a href="/about">tentang</a></li>
+							<li class="menu-active"><a href="/contact">kontak</a></li>
 						</ul>
 					</nav>
 					<!--######## #nav-menu-container -->
@@ -75,11 +92,11 @@
 		<div class="container">
 			<div class="row d-flex text-center align-items-center justify-content-center">
 				<div class="about-content col-lg-12">
-					<p class="text-white link-nav"><a href="index.html">Home </a>
+					<p class="text-white link-nav"><a href="index.html">Utama </a>
 						<span class="lnr lnr-arrow-right"></span> <a href="/contact">
-							Contact Us</a></p>
+							Hubungi Kami</a></p>
 					<h1 class="text-white">
-						Contact Us
+						Hubungi Kami
 					</h1>
 				</div>
 			</div>
@@ -92,7 +109,7 @@
 		<div class="container">
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-10 header-text">
-					<h1>For More Information</h1>
+					<h1>Informsi Lebih <b>Lanjut</b></h1>
 					<p>
 						Hubungi kami untuk mendapatkan informasi lebih lanjut
 					</p>
@@ -104,17 +121,17 @@
 						<div class="info_item">
 							<i class="lnr lnr-home"></i>
 							<h3>D.I. Yogyakarta, Indonesia</h3>
-							<p>Karanggayam</p>
+							<p>SV UGM</p>
 						</div>
 						<div class="info_item">
 							<i class="lnr lnr-phone-handset"></i>
 							<h3><a href="sms:+6283897710862" style="color: #222222;">+62 838 9771 0862</a></h3>
-							<p>Mon to Fri 9am to 6 pm</p>
+							<p>Senin sampai Jumat, Pukul 9 pagi sampai 6 sore</p>
 						</div>
 						<div class="info_item">
 							<i class="lnr lnr-envelope"></i>
 							<h3><a href="mailto:proper@gmail.com" style="color: #222222;">proper@gmail.com</a></h3>
-							<p>Send us your query anytime!</p>
+							<p>Hubungi kami lewat email kapanpun</p>
 						</div>
 					</div>
 				</div>
@@ -143,7 +160,7 @@
 						<p class="desc">
 							Layanan online selama 24 jam
 						</p>
-						<h4>24 Jam Support</h4>
+						<h4>Dukungan 24 Jam</h4>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
@@ -185,12 +202,12 @@
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>Web <b style="font-size:14px">Information</b></h6>
+						<h6>Informasi <b style="font-size:14px">Web</b></h6>
 						<ul class="instafeed d-flex flex-wrap">
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-phone-handset"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Phone Number</b>
+							<div><b style="font-size:16px; color:#fff">Nomor Telepon</b>
 								<p>+62 838 9771 0862</p>
 							</div>
 						</ul>
@@ -198,7 +215,7 @@
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-envelope"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Email Address</b>
+							<div><b style="font-size:16px; color:#fff">Alamat Email</b>
 								<p>Email :<a href="mailto:proper@gmail.com"> proper@gmail.com</a></p>
 							</div>
 						</ul>
@@ -206,7 +223,7 @@
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-home"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Location</b>
+							<div><b style="font-size:16px; color:#fff">Lokasi</b>
 								<p>D.I. Yogyakarta, Indonesia</p>
 							</div>
 						</ul>

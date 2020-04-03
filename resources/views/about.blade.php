@@ -38,10 +38,27 @@
 			<div class="menu-top container">
 				<div class="d-flex justify-content-end align-items-center">
 					<ul class="list">
-                    <li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
-						<li><a href="#">Sell / Rent Property</a></li>
-                        <li><a href="{{ route('login') }}">login</a></li>
-                        <li><a href="{{ route('register') }}">register</a></li>
+						<li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
+						<li><a href="/iklan">Jual / Sewa Properti</a></li>
+						@guest
+                        <li><a href="{{ route('login') }}">masuk</a></li>
+						@if (Route::has('register'))
+                        <li><a href="{{ route('register') }}">daftar </a></li>
+						@endif
+						@else
+						<li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+						<li><a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Keluar') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+						</li>
+                        @endguest
+						<ul class="hidden"></ul>
 					</ul>
 				</div>
 			</div>
@@ -55,10 +72,10 @@
 					</div>
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
-                            <li><a href="/utama">home</a></li>
-							<li><a href="/properties">properties</a></li>
-							<li class="menu-active"><a href="/about">about</a></li>
-							<li><a href="/contact">Contact</a></li>
+                            <li><a href="/utama">utama</a></li>
+							<li><a href="/properties">iklan</a></li>
+							<li class="menu-active"><a href="/about">tentang</a></li>
+							<li><a href="/contact">kontak</a></li>
 						</ul>
 					</nav>
 					<!--######## #nav-menu-container -->
@@ -74,10 +91,10 @@
 		<div class="container">
 			<div class="row d-flex text-center align-items-center justify-content-center">
 				<div class="about-content col-lg-12">
-					<p class="text-white link-nav"><a href="index.html">Home </a> <span class="lnr lnr-arrow-right"></span> <a href="about.html">
-							About Us</a></p>
+					<p class="text-white link-nav"><a href="/utama">Utama </a> <span class="lnr lnr-arrow-right"></span> <a href="about.html">
+							Tentang Kami</a></p>
 					<h1 class="text-white">
-						About Us
+						Tentang Kami
 					</h1>
 				</div>
 			</div>
@@ -90,7 +107,9 @@
 		<div class="container">
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-10 header-text">
-					<h1>About Proper <span> <i class="fa fa-cubes"></i></span></h1>
+					<h1>Tentang <b>Proper</b> 
+						{{-- <span> <i class="fa fa-cubes"></i></span> --}}
+					</h1>
 				</div>
 			</div>
 			<div class="row d-flex justify-content-end align-items-center">
@@ -101,8 +120,8 @@
 					<div class="single-about">
 					<p>Proper merupakan Sistem Informasi berbasis web yang memberikan informasi-informasi 
 						serta perikanan tentang Properti</p><br>
-					<p>Untuk saat ini properti yang ada dalam <b>PROPER</b> terapat 5 jenis yaitu : 
-					Pertanahan, Perumahan, Pertokoan, Apartement, dan Kos-kosan.</p>
+					<p>Untuk saat ini properti yang ada dalam <b>PROPER</b> terapat 6 jenis yaitu :</p>
+					<p>Rumah, Apartemen, Kos, Tanah, Ruko, dan Toko/Kios.</p>
 					</div>
 				</div>
 			</div>
@@ -129,7 +148,7 @@
 						<p class="desc">
 							Layanan online selama 24 jam
 						</p>
-						<h4>24 Jam Support</h4>
+						<h4>Dukungan 24 Jam</h4>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
@@ -171,12 +190,12 @@
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>Web <b style="font-size:14px">Information</b></h6>
+						<h6>Informasi <b style="font-size:14px">Web</b></h6>
 						<ul class="instafeed d-flex flex-wrap">
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-phone-handset"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Phone Number</b>
+							<div><b style="font-size:16px; color:#fff">Nomor Telepon</b>
 								<p>+62 838 9771 0862</p>
 							</div>
 						</ul>
@@ -184,7 +203,7 @@
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-envelope"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Email Address</b>
+							<div><b style="font-size:16px; color:#fff">Alamat Email</b>
 								<p>Email :<a href="mailto:proper@gmail.com"> proper@gmail.com</a></p>
 							</div>
 						</ul>
@@ -192,7 +211,7 @@
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-home"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Location</b>
+							<div><b style="font-size:16px; color:#fff">Lokasi</b>
 								<p>D.I. Yogyakarta, Indonesia</p>
 							</div>
 						</ul>

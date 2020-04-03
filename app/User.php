@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'code', 'active'
+        'name', 'email', 'password', 'phone', 'code', 'active', 'profil', 'ktp', 'provinsi', 'kabupaten', 'kecamatan',
     ];
 
     /**
@@ -43,5 +43,9 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function prop(){
+        return $this->belongsTo('App\Properti');
     }
 }

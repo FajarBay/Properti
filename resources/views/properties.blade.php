@@ -39,10 +39,27 @@
 			<div class="menu-top container">
 				<div class="d-flex justify-content-end align-items-center">
 					<ul class="list">
-                    <li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
-						<li><a href="#">Sell / Rent Property</a></li>
-                        <li><a href="{{ route('login') }}">login</a></li>
-                        <li><a href="{{ route('register') }}">register</a></li>
+					<li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
+					<li><a href="/iklan">Jual / Sewa Properti</a></li>
+					@guest
+					<li><a href="{{ route('login') }}">masuk</a></li>
+					@if (Route::has('register'))
+					<li><a href="{{ route('register') }}">daftar </a></li>
+					@endif
+					@else
+					<li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+					<li><a href="{{ route('logout') }}"
+								   onclick="event.preventDefault();
+												 document.getElementById('logout-form').submit();">
+									{{ __('Keluar') }}
+								</a>
+
+								<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+									@csrf
+								</form>
+					</li>
+					@endguest
+					<ul class="hidden"></ul>
 					</ul>
 				</div>
 			</div>
@@ -56,10 +73,10 @@
 					</div>
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
-                            <li><a href="/utama">home</a></li>
-							<li class="menu-active"><a href="/properties">properties</a></li>
-							<li><a href="/about">about</a></li>
-							<li><a href="/contact">Contact</a></li>
+                            <li><a href="/utama">utama</a></li>
+							<li class="menu-active"><a href="/properties">iklan</a></li>
+							<li><a href="/about">tentang</a></li>
+							<li><a href="/contact">kontak</a></li>
 						</ul>
 					</nav>
 					<!--######## #nav-menu-container -->
@@ -75,67 +92,70 @@
 		<div class="container">
 			<div class="row fullscreen align-items-end justify-content-center">
 				<div class="banner-content col-lg-12 col-md-12">
-				<h1>PROPERTY <b>ADVERTISEMENTS</b></h1>
+					<h1>IKLAN <b>PROPERTI</b></h1>
 					<div class="search-field">
-						<form class="search-form" action="#">
+						{{-- <form class="search-form" action=""> --}}
 							<div class="row">
 								<div class="col-lg-12 d-flex align-items-center justify-content-center toggle-wrap">
 									<div class="row">
 										<div class="col">
-											<h4 class="search-title">Search Properties For</h4>
+											<h4 class="search-title">Cari Properti Berdasarkan</h4>
 										</div>
 									</div>
 								</div>
 								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="location" class="app-select form-control" required>
-										<option data-display="Choose locations">Choose locations</option>
-										<option value="1">Jakarta</option>
-										<option value="2">Bandung</option>
-										<option value="3">Yogyakarta</option>
-										<option value="4">Semarang</option>
-									</select>
-								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="property-type" class="app-select form-control" required>
-										<option data-display="Property Type">Property Type</option>
-										<option value="1">Perumahan</option>
-										<option value="2">Pertanahan</option>
-										<option value="3">Apartement</option>
-										<option value="3">Kos-kosan</option>
-										<option value="3">Pertokoan</option>
+									<select class="app-select form-control" id="propinsi">
+										<option selected="" value="">-- Pilih Provinsi --</option>
 									</select>
 								</div>
 								<div class="col-lg-3 col-md-6 col-xs-6">
 									<select name="bedroom" class="app-select form-control" required>
-										<option data-display="Bedrooms">Bedrooms</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
-										<option value="3">Four</option>
+										<option data-display="Kategori">Kategori</option>
+										<option value="1">Rumah</option>
+										<option value="2">Kos</option>
+										<option value="3">Apartemen</option>
+										<option value="3">Tanah</option>
+										<option value="3">Ruko</option>
+										<option value="3">Toko/Kios</option>
 									</select>
 								</div>
 								<div class="col-lg-3 col-md-6 col-xs-6">
 									<select name="bedroom" class="app-select form-control" required>
-										<option data-display="Short by">Short by</option>
+										<option data-display="Jenis Properti">Jenis Properti</option>
+										<option value="1">Jual</option>
+										<option value="2">Sewa</option>
+									</select>
+								</div>
+								<div class="col-lg-3 col-md-6 col-xs-6">
+									<select name="bedroom" class="app-select form-control" required>
+										<option data-display="Urutkan">Urutkan</option>
 										<option value="1">Terbaru</option>
 										<option value="2">Harga Tertinggi</option>
 										<option value="3">Harga Terendah</option>
 									</select>
 								</div>
-								<div class="col-lg-12 range-wrap d-flex">
-									<b class="mt-10 mb-0">Rentang Harga</b>
+								<div class="col-lg-3 range-wrap"><br><br>
+									<select name="bedroom" class="app-select form-control" required>
+										<option data-display="Nego">Nego</option>
+										<option value="1">Ya</option>
+										<option value="2">Tidak</option>
+									</select>
 								</div>
-								<div class="col-lg-3 range-wrap d-flex">
-									<input type="input" class="form-control app-select" name="min" placeholder="Min">
+								<div class="col-lg-3 range-wrap"><br><br>
+									<input type="input" class="form-control app-select" name="max" placeholder="Harga Maksimal">
+									{{-- <p class="small">Harga Maksimal</p> --}}
 								</div>
-								<div class="col-lg-3 range-wrap">
-									<input type="input" class="form-control app-select" name="max" placeholder="Max">
+								<div class="col-lg-3 range-wrap"><br><br>
+									<input type="input" class="form-control app-select" name="max" placeholder="Harga Maksimal">
+									{{-- <p class="small">Harga Maksimal</p> --}}
 								</div>
-								<div class="col-lg-6 d-flex justify-content-end">
-									<button type="submit" class="primary-btn">Search Properties<span class="lnr lnr-arrow-right"></span></button>
+								<div class="col-lg-3 d-flex justify-content-end">
+									<a href="/properties1">
+									<button class="primary-btn">Cari<span class="lnr lnr-arrow-right"></span></button>
+									</a>
 								</div>
 							</div>
-						</form>
+						{{-- </form> --}}
 					</div>
 				</div>
 			</div>
@@ -151,87 +171,54 @@
 		<div class="container">
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-10 header-text">
-					<h1>Rekomendadi <b>Properti</b></h1>
+					<h1>Rekomendasi <b>Properti</b></h1>
 					<p>
-						Rekomendadi properti untuk anda hari ini
+						Rekomendasi properti untuk anda hari ini
 					</p>
 				</div>
 			</div>
 			<div class="row">
+				@foreach($data as $d)
 				<div class="col-lg-4">
 					<div class="single-property">
 						<div class="images">
-							<img class="img-fluid mx-auto d-block" src="assets/img/s2.jpg" alt="">
-							<span>For Sale</span>
+							<img class="img-fluid mx-auto d-block" src="/foto1/{{$d->foto1}}" alt="">
+							<span>Jual</span>
 						</div>
-
 						<div class="desc">
 							<div class="top d-flex justify-content-between">
-								<h4><a href="#">Rumah Baru</a></h4>
+								<h4><a href="{{route('lihat', $d->id)}}">{{$d->nama_prop}}</a></h4>
 							</div>
 							<div class="middle">
 								<div class="d-flex justify-content-start">
-									<p>Harga : Rp 350.000.000	</p>>
+									<p>Harga : 
+										<?php 
+										if($d->jenis == 0) {
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Jual';
+										}else if($d->jenis == 1){
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Hari';
+										}else if($d->jenis == 2){
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Minggu';
+										}else if($d->jenis == 3){
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Bulan';
+										}else if($d->jenis == 4){
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Tahun';
+										}					
+										// echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
+										?>	
+									</p>
 								</div>
 								<div class="d-flex justify-content-start">
-									<p>Alamat : Yogyakarta, Indonesia</p>
+									<p>Alamat : {{$d->kecamatan}}, {{$d->kabupaten}}, {{$d->provinsi}}</p>
 								</div>
 							</div>
 							<div class="bottom d-flex justify-content-start">
-								<p>Rumah</p>
+								<p>{{$d->kategori->nama_kat}}</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4">
-					<div class="single-property">
-						<div class="images">
-							<img class="img-fluid mx-auto d-block" src="assets/img/s1.jpg" alt="">
-							<span>For Sale</span>
-						</div>
-
-						<div class="desc">
-							<div class="top d-flex justify-content-between">
-								<h4><a href="#">Kos Putri</a></h4>
-							</div>
-							<div class="middle">
-								<div class="d-flex justify-content-start">
-									<p>Harga : Rp 8.000.000	</p>
-								</div>
-								<div class="d-flex justify-content-start">
-									<p>Alamat : Yogyakarta, Indonesia</p>
-								</div>
-							</div>
-							<div class="bottom d-flex justify-content-start">
-								<p>Kos</p>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="single-property">
-						<div class="images">
-							<img class="img-fluid mx-auto d-block" src="assets/img/s3.jpg" alt="">
-							<span>For Rent</span>
-						</div>
-
-						<div class="desc">
-							<div class="top d-flex justify-content-between">
-								<h4><a href="#">Kos Putra</a></h4>
-							</div>
-							<div class="middle">
-								<div class="justify-content-start">
-									<p>Harga : Rp 5.000.000	</p>
-								</div>
-								<div class="justify-content-start">
-									<p>Alamat : Yogyakarta, Indonesia</p>
-							</div>
-							<div class="bottom d-flex justify-content-start">
-								<p>Kos</p>
-							</div>
-						</div>
-					</div>
-				</div>
+				@endforeach
 			</div>
 		</div>
 	</section>
@@ -326,12 +313,12 @@
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>Web <b style="font-size:14px">Information</b></h6>
+						<h6>Informasi <b style="font-size:14px">Web</b></h6>
 						<ul class="instafeed d-flex flex-wrap">
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-phone-handset"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Phone Number</b>
+							<div><b style="font-size:16px; color:#fff">Nomor Telepon</b>
 								<p>+62 838 9771 0862</p>
 							</div>
 						</ul>
@@ -339,7 +326,7 @@
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-envelope"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Email Address</b>
+							<div><b style="font-size:16px; color:#fff">Alamat Email</b>
 								<p>Email :<a href="mailto:proper@gmail.com"> proper@gmail.com</a></p>
 							</div>
 						</ul>
@@ -347,7 +334,7 @@
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-home"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Location</b>
+							<div><b style="font-size:16px; color:#fff">Lokasi</b>
 								<p>D.I. Yogyakarta, Indonesia</p>
 							</div>
 						</ul>
@@ -376,6 +363,117 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="assets/js/jquery.magnific-popup.min.js"></script>
 	<script src="assets/js/owl.carousel.min.js"></script>
 	<script src="assets/js/main.js"></script>
+	<script type="text/javascript">
+    var return_first = function() {
+        var tmp = null;
+        $.ajax({
+            'async': false,
+            'type': "get",
+            'global': false,
+            'dataType': 'json',
+            'url': 'https://x.rajaapi.com/poe',
+            'success': function(data) {
+                tmp = data.token;
+            }
+        });
+        return tmp;
+    }();
+$(document).ready(function() {
+    $.ajax({
+        url: 'https://x.rajaapi.com/MeP7c5ne' + window.return_first + '/m/wilayah/provinsi',
+        type: 'GET',
+        dataType: 'json',
+        success: function(json) {
+            if (json.code == 200) {
+                for (i = 0; i < Object.keys(json.data).length; i++) {
+                    $('#propinsi').append($('<option>').text(json.data[i].name).attr('value', json.data[i].id));
+                      console.log(json.data[i]); 
+                }
+                
+              //   $('#prop').append($('<option>').text('value'.json.data[i].name);
+            } else {
+                $('#kabupaten').append($('<option>').text('Data tidak di temukan').attr('value', 'Data tidak di temukan'));
+            }
+        }
+    });
+    $("#propinsi").change(function() {
+        var propinsi = $("#propinsi").val();
+        var prop = $("#propinsi").find(":selected").text();
+        $.ajax({
+            url: 'https://x.rajaapi.com/MeP7c5ne' + window.return_first + '/m/wilayah/kabupaten',
+            data: "idpropinsi=" + propinsi,
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            success: function(json) {
+                $("#kabupaten").html('');
+                if (json.code == 200) {
+                    for (i = 0; i < Object.keys(json.data).length; i++) {
+                        $('#kabupaten').append($('<option>').text(json.data[i].name).attr('value', json.data[i].id));
+                          // $('#kab').append($('<option>').text('value'.json.data[i].name);
+                              console.log(prop);
+                              $( "#prop" ).val( prop );
+                    }
+                    $('#kecamatan').html($('<option>').text('-- Pilih Kecamatan --').attr('value', '-- Pilih Kecamatan --'));
+                    $('#kelurahan').html($('<option>').text('-- Pilih Kelurahan --').attr('value', '-- Pilih Kelurahan --'));
+
+                } else {
+                    $('#kabupaten').append($('<option>').text('Data tidak di temukan').attr('value', 'Data tidak di temukan'));
+                }
+            }
+        });
+    });
+    $("#kabupaten").change(function() {
+        var kabupaten = $("#kabupaten").val();
+        var kab = $("#kabupaten").find(":selected").text();
+        $.ajax({
+            url: 'https://x.rajaapi.com/MeP7c5ne' + window.return_first + '/m/wilayah/kecamatan',
+            data: "idkabupaten=" + kabupaten + "&idpropinsi=" + propinsi,
+            type: 'GET',
+            cache: false,
+            dataType: 'json',
+            success: function(json) {
+                $("#kecamatan").html('');
+                if (json.code == 200) {
+                    for (i = 0; i < Object.keys(json.data).length; i++) {
+                        $('#kecamatan').append($('<option>').text(json.data[i].name).attr('value', json.data[i].id));
+                          // $('#kec').append($('<option>').text('value'.json.data[i].name);
+                              console.log(kab);
+                              $( "#kab" ).val( kab );
+                    }
+                    $('#kelurahan').html($('<option>').text('-- Pilih Kelurahan --').attr('value', '-- Pilih Kelurahan --'));
+                    
+                } else {
+                    $('#kecamatan').append($('<option>').text('Data tidak di temukan').attr('value', 'Data tidak di temukan'));
+                }
+            }
+        });
+    });
+    $("#kecamatan").change(function() {
+        var kecamatan = $("#kecamatan").val();
+        var kec = $("#kecamatan").find(":selected").text();
+        $.ajax({
+            url: 'https://x.rajaapi.com/MeP7c5ne' + window.return_first + '/m/wilayah/kelurahan',
+            data: "idkabupaten=" + kabupaten + "&idpropinsi=" + propinsi + "&idkecamatan=" + kecamatan,
+            type: 'GET',
+            dataType: 'json',
+            cache: false,
+            success: function(json) {
+                $("#kelurahan").html('');
+                if (json.code == 200) {
+                    for (i = 0; i < Object.keys(json.data).length; i++) {
+                        $('#kelurahan').append($('<option>').text(json.data[i].name).attr('value', json.data[i].id));
+                          console.log(kec);
+                          $( "#kec" ).val( kec );
+                    }
+                } else {
+                    $('#kelurahan').append($('<option>').text('Data tidak di temukan').attr('value', 'Data tidak di temukan'));
+                }
+            }
+        });
+    });
+});
+</script>
 </body>
 
 </html>

@@ -40,18 +40,18 @@
 				<div class="d-flex justify-content-end align-items-center">
 					<ul class="list">
 						<li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
-						<li><a href="#">Sell / Rent Property</a></li>
+						<li><a href="/iklan">Jual / Sewa Properti</a></li>
 						@guest
-                        <li><a href="{{ route('login') }}">login</a></li>
+                        <li><a href="{{ route('login') }}">masuk</a></li>
 						@if (Route::has('register'))
-                        <li><a href="{{ route('register') }}">register</a></li>
+                        <li><a href="{{ route('register') }}">daftar </a></li>
 						@endif
 						@else
-						<li><a href="/dashboard">Halo {{ Auth::user()->name }}</a></li>
+						<li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
 						<li><a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Keluar') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -73,10 +73,10 @@
 					</div>
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
-							<li class="menu-active"><a href="/utama">home</a></li>
-							<li><a href="/properties">properties</a></li>
-							<li><a href="/about">about</a></li>
-							<li><a href="/contact">Contact</a></li>
+							<li class="menu-active"><a href="/utama">utama</a></li>
+							<li><a href="/properties">iklan</a></li>
+							<li><a href="/about">tentang</a></li>
+							<li><a href="/contact">kontak</a></li>
 						</ul>
 					</nav>
 					<!--######## #nav-menu-container -->
@@ -92,90 +92,15 @@
 		<div class="container">
 			<div class="row fullscreen align-items-end justify-content-center">
 				<div class="banner-content col-lg-8 col-md-6">
-				<h1>PROPERTY <b>ADVERTISEMENTS</b></h1>
+				<h1>IKLAN <b>PROPERTI</b>
+				{{-- <br><small><small>PASANG IKLAN PROPERTI ANDA DISINI!</small></small> --}}
+				</h1>
 					<form class="form-inline">
 						<div class="input-group md-form form-sm form-2 mb-100 col-lg-12">
-							<input type="input" class="form-control app-select" name="cari properti" placeholder="Cari properti">
-							<button class="primary-btn ml-10" type="submit">Search Properties<span class="lnr lnr-arrow-right"></span></button>
+							<input type="input" class="form-control app-select" name="cari properti" placeholder="Cari berdasarkan lokasi atau nama">
+							<button class="primary-btn ml-10" type="submit">Cari<span class="lnr lnr-arrow-right"></span></button>
 						</div>
 					</form>
-					
-					
-					<!-- <div class="search-field">
-						<form class="search-form" action="#">
-							<div class="row">
-								<div class="col-lg-12 d-flex align-items-center justify-content-center toggle-wrap">
-									<div class="row">
-										<div class="col">
-											<h4 class="search-title">Search Properties For</h4>
-										</div>
-										<div class="col">
-											<div class="onoffswitch3 d-block mx-auto">
-												<input type="checkbox" name="onoffswitch3" class="onoffswitch3-checkbox" id="myonoffswitch3" checked>
-												<label class="onoffswitch3-label" for="myonoffswitch3">
-													<span class="onoffswitch3-inner">
-														<span class="onoffswitch3-active">
-															<span class="onoffswitch3-switch">Sell</span>
-															<span class="lnr lnr-arrow-right"></span>
-														</span>
-														<span class="onoffswitch3-inactive">
-															<span class="lnr lnr-arrow-left"></span>
-															<span class="onoffswitch3-switch">Rent</span>
-														</span>
-													</span>
-												</label>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="location" class="app-select form-control" required>
-										<option data-display="Choose locations">Choose locations</option>
-										<option value="1">Jakarta</option>
-										<option value="2">Bandung</option>
-										<option value="3">Yogyakarta</option>
-										<option value="4">Semarang</option>
-									</select>
-								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="property-type" class="app-select form-control" required>
-										<option data-display="Property Type">Property Type</option>
-										<option value="1">Property type 1</option>
-										<option value="2">Property type 2</option>
-										<option value="3">Property type 3</option>
-									</select>
-								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="bedroom" class="app-select form-control" required>
-										<option data-display="Bedrooms">Bedrooms</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
-										<option value="3">Four</option>
-									</select>
-								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="bedroom" class="app-select form-control" required>
-										<option data-display="Bedrooms">Bedrooms</option>
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
-									</select>
-								</div>
-								<div class="col-lg-4 range-wrap">
-									<p>Price Range($):</p>
-									<input type="text" id="range" value="" name="range" />
-								</div>
-								<div class="col-lg-4 range-wrap">
-									<p>Area Range(sqm):</p>
-									<input type="text" id="range2" value="" name="range" />
-								</div>
-								<div class="col-lg-4 d-flex justify-content-end">
-									<button class="primary-btn">Search Properties<span class="lnr lnr-arrow-right"></span></button>
-								</div>
-							</div>
-						</form>
-					</div> -->
 				</div>
 			</div>
 		</div>
@@ -187,88 +112,41 @@
 		<div class="container">
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-10 header-text">
-					<h1>Rekomendadi <b>Properti</b></h1>
+					<h1>Properti <b>Terbaru</b></h1>
 					<p>
-						Rekomendadi properti untuk anda hari ini
+						Rekomendasi properti untuk anda hari ini
 					</p>
 				</div>
 			</div>
 			<div class="row">
-			<div class="col-lg-4">
-					<div class="single-property">
-						<div class="images">
-							<img class="img-fluid mx-auto d-block" src="assets/img/s2.jpg" alt="">
-							<span>For Sale</span>
-						</div>
-
-						<div class="desc">
-							<div class="top d-flex justify-content-between">
-								<h4><a href="#">Rumah Baru</a></h4>
-							</div>
-							<div class="middle">
-								<div class="d-flex justify-content-start">
-									<p>Harga : Rp 350.000.000	</p>
-								</div>
-								<div class="d-flex justify-content-start">
-									<p>Alamat : Yogyakarta, Indonesia</p>
-								</div>
-							</div>
-							<div class="bottom d-flex justify-content-start">
-								<p>Rumah</p>
-							</div>
-						</div>
-					</div>
-				</div>
+				@foreach($data as $d)
 				<div class="col-lg-4">
 					<div class="single-property">
 						<div class="images">
-							<img class="img-fluid mx-auto d-block" src="assets/img/s1.jpg" alt="">
-							<span>For Sale</span>
+							<img class="img-fluid mx-auto d-block" src="/foto1/{{$d->foto1}}" alt="">
+							<span>Jual</span>
 						</div>
-
 						<div class="desc">
 							<div class="top d-flex justify-content-between">
-								<h4><a href="#">Kos Putri</a></h4>
+								<h4><a href="{{route('lihat', $d->id)}}">{{$d->nama_prop}}</a></h4>
 							</div>
 							<div class="middle">
 								<div class="d-flex justify-content-start">
-									<p>Harga : Rp 8.000.000	</p>
+									<p>Harga : <?php 		
+										echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
+									?>	</p>
 								</div>
 								<div class="d-flex justify-content-start">
-									<p>Alamat : Yogyakarta, Indonesia</p>
+									<small><p>Alamat : {{$d->kecamatan}}, {{$d->kabupaten}}, {{$d->provinsi}}</p></small>
 								</div>
 							</div>
 							<div class="bottom d-flex justify-content-start">
-								<p>Kos</p>
+								<p>{{$d->kategori->nama_kat}}</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4">
-					<div class="single-property">
-						<div class="images">
-							<img class="img-fluid mx-auto d-block" src="assets/img/s3.jpg" alt="">
-							<span>For Rent</span>
-						</div>
-
-						<div class="desc">
-							<div class="top d-flex justify-content-between">
-								<h4><a href="#">Kos Putra</a></h4>
-							</div>
-							<div class="middle">
-								<div class="justify-content-start">
-									<p>Harga : Rp 5.000.000	</p>
-								</div>
-								<div class="justify-content-start">
-									<p>Alamat : Yogyakarta, Indonesia</p>
-							</div>
-							<div class="bottom d-flex justify-content-start">
-								<p>Kos</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+				@endforeach
 		</div>
 	</section>
 	<!-- End property Area -->
@@ -285,7 +163,13 @@
 						</p>
 					</div>
 					<div class="single-about">
-					<button class="primary-btn" type="submit">Pasang Iklan Sekarang<span class="lnr lnr-arrow-right"></span></button>
+					<?php
+					if(Auth::check()){
+						echo '<a href="/properti2"><button class="primary-btn">Pasang Iklan Sekarang<span class="lnr lnr-arrow-right"></span></button></a>';
+					}else {
+						echo '<button class="primary-btn" data-toggle="modal" data-target="#exampleModal">Pasang Iklan Sekarang<span class="lnr lnr-arrow-right"></span></button>';
+					}
+					?>
 					</div>
 				</div>
 				<div class="col-lg-6 about-right no-padding">
@@ -294,16 +178,36 @@
 			</div>
 		</div>
 	</section>
-	<!-- End About Area -->
-
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Anda Belum <b>Masuk!</b></h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				<p>Untuk memasang iklan, anda harus memiliki akun terlebih dahulu.</p>
+				<p>Apakah anda sudah memiliki akun? Jika iya, klik tombol <b>Masuk</b></p>
+				<p>Jika belum, klik tombol <b>Daftar</b></p>
+			</div>
+			<div class="modal-footer justify-content-center">
+			<button type="button" class="btn btn-danger" data-dismiss="modal">Masuk</button>
+			<button type="submit" class="btn btn-secondary">Daftar</button>
+			</div>
+		</div>
+		</div>
+	</div>
 	<!-- Start city Area -->
 	<section class="city-area section-gap">
 		<div class="container">
 			<div class="row d-flex justify-content-center">
 				<div class="col-md-10 header-text">
-					<h1>Properties in Various Cities</h1>
+					<h1>Properti Berdasarkan <b>Kota</b></h1>
 					<p>
-						Who are in extremely love with eco friendly system.
+						Pilih kota untuk mencari properti
 					</p>
 				</div>
 			</div>
@@ -358,56 +262,8 @@
 		</div>
 	</section>
 	<!-- End city Area -->
-
-	<!-- Start testomial Area -->
-	<!-- <section class="testomial-area section-gap">
-		<div class="container">
-			<div class="row d-flex justify-content-center">
-				<div class="col-md-10 header-text">
-					<h1>Feedback from our real clients</h1>
-					<p>
-						It won’t be a bigger problem to find one video game lover in your neighbor. Since the introduction of Virtual Game,
-					</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="active-testimonial-carusel">
-					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/trust.jpg" alt="">
-						<p class="desc">
-							Iklan yang ditampilkan terpercaya
-						</p>
-						<h4>Iklan Terpercaya</h4>
-					</div>
-					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/online.jpg" alt="">
-						<p class="desc">
-							Layanan online selama 24 jam
-						</p>
-						<h4>24 Jam Support</h4>
-					</div>
-					<div class="single-testimonial item">
-						<img class="mx-auto rounded-circle" src="assets/img/nego.jpg" alt="">
-						<p class="desc">
-							Fitur nego untuk menawar harga
-						</p>
-						<h4>Fitur Nego</h4>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section> -->
-
 	<section class="blog-area section-gap">
 		<div class="container">
-			<div class="row d-flex justify-content-center">
-				<div class="col-md-10 header-text">
-					<h1>Feedback from our real clients</h1>
-					<p>
-						It won’t be a bigger problem to find one video game lover in your neighbor. Since the introduction of Virtual Game,
-					</p>
-				</div>
-			</div>
 			<div class="row">
 				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
 					<div class="single-testimonial item">
@@ -424,7 +280,7 @@
 						<p class="desc">
 							Layanan online selama 24 jam
 						</p>
-						<h4>24 Jam Support</h4>
+						<h4>Dukungan 24 Jam</h4>
 					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-12 single-blog">
@@ -470,12 +326,12 @@
 				</div>
 				<div class="col-lg-4 col-md-6 col-sm-6">
 					<div class="single-footer-widget">
-						<h6>Web <b style="font-size:14px">Information</b></h6>
+						<h6>Informasi <b style="font-size:14px">Web</b></h6>
 						<ul class="instafeed d-flex flex-wrap">
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-phone-handset"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Phone Number</b>
+							<div><b style="font-size:16px; color:#fff">Nomor Telepon</b>
 								<p>+62 838 9771 0862</p>
 							</div>
 						</ul>
@@ -483,7 +339,7 @@
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-envelope"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Email Address</b>
+							<div><b style="font-size:16px; color:#fff">Alamat Email</b>
 								<p>Email :<a href="mailto:proper@gmail.com"> proper@gmail.com</a></p>
 							</div>
 						</ul>
@@ -491,7 +347,7 @@
 							<div class="mr-20 ml-10">
 							<i class="lnr lnr-home"></i>
 							</div>
-							<div><b style="font-size:16px; color:#fff">Location</b>
+							<div><b style="font-size:16px; color:#fff">Lokasi</b>
 								<p>D.I. Yogyakarta, Indonesia</p>
 							</div>
 						</ul>

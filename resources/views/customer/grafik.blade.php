@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.cusBase')
 
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Components - Ready Bootstrap Dashboard</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-    <link rel="stylesheet" href="asset/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="asset/css/ready.css">
-    <link rel="stylesheet" href="asset/css/demo.css">
-</head>
-
-<body>
+@section('content')
     <div class="wrapper">
         <div class="main-header">
             <div class="logo-header">
@@ -21,19 +10,28 @@
 				</button>
             </div>
             <nav class="navbar navbar-header navbar-expand-lg">
+                <div class="container-fluid">
+                    <ul class="navbar-nav topbar-nav md-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" role="button">
+                                Pesanan
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </nav>
         </div>
         <div class="sidebar">
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="asset/img/profile.jpg">
+                        <img src="assets/img/blog/c5.jpg">
                     </div>
                     <div class="info">
-                        <a class="" href="dashboard">
+                        <a class="" href="cek">
                             <span>
-									Hizrian
-									<span class="user-level">Administrator</span>
+                                Fajar Bayu
+									<span class="user-level">Pengguna</span>
                             </span>
                         </a>
                         <div class="clearfix"></div>
@@ -54,8 +52,8 @@
                     </li>
                     <li class="nav-item active">
                         <a href="grafik">
-                            <i class="la la-bar-chart"></i>
-                            <p>Grafik Transakasi</p>
+                            <i class="la la-shopping-cart"></i>
+                            <p>Pesanan</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -83,7 +81,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="pembelian">
-                            <i class="la la-shopping-cart"></i>
+                            <i class="la la-dollar"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -94,10 +92,16 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="icons.html">
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
                             <i class="la la-power-off"></i>
-                            <p>Logout</p>
+                            <p>Keluar</p>
                         </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -105,17 +109,80 @@
         <div class="main-panel">
             <div class="content">
                 <div class="container-fluid">
-                    <h4 class="page-title">Component</h4>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title">2018 Sales</h4>
-                                    <p class="card-category">
-                                        Number of products sold</p>
+                                    <div class="card-title">Daftar Pesanan Anda</div>
                                 </div>
-                                <div class="card-body">
-                                    <div id="salesChart" class="chart"></div>
+                                <div class="card-body table-responsive">
+                                    <table class="table table-head-bg-danger table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">No</th>
+                                                <th scope="col">Nama</th>
+                                                <th scope="col">Jumlah yang harus dibayar</th>
+                                                <th scope="col">Tanggal</th>
+                                                <th scope="col">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Apartemen</td>
+                                                <td>Rp. 200.000.000</td>
+                                                <td>27-02-2020</td>
+                                                <td>
+                                                    <a href="/pesanan">
+                                                        <button class="btn btn-primary btn-xs">Detail</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>Kos</td>
+                                                <td>Rp. 50.000.000</td>
+                                                <td>24-02-2020</td>
+                                                <td>
+                                                    <a href="Tambah.html">
+                                                        <button class="btn btn-primary btn-xs">Detail</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td>Rumah</td>
+                                                <td>Rp. 200.000.000</td>
+                                                <td>22-02-2020</td>
+                                                <td>
+                                                    <a href="Tambah.html">
+                                                        <button class="btn btn-primary btn-xs">Detail</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="card-body">
+                                        <p class="demo">
+                                            <ul class="pagination pg-danger">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                </li>
+                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -140,22 +207,4 @@
             </footer>
         </div>
     </div>
-    </div>
-
-</body>
-<script src="asset/js/core/jquery.3.2.1.min.js"></script>
-<script src="asset/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-<script src="asset/js/core/popper.min.js"></script>
-<script src="asset/js/core/bootstrap.min.js"></script>
-<script src="asset/js/plugin/chartist/chartist.min.js"></script>
-<script src="asset/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
-<script src="asset/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-<script src="asset/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
-<script src="asset/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
-<script src="asset/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
-<script src="asset/js/plugin/chart-circle/circles.min.js"></script>
-<script src="asset/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-<script src="asset/js/ready.min.js"></script>
-<script src="asset/js/demo.js"></script>
-
-</html>
+    @endsection

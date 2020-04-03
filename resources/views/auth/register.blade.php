@@ -1,7 +1,42 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
-<div class="container">
+<div class="wrapper" style="background-image: url('asset/img/14836.jpg'); background-size: cover;">
+    <div class="inner">
+        <div class="image-holder">
+            <img src="asset/img/1.jpg" alt="">
+        </div>
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+            <h3>Pendaftaran</h3>
+            <div class="form-wrapper">
+                <input type="text" placeholder="Nama Lengkap" class="form-control" name="name" value="{{ old('name') }}" required>
+                <i class="zmdi zmdi-account"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="text" placeholder="Nomor Telepon" class="form-control" name="phone" required>
+                <i class="zmdi zmdi-phone"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="text" placeholder="Alamat Email" class="form-control" name="email" value="{{ old('email') }}" required>
+                <i class="zmdi zmdi-email"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="password" placeholder="Kata Sandi" class="form-control" name="password" required>
+                <i class="zmdi zmdi-lock"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="password" placeholder="Ulang Kata Sandi" class="form-control" name="password_confirmation" required>
+                <i class="zmdi zmdi-lock"></i>
+            </div>
+            <button>Daftar
+                <i class="zmdi zmdi-arrow-right"></i>
+            </button><br>
+            <p class="text-center">Sudah punya akun? <a class="a" href="{{ route('login') }}">Masuk</a></p>
+        </form>
+    </div>
+</div>
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -81,5 +116,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection

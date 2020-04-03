@@ -23,6 +23,11 @@ class CreateUsersTable extends Migration
             $table->string('code')->nullable();
             $table->boolean('active')->default(0);
             $table->string('password');
+            $table->string('profile')->default('user.jpg');
+            $table->string('ktp')->default('user.jpg');
+            $table->string('provinsi');
+            $table->string('kabupaten');
+            $table->string('kecamatan');
             $table->rememberToken();
             $table->timestamps();
         });

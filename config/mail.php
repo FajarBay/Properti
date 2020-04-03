@@ -15,6 +15,16 @@ return [
     |            "postmark", "log", "array"
     |
     */
+    "driver" => "smtp",
+    "host" => "smtp.mailtrap.io",
+    "port" => 2525,
+    "from" => array(
+        "address" => "from@example.com",
+        "name" => "Example"
+    ),
+    "username" => "18750e5be3f7bd",
+    "password" => "f7565710e15c99",
+    "sendmail" => "/usr/sbin/sendmail -bs",
 
     'driver' => env('MAIL_DRIVER', 'smtp'),
 

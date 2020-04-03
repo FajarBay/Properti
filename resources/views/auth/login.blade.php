@@ -1,7 +1,43 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
-<div class="container">
+<div class="wrapper" style="background-image: url('asset/img/14836.jpg'); background-size: cover;">
+    <div class="inner">
+        <div class="image-holder">
+            <img src="asset/img/1.jpg" alt="">
+        </div>
+            @if(Session::has('message'))
+                <div class="alert alert-success">{{Session::get('message')}}</div>
+            @endif
+            <form method="POST" action="{{ route('login') }}" style="padding-top: 70px">
+                @csrf
+            <h3>Masuk</h3>
+            <div class="form-wrapper">
+                <input type="text" placeholder="Alamat Email" name="email" oninvalid="this.setCustomValidity('Masukan email yang valid')"
+                oninput="setCustomValidity('')" class="form-control" value="{{ old('email') }}" required>
+                <i class="zmdi zmdi-email"></i>
+            </div>
+            <div class="form-wrapper">
+                <input type="password" placeholder="Kata Sandi" oninvalid="this.setCustomValidity('Email atau kata sandi salah')"
+                oninput="setCustomValidity('')" name="password" class="form-control" required>
+                <i class="zmdi zmdi-lock"></i>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                <label for="remember">Ingat Saya</label>
+                @if (Route::has('password.request'))
+                <a class="btn btn-link a" style="float:right" href="/reset">Lupa Kata Sandi?</a>
+                @endif
+                {{-- {{ route('password.request') }} --}}
+            </div>
+            <button>{{ __('Masuk') }}
+                <i class="zmdi zmdi-arrow-right"></i>
+            </button><br>
+            <p class="text-center">Belum punya akun? <a class="a" href="{{ route('register') }}">Daftar sekarang</a></p>
+        </form>
+    </div>
+</div>
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -74,5 +110,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection

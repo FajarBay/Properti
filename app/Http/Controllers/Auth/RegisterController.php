@@ -35,7 +35,8 @@ public function register(Request $request)
 {
     $this->validator($request->all())->validate();
     event(new Registered($user = $this->create($request->all())));
-    return $this->registered($request,$user) ?: redirect('/verify?phone='.$request->phone);
+    return $this->registered($request,$user) ?:
+    redirect('/verify?phone='.$request->phone);
 }
     /**
      * Get a validator for an incoming registration request.
@@ -71,6 +72,7 @@ public function register(Request $request)
         if($user){
             $user->code=SendOTP::sendOTP($user->phone);
             $user->save();
+            return redirect('verify');
         }
     }
 }

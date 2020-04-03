@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -52,9 +52,9 @@ class LoginController extends Controller
                 if($user->active && $this->attemptLogin($request)){
                     $user = User::where('email', $user->email)->first();
                     if($user->is_admin()){
-                    return redirect()->route('home');
+                    return redirect()->route('adminDash');
                 }
-                return redirect()->route('dashboard');
+                return redirect()->route('utama');
                 }
               
                else{
