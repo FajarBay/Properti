@@ -25,12 +25,12 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="assets/img/blog/c5.jpg">
+                        <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                     </div>
                     <div class="info">
                         <a class="" href="cek">
                             <span>
-                                Fajar Bayu
+                                {{Auth::user()->name}}
 									<span class="user-level">Pengguna</span>
                             </span>
                         </a>
@@ -156,16 +156,12 @@
                                                 </label>
                                                 <small id="hargaHelp" class="form-text text-muted">Apakah iklan ada dapat dinego?.</small>
                                             </div>
-                                            <br>
-                                            <br>
-                                            <br>
-                                            <br>
-                                            <br>
                                             
                                             <input type="hidden" name="id_prop" value="{{$properti->id}}">
                                             <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
                                             <input type="hidden" name="sold" value="1">
                                             <input type="hidden" name="status" value="0">
+                                            <input type="hidden" name="book" value="0">
                                             <input type="hidden" name="dilihat" value="0">
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">
@@ -193,9 +189,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="tambah3">
+                                            {{-- <a href="tambah3">
                                                 <button class="btn btn-danger">Kembali</button>
-                                            </a>
+                                            </a> --}}
                                         </div>
                                     </div>
                                 </form>

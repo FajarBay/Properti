@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts.edit')
 
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Components - Ready Bootstrap Dashboard</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-    <link rel="stylesheet" href="{{asset ('asset/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="{{asset ('asset/css/ready.css') }}">
-    <link rel="stylesheet" href="{{asset ('asset/css/demo.css') }}">
-</head>
-
-<body>
+@section('content')
     <div class="wrapper">
     <div class="main-header">
             <div class="logo-header">
@@ -36,7 +25,7 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="{{asset ('asset/img/profile.jpg') }}">
+                        <img src="{{asset ('asset/img/support.png') }}">
                     </div>
                     <div class="info">
                         <a class="" href="adminDash">
@@ -116,7 +105,7 @@
                                 <div class="card-header">
                                     <div class="card-title">Detail Iklan Anda
                                         <?php
-                                            if($properti->status == 0){
+                                            if($properti->iklan->status == 0){
                                                echo "<span class=\"badge badge-warning float-right\">Menunggu</span>";
                                             }else {
                                                echo "<span class=\"badge badge-success float-right\">Terverifikasi</span>";
@@ -124,7 +113,7 @@
                                         ?>
                                     </div>
                                 </div>
-                                <div class="card-body">
+                                    <div class="card-body">
                                         <div class="col-md-12">
                                             <div class="form-group">
 
@@ -167,32 +156,10 @@
                                                                 <td><strong>{{$properti->nama_prop}}</td>
                                                             </tr>
                                                             <tr>
-                                                                <td width="250px">Tanggal</td>
-                                                                <td>
-                                                                    <?php
-                                                                    $date = new DateTime($properti->created_at);
-                                                                    echo $date->format('d-m-Y');
-                                                                    ?>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
                                                                 <td width="250px">Kategori</td>
                                                                 <td>
-                                                                    <?php
-                                                                    if($properti->id_kat == 'K01'){
-                                                                        echo "Rumah";
-                                                                    }else if($properti->id_kat == 'K02'){
-                                                                        echo "Kos";
-                                                                    }else if($properti->id_kat == 'K03'){
-                                                                        echo "Apartemen";
-                                                                    }else if($properti->id_kat == 'K04'){
-                                                                        echo "Tanah";
-                                                                    }else if($properti->id_kat == 'K05'){
-                                                                        echo "Ruko";
-                                                                    }else if($properti->id_kat == 'K06'){
-                                                                        echo "Kios/Toko";
-                                                                    }
-                                                                ?></td>
+                                                                    {{$properti->kategori->nama_kat}}
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Harga</td>
@@ -219,21 +186,30 @@
                                                                 <td>{{$properti->fasilitas}}</td>
                                                             </tr>
                                                             <tr>
+                                                                <td width="250px">Tanggal</td>
+                                                                <td>
+                                                                    <?php
+                                                                    $date = new DateTime($properti->created_at);
+                                                                        echo $date->format('d F Y');
+                                                                    ?>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
                                                                 <td width="250px">Maps</td>
                                                                 <td>{{$properti->alamatmaps}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Jenis</td>
                                                                 <td><?php 
-                                                                    if($properti->jenis == 0){
+                                                                    if($properti->iklan->jenis == 0){
                                                                         echo "Iklan Jual";
-                                                                    }else if($properti->jenis == 1) {
+                                                                    }else if($properti->iklan->jenis == 1) {
                                                                         echo "Iklan Sewa/Hari";
-                                                                    }else if($properti->jenis == 2) {
+                                                                    }else if($properti->iklan->jenis == 2) {
                                                                         echo "Iklan Sewa/Minggu";
-                                                                    }else if($properti->jenis == 3) {
+                                                                    }else if($properti->iklan->jenis == 3) {
                                                                         echo "Iklan Sewa/Bulan";
-                                                                    }else if($properti->jenis == 4) {
+                                                                    }else if($properti->iklan->jenis == 4) {
                                                                         echo "Iklan Sewa/Tahun";
                                                                     }
                                                                     ?>
@@ -264,15 +240,19 @@
                                                         </tbody>
                                                     </table>
                                                     <hr>
-                                                    <div class="text-right ">
+                                                    <div class="text-right" style="display:flex; float:right">
                                                     {{-- <a href="{{route('iklan.edit', $properti->id)}}"> --}}
-                                                        <?php 
-                                                    if($properti->status == 0){
-                                                        echo "<button class=\"btn btn-success\">Verifikasi</button>";
-                                                    }else{
-                                                        echo "<button class=\"btn btn-warning\">Batal Verifikasi</button>";
-                                                    } 
-                                                    ?>
+                                                    @if($properti->iklan->status == 0)
+                                                        <form action="{{route('verifIklan', $properti->iklan->id)}}" method="post" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+                                                        <button type="submit" class="btn btn-success mr-1">Verifikasi</button>
+                                                        </form>
+                                                    @else
+                                                    <form action="{{route('batalVerif', $properti->iklan->id)}}" method="post" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+                                                        <button type="submit" class="btn btn-warning mr-1">Batal Verifikasi</button>
+                                                    </form>
+                                                    @endif
                                                         {{-- <button class="btn btn-success">Konfirmasi</button> --}}
                                                     {{-- </a> --}}
                                                     <a href="/cek">
@@ -284,12 +264,12 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div>
+            <br>
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">
@@ -308,41 +288,4 @@
             </footer>
         </div>
     </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
-                    <p>
-                        <b>We'll let you know when it's done</b></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-<script src="{{asset ('asset/js/core/jquery.3.2.1.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-<script src="{{asset ('asset/js/core/popper.min.js') }}"></script>
-<script src="{{asset ('asset/js/core/bootstrap.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/chartist/chartist.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/jquery-mapael/jquery.mapael.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/jquery-mapael/maps/world_countries.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/chart-circle/circles.min.js') }}"></script>
-<script src="{{asset ('asset/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
-<script src="{{asset ('asset/js/ready.min.js') }}"></script>
-
-</html>
+    @endsection

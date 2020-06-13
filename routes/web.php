@@ -72,27 +72,33 @@ Route::group(['middleware' => 'auth'], function(){
     // Route::get('/iklan', function(){
     //     return view('customer/iklan');
     // })->name('iklan');
-    Route::get('/grafik', function(){
-        return view('customer/grafik');
-    });
+    // Route::get('/grafik', function(){
+    //     return view('customer/grafik');
+    // });
     Route::get('/pesanan', function(){
         return view('customer/detailPesanan');
     });
-    Route::get('/beli', function(){
-        return view('customer/detailPembelian');
+
+    Route::get('/pesanan', 'PesananController@index');
+
+    Route::get('/pembayaran', function(){
+        return view('customer/pembayaran');
     });
+    // Route::get('/beli', function(){
+    //     return view('customer/detailPembelian');
+    // });
     Route::get('/chatAdmin', function(){
         return view('customer/chatAdmin');
     })->name('chatAdmin');
     Route::get('/chatCustomer', function(){
         return view('customer/chatCustomer');
     })->name('chatCustomer');
-    Route::get('/penjualan', function(){
-        return view('customer/penjualan');
-    })->name('penjualan');
-    Route::get('/pembelian', function(){
-        return view('customer/pembelian');
-    })->name('pembelian');
+    // Route::get('/penjualan', function(){
+    //     return view('customer/penjualan');
+    // })->name('penjualan');
+    // Route::get('/pembelian', function(){
+    //     return view('customer/pembelian');
+    // })->name('pembelian');
     Route::get('/detailPenjualan', function(){
         return view('customer/detailPenjualan');
     });
@@ -131,6 +137,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/daftarUser', 'AdminController@user')->name('daftarUser');
     Route::get('/daftarIklan', 'AdminController@daftarIklan');
     Route::get('/detailUser/{id}', 'AdminController@detailUser')->name('detailUser');
+
+    Route::post('/verifIklan/{id}', 'AdminController@verifIklan')->name('verifIklan');
+    Route::post('/batalVerif/{id}', 'AdminController@batalVerif')->name('batalVerif');
     // Route::get('/daftarUser', function(){
     //     return view('admin/daftarUser');
     // })->name('daftarUser');
@@ -177,11 +186,26 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/remove-image', 'PropertiController@removeImage');
     Route::post('/store1', 'PropertiController@store');
     Route::get('/iklan', 'PropertiController@index');
+    Route::get('/grafik', 'PesananController@index');
+    Route::get('/pembelian', 'PesananController@pembelian');
+    Route::get('/penjualan', 'PesananController@penjualan');
+
+    
+    // Route::get('/kirim_bukti', 'PesananController@CreateBukti');
+    Route::post('/kirim_bukti/{id}', 'PesananController@bukti')->name('kirim_bukti');
+    
     // Route::get('/edit/{id}', 'PropertiController@edit')->name('edit');
     // Route::get('/show/{id}', 'PropertiController@show')->name('show');
     Route::resource('prop','UserController');
     Route::resource('iklan','PropertiController');
+    Route::resource('pesanan','PesananController');
+    Route::get('/detailPembelian/{id}', 'PesananController@detailPembelian')->name('detailPembelian');
+    Route::get('/detailPenjualan/{id}', 'PesananController@detailPenjualan')->name('detailPenjualan');
+    Route::post('/verifikasiPenjualan/{id}', 'PesananController@verifikasiPenjualan')->name('verifikasiPenjualan');
+    Route::post('/bayar/{id}', 'PesananController@bayar')->name('bayar');
 
     Route::get('/upload', 'iklanController@CreateIklan');
     Route::post('/upload', 'IklanController@PostIklan');
     Route::post('/pesanan/{id}', 'HomeController@pesanan')->name('pesanan');
+    Route::post('/batalkan/{id}', 'HomeController@hapusPesanan')->name('batalkan');
+    Route::post('/bayar/{id}', 'PesananController@pembayaran')->name('bayar');

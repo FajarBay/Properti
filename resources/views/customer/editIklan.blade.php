@@ -25,12 +25,12 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="{{asset ('assets/img/blog/c5.jpg') }}">
+                        <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                     </div>
                     <div class="info">
                         <a class="" href="cek">
                             <span>
-                                Fajar Bayu
+                                {{Auth::user()->name}}
 									<span class="user-level">Pengguna</span>
                             </span>
                         </a>

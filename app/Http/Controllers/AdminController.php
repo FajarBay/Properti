@@ -13,7 +13,7 @@ class AdminController extends Controller
     public function dash(Request $request)
     {
 
-        $products = Properti::all();
+        $products = Properti::orderBy('id', 'desc')->paginate(4);
 
         return view('admin.adminDash', compact('products'));
     }
@@ -21,7 +21,7 @@ class AdminController extends Controller
     public function daftarIklan(Request $request)
     {
 
-        $products = Properti::all();
+        $products = Properti::orderBy('id', 'desc')->paginate(4);
 
         return view('admin.daftarIklan', compact('products'));
     }
@@ -29,7 +29,7 @@ class AdminController extends Controller
     public function kategori(Request $request)
     {
 
-        $kategori = Kategori::all();
+        $kategori = Kategori::orderBy('id')->paginate(4);
 
         return view('admin.daftarKategori', compact('kategori'));
     }
@@ -37,7 +37,7 @@ class AdminController extends Controller
     public function user(Request $request)
     {
 
-        $user = DB::table('users')->where('admin','0')->orderBy('id', 'desc')->get();
+        $user = DB::table('users')->where('admin','0')->orderBy('id', 'desc')->paginate(4);
 
         return view('admin.daftarUser', compact('user'));
     }
@@ -54,5 +54,19 @@ class AdminController extends Controller
     {
         $properti = Properti::where('id', $id)->get();
        	return view('admin.detailIklan', compact('properti'));
+    }
+
+    public function verifIklan($id) {
+        $iklan = Properti::find($id)->iklan;
+        $iklan->status = 1;
+        $iklan->save();
+        return back();
+    }
+
+    public function batalVerif($id) {
+        $iklan = Properti::find($id)->iklan;
+        $iklan->status = 0;
+        $iklan->save();
+        return back();
     }
 }

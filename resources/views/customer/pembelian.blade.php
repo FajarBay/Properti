@@ -25,12 +25,12 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="assets/img/blog/c5.jpg">
+                        <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                     </div>
                     <div class="info">
                         <a class="" href="cek">
                             <span>
-                                Fajar Bayu
+                                {{Auth::user()->name}}
 									<span class="user-level">Pengguna</span>
                             </span>
                         </a>
@@ -121,73 +121,46 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">No</th>
+                                                <th scope="col">Invoice</th>
                                                 <th scope="col">Nama</th>
-                                                <th scope="col">Jumlah Pembayaran</th>
-                                                <th scope="col">Tanggal</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col">Action</th>
+                                                <th scope="col">Tanggal</th>
+                                                <th scope="col">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @forelse ($pembelian as $d)
+                                            @php $no = 1; @endphp
                                             <tr>
-                                                <td>1</td>
-                                                <td>Apartemen</td>
-                                                <td>Rp. 200.000.000</td>
-                                                <td>27-02-2020</td>
-                                                <td>Terkonfirmasi</td>
+                                                <td>{{$no++}}</td>
+                                                <td>{{$d->invoice}}</td>
+                                                <td>{{$d->proper->nama_prop}}</td>
+                                                @if($d->konf_admin == 0)
+                                                    <td>Belum Dikonfirmasi</td>
+                                                @else
+                                                    <td>Dikonfirmasi</td>
+                                                @endif
                                                 <td>
-                                                    <a href="/beli">
+                                                    <?php
+                                                    $date = new DateTime($d->proper->created_at);
+                                                    echo $date->format('d F Y');
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('detailPembelian', $d->id)}}">
                                                         <button class="btn btn-primary btn-xs">Detail</button>
                                                     </a>
                                                 </td>
                                             </tr>
+                                            @empty
                                             <tr>
-                                                <td>2</td>
-                                                <td>Kos</td>
-                                                <td>Rp. 50.000.000</td>
-                                                <td>24-02-2020</td>
-                                                <td>Belum Terkonfirmasi</td>
-                                                <td>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
+                                                <td class="text-center" colspan="6">
+                                                    <h6 class="alert alert-warning"><strong>Maaf!</strong> Belum ada data yang ditampilkan.</h6>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Rumah</td>
-                                                <td>Rp. 200.000.000</td>
-                                                <td>22-02-2020</td>
-                                                <td>Belum Terkonfirmasi</td>
-                                                <td>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            </tr> 
+                                            @endforelse
                                         </tbody>
                                     </table>
-                                    <div class="card-body">
-                                        <p class="demo">
-                                            <ul class="pagination pg-danger">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                </li>
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>

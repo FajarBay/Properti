@@ -48,4 +48,8 @@ class User extends Authenticatable
     public function prop(){
         return $this->belongsTo('App\Properti');
     }
+
+    public function booking(){
+        return $this->belongsTo('App\Pesanan');
+    }
 }

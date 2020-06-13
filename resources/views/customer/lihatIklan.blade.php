@@ -25,12 +25,12 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="{{asset ('assets/img/blog/c5.jpg') }}">
+                        <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                     </div>
                     <div class="info">
                         <a class="" href="cek">
                             <span>
-                                Fajar Bayu
+                                {{Auth::user()->name}}
 									<span class="user-level">Pengguna</span>
                             </span>
                         </a>
@@ -133,18 +133,18 @@
                                         <div class="card-title">Detail Iklan Anda
                                             <?php
                                                 if($p->iklan->status == 0){
-                                                    echo "<span class=\"badge badge-warning float-right\">Menunggu</span>";
+                                                    echo "<span class=\"badge badge-warning float-right\">Menunggu Konfirmasi Admin</span>";
                                                 }else {
                                                     echo "<span class=\"badge badge-success float-right\">Aktif</span>";
                                                 }
                                             ?>
                                         </div>
                                     </div>
-                                    <div class="card-body">
+                                    {{-- <div class="card-body">
                                             <div class="col-md-12">
-                                                <div class="form-group">
+                                                <div class="form-group"> --}}
 
-                                                    <div class=" card-body table-responsive ">
+                                                    <div class="card-body table-responsive ">
                                                         <div id="carouselExampleIndicators" class="carousel slide w-75 mx-auto" data-ride="carousel">
                                                             <ol class="carousel-indicators">
                                                                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -191,9 +191,20 @@
                                                                 <tr>
                                                                     <td width="250px">Harga</td>
                                                                     <td>
-                                                                        <?php 		
+                                                                        <?php 
+                                                                        if($p->iklan->jenis == 0) {
                                                                             echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->harga)),3)));
-                                                                        ?>
+                                                                        }else if($p->iklan->jenis == 1){
+                                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->harga)),3))).' /Hari';
+                                                                        }else if($p->iklan->jenis == 2){
+                                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->harga)),3))).' /Minggu';
+                                                                        }else if($p->iklan->jenis == 3){
+                                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->harga)),3))).' /Bulan';
+                                                                        }else if($p->iklan->jenis == 4){
+                                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->harga)),3))).' /Tahun';
+                                                                        }					
+                                                                        // echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
+                                                                        ?>	
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -234,9 +245,9 @@
                                                         <a href="/cek">
                                                             <button class="btn btn-danger">Kembali</button>
                                                         </a>
-                                                        </div>
+                                                        {{-- </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                     </div>

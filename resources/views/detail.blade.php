@@ -194,12 +194,12 @@
                     <div class="text-center">
                     <?php
                         if(Auth::check()){
-                            if($iklan->status == 3){
+                            if($iklan->book == 1){
                                 echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Sudah Dipesan</button>';
                             }else {
                                 echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Pesan</button>';
                             }
-                        }else if($iklan->status == 3){
+                        }else if($iklan->book == 1){
                             echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled>Sudah Dipesan</button>';
                         }else{
                             echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Pesan</button>';
@@ -250,8 +250,10 @@
                 </div>
                 <form action="{{route('pesanan', $d->id)}}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                <input type="hidden" name="status" value="3">
-                <input type="hidden" name="id_pemesan" value="{{ Auth::user()->id }}">
+                <input type="hidden" name="book" value="1">
+                @if (Auth::check())
+                <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
+                @endif
                 <input type="hidden" name="id_prop" value="{{ $d->id }}">
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-danger">Hubungi Penjual</button>

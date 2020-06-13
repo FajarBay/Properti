@@ -179,11 +179,17 @@
 			</div>
 			<div class="row">
 				@foreach($data as $d)
-				<div class="col-lg-4">
+				<div class="col-lg-4" style="margin-bottom: 20px">
 					<div class="single-property">
 						<div class="images">
 							<img class="img-fluid mx-auto d-block" src="/foto1/{{$d->foto1}}" alt="">
-							<span>Jual</span>
+							<span>
+								@if($d->iklan->jenis == 0)
+									Jual
+								@else
+									Sewa
+								@endif
+							</span>
 						</div>
 						<div class="desc">
 							<div class="top d-flex justify-content-between">
@@ -193,15 +199,15 @@
 								<div class="d-flex justify-content-start">
 									<p>Harga : 
 										<?php 
-										if($d->jenis == 0) {
-											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Jual';
-										}else if($d->jenis == 1){
+										if($d->iklan->jenis == 0) {
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
+										}else if($d->iklan->jenis == 1){
 											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Hari';
-										}else if($d->jenis == 2){
+										}else if($d->iklan->jenis == 2){
 											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Minggu';
-										}else if($d->jenis == 3){
+										}else if($d->iklan->jenis == 3){
 											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Bulan';
-										}else if($d->jenis == 4){
+										}else if($d->iklan->jenis == 4){
 											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Tahun';
 										}					
 										// echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
@@ -219,11 +225,13 @@
 					</div>
 				</div>
 				@endforeach
+				<br>
 			</div>
 		</div>
 	</section>
 	<!-- End property Area -->
-
+	{{ $data->links("pagination::bootstrap-4") }}
+	<br>
 	<!-- Start city Area -->
 	<section class="city-area section-gap-bottom">
 		<div class="container">

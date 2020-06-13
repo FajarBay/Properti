@@ -25,12 +25,12 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="assets/img/blog/c5.jpg">
+                        <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                     </div>
                     <div class="info">
                         <a class="" href="cek">
                             <span>
-                                Fajar Bayu
+                                {{Auth::user()->name}}
 									<span class="user-level">Pengguna</span>
                             </span>
                         </a>
@@ -116,6 +116,7 @@
                                     <div class="card-title">Daftar Pesanan Anda</div>
                                 </div>
                                 <div class="card-body table-responsive">
+                                    
                                     <table class="table table-head-bg-danger table-striped table-hover">
                                         <thead>
                                             <tr>
@@ -127,42 +128,45 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @forelse ($pesanan as $d)
+                                            @php $no = 1; @endphp
+                                            {{-- @foreach($pesanan ?? '' as $d) --}}
+                                            {{-- @forelse ($pesanan ?? '' as $d) --}}
+                                                <tr>
+                                                    <td>{{$no++}}</td>
+                                                    <td>{{$d->properti->nama_prop}}</td>
+                                                    <td>
+                                                        <?php 		
+                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->properti->harga)),3)));
+                                                        ?>    
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                        $date = new DateTime($d->properti->created_at);
+                                                        echo $date->format('d F Y');
+                                                        ?>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{route('pesanan.show', $d->properti->id)}}">
+                                                            <button class="btn btn-primary btn-xs">Detail</button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                {{-- @endforeach --}}
+                                            {{-- @endforelse --}}
+                                            @empty
                                             <tr>
-                                                <td>1</td>
-                                                <td>Apartemen</td>
-                                                <td>Rp. 200.000.000</td>
-                                                <td>27-02-2020</td>
-                                                <td>
-                                                    <a href="/pesanan">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
+                                                <td class="text-center" colspan="5">
+                                                    <h6 class="alert alert-warning"><strong>Maaf!</strong> Belum ada data yang ditampilkan.</h6>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>Kos</td>
-                                                <td>Rp. 50.000.000</td>
-                                                <td>24-02-2020</td>
-                                                <td>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>Rumah</td>
-                                                <td>Rp. 200.000.000</td>
-                                                <td>22-02-2020</td>
-                                                <td>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            </tr> 
+                                            @endforelse
+                                            
                                         </tbody>
                                     </table>
-                                    <div class="card-body">
+                                    
+                                    {{-- @endforeach --}}
+                                    {{-- <div class="card-body">
                                         <p class="demo">
                                             <ul class="pagination pg-danger">
                                                 <li class="page-item">
@@ -182,7 +186,7 @@
                                                 </li>
                                             </ul>
                                         </p>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

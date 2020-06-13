@@ -30,13 +30,13 @@ class PropertiController extends Controller
 
     public function dash(Request $request)
     {
-        $data = Properti::where('id_user', '=', Auth::user()->id)->get();
+        $data = Properti::where('id_user', '=', Auth::user()->id)->orderBy('id', 'desc')->paginate(3);
 
         // $kat = Kategori::where('id', '=', DB::table('properti')->id_kat)->get();
 
-        $products = Properti::all();
+        $user = Auth::user();
 
-        return view('customer.dashboard', compact('data', 'products'));
+        return view('customer.dashboard', compact('data', 'user'));
     }
 
     public function createStep1(Request $request)
@@ -212,6 +212,7 @@ class PropertiController extends Controller
             'nego' => 'required',
             'sold' => 'required',
             'status' => 'required',
+            'book' => 'required',
             'dilihat' => 'required',
             // 'tanggal' => 'required',
         ]);

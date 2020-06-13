@@ -25,12 +25,12 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="assets/img/blog/c5.jpg">
+                        <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                     </div>
                     <div class="info">
                         <a class="" href="cek">
                             <span>
-                                Fajar Bayu
+                                {{Auth::user()->name}}
 									<span class="user-level">Pengguna</span>
                             </span>
                         </a>
@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="main-panel">
-            <div class="content">
+            <div class="content" style="margin-bottom:25px">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12 space">
@@ -189,6 +189,7 @@
                     </div>
                 </div>
             </div>
+        </div>
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">

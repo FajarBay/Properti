@@ -9,6 +9,67 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{{ asset('asset/css/ready.css') }}">
     <link rel="stylesheet" href="{{ asset('asset/css/demo.css') }}">
+    <style>
+        .incoming_msg_img {
+        display: inline-block;
+        width: 6%;
+        }
+            .received_msg {
+        display: inline-block;
+        padding: 0 0 0 10px;
+        vertical-align: top;
+        width: 92%;
+        }
+        .received_withd_msg p {
+        background: #ebebeb none repeat scroll 0 0;
+        border-radius: 3px;
+        color: #646464;
+        font-size: 14px;
+        margin: 0;
+        padding: 5px 10px 5px 12px;
+        width: 100%;
+        }
+        .received_withd_msg { width: 57%;}
+        .mesgs {
+        float: left;
+        padding: 30px 15px 0 25px;
+        width: 60%;
+        }
+
+        .sent_msg p {
+        background: #ff646d none repeat scroll 0 0;
+        border-radius: 3px;
+        font-size: 14px;
+        margin: 0; color:#fff;
+        padding: 5px 10px 5px 12px;
+        width:100%;
+        }
+        .outgoing_msg{ overflow:hidden; margin:26px 0 26px; padding-right:10px;}
+        .sent_msg {
+        float: right;
+        width: 46%;
+        }
+
+        html {
+            height: 100%;
+            box-sizing: border-box;
+            }
+
+            *,
+            *:before,   
+            *:after {
+            box-sizing: inherit;
+            }
+        body {
+            position: relative;
+            min-height: 100%;
+        }
+        footer {
+            position: absolute; 
+            bottom: 0; 
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

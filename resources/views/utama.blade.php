@@ -124,7 +124,13 @@
 					<div class="single-property">
 						<div class="images">
 							<img class="img-fluid mx-auto d-block" src="/foto1/{{$d->foto1}}" alt="">
-							<span>Jual</span>
+							<span>
+								@if($d->iklan->jenis == 0)
+									Jual
+								@else
+									Sewa
+								@endif
+							</span>
 						</div>
 						<div class="desc">
 							<div class="top d-flex justify-content-between">
@@ -132,9 +138,22 @@
 							</div>
 							<div class="middle">
 								<div class="d-flex justify-content-start">
-									<p>Harga : <?php 		
-										echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
-									?>	</p>
+									<p>Harga : 
+										<?php 
+										if($d->iklan->jenis == 0) {
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
+										}else if($d->iklan->jenis == 1){
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Hari';
+										}else if($d->iklan->jenis == 2){
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Minggu';
+										}else if($d->iklan->jenis == 3){
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Bulan';
+										}else if($d->iklan->jenis == 4){
+											echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3))).' /Tahun';
+										}					
+										// echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
+										?>	
+									</p>
 								</div>
 								<div class="d-flex justify-content-start">
 									<small><p>Alamat : {{$d->kecamatan}}, {{$d->kabupaten}}, {{$d->provinsi}}</p></small>

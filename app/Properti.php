@@ -19,4 +19,12 @@ class Properti extends Model
     public function kategori(){
         return $this->hasOne('App\Kategori', 'id', 'id_kat');
     }
+
+    public function pesanan(){
+        return $this->belongsTo('App\Pesanan');
+    }
+    
+    public function trans(){
+        return $this->belongsTo('App\Transaksi', 'id', 'id_prop');
+    }
 }

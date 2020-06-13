@@ -25,12 +25,12 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="assets/img/blog/c5.jpg">
+                        <img src="{{ URL::to('/') }}/profil/{{ $user->profil }}">
                     </div>
                     <div class="info">
                         <a class="" href="cek">
                             <span>
-                                Fajar Bayu
+                                {{$user->name}}
 									<span class="user-level">Pengguna</span>
                             </span>
                         </a>
@@ -200,39 +200,41 @@
                                                 <th scope="col">No</th>
                                                 <th scope="col">Nama</th>
                                                 <th scope="col">Harga</th>
-                                                <th scope="col">Waktu</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col">Action</th>
+                                                <th scope="col">Tanggal</th>
+                                                <th scope="col">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @php $no = 1; @endphp
-                                            @foreach($data as $data)
+                                            @foreach($data as $d)
                                             <tr>
                                                 <td>{{$no++}}</td>
-                                                <td>{{$data->nama_prop}}</td>
+                                                <td>{{$d->nama_prop}}</td>
                                                 <td>
                                                     <?php 		
-                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($data->harga)),3)));
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
                                                     ?>    
                                                 </td>
                                                 <td>
                                                     <?php
-                                                    $date = new DateTime($data->created_at);
-                                                    echo $date->format('d F Y');
-                                                    ?>
-                                                </td>
-                                                <td>
-                                                    <?php
-                                                        if($data->status == 0){
+                                                        if($d->iklan->id == 0){
                                                         echo "Menunggu";
-                                                        }else {
+                                                        }else if($d->iklan->status == 1){
                                                         echo "Aktif";
+                                                        }else{
+                                                            echo "Dipesan";
                                                         }
                                                     ?>       
                                                 </td>
                                                 <td>
-                                                    <a href="{{route('iklan.show', $data->id)}}">
+                                                    <?php
+                                                    $date = new DateTime($d->created_at);
+                                                    echo $date->format('d F Y');
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('iklan.show', $d->id)}}">
                                                         <button class="btn btn-primary btn-xs">Detail</button>
                                                     </a>
                                                 </td>
@@ -240,33 +242,14 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="card-body">
-                                        <p class="demo">
-                                            <ul class="pagination pg-danger">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                </li>
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </p>
-                                    </div>
+                                    {{ $data->links("pagination::bootstrap-4") }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <br>
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">

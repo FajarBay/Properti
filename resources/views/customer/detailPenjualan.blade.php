@@ -1,42 +1,42 @@
-@extends('layouts.cusBase')
+@extends('layouts.edit')
 
 @section('content')
-    <div class="wrapper">
-        <div class="main-header">
-            <div class="logo-header">
-                <a href="/utama" class="logo"><img src="asset/img/logo-nav.png"></a>
-                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-            </div>
-            <nav class="navbar navbar-header navbar-expand-lg">
-                <div class="container-fluid">
-                    <ul class="navbar-nav topbar-nav md-auto align-items-center">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" role="button">
-                                Penjualan
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+<div class="wrapper">
+    <div class="main-header">
+        <div class="logo-header">
+            <a href="/utama" class="logo"><img src="{{ asset('asset/img/logo-nav.png') }}"></a>
+            <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
-        <div class="sidebar">
-            <div class="scrollbar-inner sidebar-wrapper">
-                <div class="user">
-                    <div class="photo">
-                        <img src="assets/img/blog/c5.jpg">
-                    </div>
-                    <div class="info">
-                        <a class="" href="/cek">
-                            <span>
-                                Fajar Bayu
-									<span class="user-level">Pengguna</span>
-                            </span>
+        <nav class="navbar navbar-header navbar-expand-lg">
+            <div class="container-fluid">
+                <ul class="navbar-nav topbar-nav md-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" role="button">
+                            Pesanan
                         </a>
-                        <div class="clearfix"></div>
-                    </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="sidebar">
+        <div class="scrollbar-inner sidebar-wrapper">
+            <div class="user">
+                <div class="photo">
+                    <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                 </div>
+                <div class="info">
+                    <a class="" href="cek">
+                        <span>
+                            {{Auth::user()->name}}
+                                <span class="user-level">Pengguna</span>
+                        </span>
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
                 <ul class="nav">
                     <li class="nav-item">
                         <a href="/dashboard">
@@ -112,35 +112,71 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-md-12">
+                                @foreach($transaksi as $p)
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title">Detail Penjualan
-                                            <!-- <span class="badge badge-warning float-right">Menunggu</span> -->
-                                            <span class="badge badge-success float-right">Dikonfirmasi</span>
+                                            <?php
+                                                if($p->konf_admin == 0){
+                                                    echo "<span class=\"badge badge-warning float-right\">Menunggu Konfirmasi Admin</span>";
+                                                }else{
+                                                    echo "<span class=\"badge badge-success float-right\">Dikonfirmasi</span>";
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                     <div class=" card-body table-responsive ">
                                         <table class="table table-striped table-hover ">
                                             <tbody>
                                                 <tr>
-                                                    <td width="250px">Nomor Transaksi</td>
-                                                    <td>INV/10001/2019</td>
+                                                    <td width="250px">Nomor Invoice</td>
+                                                    <td>{{$p->invoice}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Pembeli</td>
-                                                    <td><a href="">Mark</a></td>
+                                                    <td><a href="">{{$p->pembeli->name}}</a></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Judul Iklan</td>
-                                                    <td><a href="">Apartemen</a></td>
+                                                    <td><a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Harga</td>
-                                                    <td>Rp. 200.000.000</td>
+                                                    <td>
+                                                        <?php 		
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->proper->harga)),3)));
+                                                        ?>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Alamat</td>
-                                                    <td>Depok, Sleman, Yogyakarta</td>
+                                                    <td>{{$p->proper->provinsi}}, {{$p->proper->kabupaten}}, {{$p->proper->kecamatan}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Status Pembayaran</td>
+                                                    <td>
+                                                        <?php
+                                                            $hasil = $p->proper->harga - $p->nominal;
+                                                            if($hasil != 0){
+                                                                echo "<span class=\"badge badge-warning\">Belum Lunas</span>";
+                                                            }else{
+                                                                echo "<span class=\"badge badge-success\">Lunas</span>";
+                                                            }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Jumlah Yang Belum Dibayar</td>
+                                                    <td>
+                                                        <?php
+                                                        $hasil = $p->proper->harga - $p->nominal;
+                                                            if($hasil == 0){
+                                                                echo '-';
+                                                            }else{
+                                                                echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($hasil)),3)));
+                                                            }
+                                                        ?>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -150,35 +186,47 @@
                                                 <h6>Detail Bukti Pembayaran</h6>
                                                 <tr>
                                                     <td width="250px">Tanggal</td>
-                                                    <td>22-02-2020</td>
+                                                    <td>
+                                                        <?php
+                                                    $date = new DateTime($p->created_at);
+                                                    echo $date->format('d F Y');
+                                                    ?>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Jumlah Nominal</td>
-                                                    <td>Rp. 200.000.000</td>
+                                                    <td>
+                                                        <?php 		
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->nominal)),3)));
+                                                    ?>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Catatan</td>
-                                                    <td>Pembayaran</td>
+                                                    <td>{{$p->catatan}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Bukti Pembayaran</td>
                                                     <td><a href="assets/img/bukti.jpg" target="_blank">
-                                                        <img class="thumbnail zoom" src="assets/img/bukti.jpg" width="200">
+                                                        <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $p->bukti }}" width="200">
                                                         </a>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div class="text-right ">
-                                            <a href="editIklan.html">
-                                                <button class="btn btn-success ">Verifikasi</button>
-                                            </a>
+                                        <div class="text-right" style="display:flex; float:right">
+                                            <form action="{{route('verifikasiPenjualan', $p->id)}}" method="post" enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-success mr-1">Verifikasi</button>
+                                            </form>
                                             <a href="editIklan.html">
                                                 <button class="btn btn-danger ">Kembali</button>
                                             </a>
                                         </div>
+                                        
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -202,4 +250,5 @@
             </footer>
         </div>
     </div>
+</div>
     @endsection
