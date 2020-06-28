@@ -216,4 +216,47 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+    $('#input').on('keyup', function(){
+       var input = $(this).val();
+       $('#preview_input').text(input);
+    });
+ </script>
+<script type="text/javascript">
+		
+    var rupiah = document.getElementById('rupiah');
+    rupiah.addEventListener('keyup', function(e){
+        // tambahkan 'Rp.' pada saat form di ketik
+        // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+        rupiah.value = formatRupiah(this.value, 'Rp. ');
+    });
+
+    /* Fungsi formatRupiah */
+    function formatRupiah(angka, prefix){
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split   		= number_string.split(','),
+        sisa     		= split[0].length % 3,
+        rupiah     		= split[0].substr(0, sisa),
+        ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if(ribuan){
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+</script>
+<script>
+	$('#input').on('keyup', function(){
+		var input = $(this).val();
+		var rupiah = '';
+		var angkarev = input.toString().split('').reverse().join('');
+		for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+		$('#rupiah').text("Rp. "+rupiah.split('',rupiah.length-1).reverse().join(''));
+	 });
+
+</script>
 </html>

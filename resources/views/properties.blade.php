@@ -5,7 +5,7 @@
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Favicon-->
-	<link rel="shortcut icon" href="assets/img/fav.png">
+	<link rel="shortcut icon" href="{{ asset('assets/img/fav.png') }}">
 	<!-- Author Meta -->
 	<meta name="author" content="CodePixar">
 	<!-- Meta Description -->
@@ -21,14 +21,14 @@
 	<!--
 			CSS
 			============================================= -->
-	<link rel="stylesheet" href="assets/css/linearicons.css">
-	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/css/nice-select.css">
-	<link rel="stylesheet" href="assets/css/ion.rangeSlider.css" />
-	<link rel="stylesheet" href="assets/css/ion.rangeSlider.skinFlat.css" />
-	<link rel="stylesheet" href="assets/css/bootstrap.css">
-	<link rel="stylesheet" href="assets/css/owl.carousel.css">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="{{ asset('assets/css/linearicons.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/nice-select.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/ion.rangeSlider.css') }}" />
+	<link rel="stylesheet" href="{{ asset('assets/css/ion.rangeSlider.skinFlat.css') }}" />
+	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
 </head>
 
 <body>
@@ -40,14 +40,24 @@
 				<div class="d-flex justify-content-end align-items-center">
 					<ul class="list">
 					<li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
-					<li><a href="/iklan">Jual / Sewa Properti</a></li>
+					<?php
+						if(Auth::check()){
+							echo '<li><a href="/iklan">Jual / Sewa Properti</a></li>';
+						}else {
+							echo '<li><a href="#" data-toggle="modal" data-target="#exampleModal">Jual / Sewa Properti</a></li>';
+						}
+						?>
 					@guest
 					<li><a href="{{ route('login') }}">masuk</a></li>
 					@if (Route::has('register'))
 					<li><a href="{{ route('register') }}">daftar </a></li>
 					@endif
 					@else
-					<li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+					@if (Auth::user()->name == 'admin')
+                    <li><a href="/adminDash">Halo, {{ Auth::user()->name }}</a></li>
+                    @else
+                    <li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+                    @endif
 					<li><a href="{{ route('logout') }}"
 								   onclick="event.preventDefault();
 												 document.getElementById('logout-form').submit();">
@@ -69,7 +79,7 @@
 			<div class="container">
 				<div class="row align-items-center justify-content-between d-flex">
 					<div id="logo">
-						<a href="index.html"><img src="assets/img/logo-nav.png" alt="" title="" /></a>
+						<a href="/utama"><img src="{{ asset('assets/img/logo-nav.png') }}" alt="" title="" /></a>
 					</div>
 					<nav id="nav-menu-container">
 						<ul class="nav-menu">
@@ -92,9 +102,21 @@
 		<div class="container">
 			<div class="row fullscreen align-items-end justify-content-center">
 				<div class="banner-content col-lg-12 col-md-12">
+					<form class="search-form" action="{{ route('filter') }}" method="GET">
 					<h1>IKLAN <b>PROPERTI</b></h1>
+						{{--  <form class="form-inline" action="{{ route('cariProp') }}" method="GET">  --}}
+							<div class="input-group mb-20 mr-auto ml-auto md-form form-sm form-2 col-lg-8">
+								<input type="input" class="form-control app-select" name="cari_properti" placeholder="Cari berdasarkan lokasi atau nama">
+								{{--  <div class="input-group-append">
+									<span class="input-group-text">
+										<i class="lnr lnr-magnifier"></i>
+									</span>
+								</div>  --}}
+								{{--  <button class="primary-btn ml-10" type="submit">Cari<span class="lnr lnr-arrow-right"></span></button>  --}}
+							</div>
+						{{--  </form>  --}}
 					<div class="search-field">
-						{{-- <form class="search-form" action=""> --}}
+						
 							<div class="row">
 								<div class="col-lg-12 d-flex align-items-center justify-content-center toggle-wrap">
 									<div class="row">
@@ -103,64 +125,86 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
+								{{--  <div class="col-lg-3 col-md-6 col-xs-6">
 									<select class="app-select form-control" id="propinsi">
 										<option selected="" value="">-- Pilih Provinsi --</option>
 									</select>
-								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="bedroom" class="app-select form-control" required>
-										<option data-display="Kategori">Kategori</option>
-										<option value="1">Rumah</option>
-										<option value="2">Kos</option>
-										<option value="3">Apartemen</option>
-										<option value="3">Tanah</option>
-										<option value="3">Ruko</option>
-										<option value="3">Toko/Kios</option>
+								</div>  --}}
+								<div class="col-lg-4 col-md-6 col-xs-6">
+									<select name="kategori" class="app-select form-control">
+										<option data-display="Kategori" value=""></option>
+										@foreach ($kat as $k)
+                                            <option name="kategori" value="{{$k->id}}">{{$k->nama_kat}}</option>
+                                        @endforeach
 									</select>
 								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="bedroom" class="app-select form-control" required>
-										<option data-display="Jenis Properti">Jenis Properti</option>
-										<option value="1">Jual</option>
-										<option value="2">Sewa</option>
+								<div class="col-lg-4 col-md-6 col-xs-6">
+									<select name="jenis" class="app-select form-control">
+										<option data-display="Jenis Properti" value=""></option>
+										<option name="jenis" value="0">Jual</option>
+										<option name="jenis" value="1">Sewa Harian</option>
+										<option name="jenis" value="2">Sewa Mingguan</option>
+										<option name="jenis" value="3">Sewa Bulanan</option>
+										<option name="jenis" value="4">Sewa Tahunan</option>
 									</select>
 								</div>
-								<div class="col-lg-3 col-md-6 col-xs-6">
-									<select name="bedroom" class="app-select form-control" required>
-										<option data-display="Urutkan">Urutkan</option>
-										<option value="1">Terbaru</option>
-										<option value="2">Harga Tertinggi</option>
-										<option value="3">Harga Terendah</option>
+								{{--  <div class="col-lg-4 col-md-6 col-xs-6">
+									<select name="sort" id="short" class="app-select form-control">
+										<option data-display="Urutkan" value=""></option>
+										<option name="sort" value="1">Terbaru</option>
+										<option name="sort" value="2">Harga Terendah</option>
+										<option name="sort" value="3">Harga Tertinggi</option>
+									</select>
+								</div>  --}}
+								<div class="col-lg-4 col-md-6 col-xs-6">
+									<select name="nego" class="app-select form-control">
+										<option data-display="Nego" value=""></option>
+										<option name="nego" value="0">Ya</option>
+										<option name="nego" value="1">Tidak</option>
 									</select>
 								</div>
-								<div class="col-lg-3 range-wrap"><br><br>
-									<select name="bedroom" class="app-select form-control" required>
-										<option data-display="Nego">Nego</option>
-										<option value="1">Ya</option>
-										<option value="2">Tidak</option>
-									</select>
+								<div class="col-lg-4 range-wrap"><br><br>
+									<input type="text" class="form-control app-select" id="input" name="min_price" placeholder="Harga Minimal">
+									<p class="small" >Harga Mainimal : <b><span id="rupiah"></span></b></p>
 								</div>
-								<div class="col-lg-3 range-wrap"><br><br>
-									<input type="input" class="form-control app-select" name="max" placeholder="Harga Maksimal">
-									{{-- <p class="small">Harga Maksimal</p> --}}
+								<div class="col-lg-4 range-wrap"><br><br>
+									<input type="text" class="form-control app-select" id="input2" name="max_price" placeholder="Harga Maksimal" value="{{Request::get('max_price')}}">
+									<p class="small">Harga Maksimal : <b><span id="rupiah2"></span></b></p>
 								</div>
-								<div class="col-lg-3 range-wrap"><br><br>
-									<input type="input" class="form-control app-select" name="max" placeholder="Harga Maksimal">
-									{{-- <p class="small">Harga Maksimal</p> --}}
-								</div>
-								<div class="col-lg-3 d-flex justify-content-end">
-									<a href="/properties1">
-									<button class="primary-btn">Cari<span class="lnr lnr-arrow-right"></span></button>
-									</a>
+								<div class="ml-4 col-lg-3 d-flex justify-content-end">
+									<button type="submit" class="primary-btn mr-2">Filter<span class="lnr lnr-arrow-right"></span></button>
+									<a type="button" href="/properties" style="background-color: grey" class="primary-btn">Reset<span class="lnr lnr-undo"></span></a>
 								</div>
 							</div>
-						{{-- </form> --}}
-					</div>
+						
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
 	</section>
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Anda Belum <b>Masuk!</b></h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				<p>Untuk memasang iklan, anda harus memiliki akun terlebih dahulu.</p>
+				<p>Apakah anda sudah memiliki akun? Jika iya, klik tombol <b>Masuk</b></p>
+				<p>Jika belum, klik tombol <b>Daftar</b></p>
+			</div>
+			<div class="modal-footer justify-content-center">
+			<a href="{{ route('login') }}"><button type="button" class="btn btn-danger">Masuk</button></a>
+			<a href="{{ route('register') }}"><button type="submit" class="btn btn-secondary">Daftar</button></a>
+			</div>
+		</div>
+		</div>
+	</div>
 	<!-- End banner Area -->
 
 	<!-- start banner Area -->
@@ -170,15 +214,23 @@
 	<section class="property-area section-gap relative" id="property">
 		<div class="container">
 			<div class="row d-flex justify-content-center">
-				<div class="col-md-10 header-text">
+				<div class="col-md-12 header-text">
 					<h1>Rekomendasi <b>Properti</b></h1>
 					<p>
 						Rekomendasi properti untuk anda hari ini
-					</p>
+					</p><br>
+					<div class="col-lg-3 col-md-6 col-xs-6 float-right">
+						<select name="sort" id="short" class="app-select form-control" onchange="location = this.options[this.selectedIndex].value;">
+							<option data-display="Urutkan" value=""></option>
+							<option name="sort" value="{{route('properties')}}">Terbaru</option>
+							<option name="sort" value="{{route('terendah')}}">Harga Terendah</option>
+							<option name="sort" value="{{route('tertinggi')}}">Harga Tertinggi</option>
+						</select>
+					</div>
 				</div>
 			</div>
 			<div class="row">
-				@foreach($data as $d)
+				@forelse($data as $d)
 				<div class="col-lg-4" style="margin-bottom: 20px">
 					<div class="single-property">
 						<div class="images">
@@ -224,7 +276,15 @@
 						</div>
 					</div>
 				</div>
-				@endforeach
+				@empty
+					<div class="container">
+						<div class="row d-flex justify-content-center">
+							<p style="font-size: 20px" class="alert alert-danger">
+								"Iklan yang anda cari tidak ditemukan"
+							</p>
+						</div>
+					</div>
+				@endforelse
 				<br>
 			</div>
 		</div>
@@ -246,9 +306,9 @@
 			<div class="row">
 				<div class="col-lg-4 col-md-4 mb-10">
 					<div class="content">
-						<a href="#" target="_blank">
+						<a href="/propJKT" target="_blank">
 							<div class="content-overlay"></div>
-							<img class="content-image img-fluid d-block mx-auto" src="assets/img/jakarta.jpg" alt="">
+							<img class="content-image img-fluid d-block mx-auto" src="{{ asset('assets/img/jakarta.jpg') }}" alt="">
 							<div class="content-details fadeIn-bottom">
 								<h3 class="content-title">Jakarta</h3>
 							</div>
@@ -257,9 +317,9 @@
 				</div>
 				<div class="col-lg-8 col-md-8 mb-10">
 					<div class="content">
-						<a href="#" target="_blank">
+						<a href="/propBDG" target="_blank">
 							<div class="content-overlay"></div>
-							<img class="content-image img-fluid d-block mx-auto" src="assets/img/bandung.jpg" alt="">
+							<img class="content-image img-fluid d-block mx-auto" src="{{ asset('assets/img/bandung.jpg') }}" alt="">
 							<div class="content-details fadeIn-bottom">
 								<h3 class="content-title">Bandung</h3>
 							</div>
@@ -268,9 +328,9 @@
 					<div class="row city-bottom">
 						<div class="col-lg-6 col-md-6 mt-30">
 							<div class="content">
-								<a href="#" target="_blank">
+								<a href="/propDIY" target="_blank">
 									<div class="content-overlay"></div>
-									<img class="content-image img-fluid d-block mx-auto" src="assets/img/jogja.jpeg" alt="">
+									<img class="content-image img-fluid d-block mx-auto" src="{{ asset('assets/img/jogja.jpeg') }}" alt="">
 									<div class="content-details fadeIn-bottom">
 										<h3 class="content-title">Yogyakarta</h3>
 									</div>
@@ -279,9 +339,9 @@
 						</div>
 						<div class="col-lg-6 col-md-6 mt-30">
 							<div class="content">
-								<a href="#" target="_blank">
+								<a href="/propSMG" target="_blank">
 									<div class="content-overlay"></div>
-									<img class="content-image img-fluid d-block mx-auto" src="assets/img/semarang.jpg" alt="">
+									<img class="content-image img-fluid d-block mx-auto" src="{{ asset('assets/img/semarang.jpg') }}" alt="">
 									<div class="content-details fadeIn-bottom">
 										<h3 class="content-title">Semarang</h3>
 									</div>
@@ -357,20 +417,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</footer>
 	<!-- End footer Area -->
+</body>
 
-	<script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
+	<script src="{{ asset('assets/js/vendor/jquery-2.2.4.min.js') }}"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
 	 crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-	<script src="assets/js/vendor/bootstrap.min.js"></script>
-	<script src="assets/js/jquery.ajaxchimp.min.js"></script>
-	<script src="assets/js/jquery.nice-select.min.js"></script>
-	<script src="assets/js/jquery.sticky.js"></script>
-	<script src="assets/js/ion.rangeSlider.js"></script>
+	<script src="{{ asset('assets/js/vendor/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.ajaxchimp.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.nice-select.min.js') }}"></script>
+	<script src="{{ asset('assets/js/jquery.sticky.js') }}"></script>
+	<script src="{{ asset('assets/js/ion.rangeSlider.js') }}"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="assets/js/jquery.magnific-popup.min.js"></script>
-	<script src="assets/js/owl.carousel.min.js"></script>
-	<script src="assets/js/main.js"></script>
+	<script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+	<script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+	<script src="{{ asset('assets/js/main.js') }}"></script>
 	<script type="text/javascript">
     var return_first = function() {
         var tmp = null;
@@ -482,6 +543,57 @@ $(document).ready(function() {
     });
 });
 </script>
-</body>
+<script>
+	$('#input').on('keyup', function(){
+		var input = $(this).val();
+		var rupiah = '';
+		var angkarev = input.toString().split('').reverse().join('');
+		for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+		$('#rupiah').text("Rp. "+rupiah.split('',rupiah.length-1).reverse().join(''));
+	 });
+
+</script>
+<script>
+	$('#input2').on('keyup', function(){
+		var input = $(this).val();
+		var rupiah = '';
+		var angkarev = input.toString().split('').reverse().join('');
+		for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+		$('#rupiah2').text("Rp. "+rupiah.split('',rupiah.length-1).reverse().join(''));
+	 });
+
+</script>
+{{--  <script type="text/javascript">
+
+	$('#input').on('keyup', function(){
+		var input = $(this).val();
+		$('#rupiah').text(input);
+	 });
+		
+    var rupiah = document.getElementById('rupiah');
+    rupiah.addEventListener('keyup', function(e){
+        // tambahkan 'Rp.' pada saat form di ketik
+        // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+        rupiah.value = formatRupiah(this.value, 'Rp. ');
+	});
+
+    /* Fungsi formatRupiah */
+    function formatRupiah(angka, prefix){
+        var number_string = angka.replace(/[^,\d]/g, '').toString(),
+        split   		= number_string.split(','),
+        sisa     		= split[0].length % 3,
+        rupiah     		= split[0].substr(0, sisa),
+        ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if(ribuan){
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+    }
+</script>  --}}
 
 </html>

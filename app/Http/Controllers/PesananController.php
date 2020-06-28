@@ -69,6 +69,20 @@ class PesananController extends Controller
         return redirect('/pembelian');
     }
 
+    public function kirimLagi(Request $request){
+        $bukti = new Bukti();
+
+        $bukti->nominal = $request->nominal;
+        $bukti->id_transaksi = $request->id_transaksi;
+        $buktiName = 'bukti'.time().'.'.request()->bukti->getClientOriginalExtension();
+        $request->bukti->move('bukti',$buktiName);
+        $bukti->bukti = $buktiName;
+        $bukti->catatan = $request->catatan;
+        
+        $bukti->save();
+        return back();
+    }
+
     public function pembelian(){
         $status = Iklan::where('book', '2')->get();
         $iklan = $status->pluck('id_prop');
@@ -146,7 +160,14 @@ class PesananController extends Controller
 
     public function detailPembelian($id){
         $transaksi = Transaksi::where('id', $id)->orderBy('id', 'desc')->get();
-        return view('customer.detailPembelian', compact('transaksi'));
+
+        $trans = Transaksi::find($id);
+        $data = $trans->pluck('id');
+        
+        $bukti = Bukti::where('id_transaksi', $data->all())->get();
+        // dd($bukti);
+
+        return view('customer.detailPembelian', compact('transaksi', 'bukti'));
     }
 
     public function detailpenjualan($id){

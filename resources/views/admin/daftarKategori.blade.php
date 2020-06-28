@@ -119,26 +119,33 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php $no = ($kategori->currentpage()-1) * $kategori->perPage() + 1; @endphp
+                                            {{--  @php $no = ($kategori->currentpage()-1) * $kategori->perPage() + 1; @endphp  --}}
+                                            @php $no=1 @endphp
                                             @foreach ($kategori as $data)
                                             <tr>
                                                 <td>{{$no++}}</td>
                                                 <td>{{$data->nama_kat}}</td>
-                                                <td>Contoh keterangan untuk {{$data->keterangan_kat}}</td>
+                                                <td>{{$data->keterangan_kat}}</td>
                                                 </td>
                                                 <td>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-warning btn-xs">Edit</button>
+                                                    <a href="{{route('admin.edit', $data->id)}}">
+                                                        <button class="btn btn-warning btn-xs">Ubah</button>
                                                     </a>
-                                                    <a href="Tambah.html">
-                                                        <button class="btn btn-danger btn-xs">Delete</button>
+                                                    @if($data->aktif == 1)
+                                                    <a href="{{route('sembunyi', $data->id)}}">
+                                                        <button class="btn btn-danger btn-xs">Sembuyikan</button>
                                                     </a>
+                                                    @else
+                                                    <a href="{{route('tampil', $data->id)}}">
+                                                        <button class="btn btn-success btn-xs">Tampilkan</button>
+                                                    </a>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    {{ $kategori->links("pagination::bootstrap-4") }}
+                                    {{--  {{ $kategori->links("pagination::bootstrap-4") }}  --}}
                                 </div>
                             </div>
                         </div>

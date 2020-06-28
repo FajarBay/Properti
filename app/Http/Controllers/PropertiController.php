@@ -66,7 +66,7 @@ class PropertiController extends Controller
 
     public function createStep2(Request $request)
     {
-        $kat = Kategori::all();
+        $kat = Kategori::where('aktif', '1')->get();
         $properti = $request->session()->get('properti');
 
         return view('customer.tambah2',compact('properti', 'kat'));
@@ -275,7 +275,7 @@ class PropertiController extends Controller
     public function edit($id)
     {
         $properti = Properti::where('id', $id)->get();
-        $kat = Kategori::all();
+        $kat = Kategori::where('aktif', '1')->get();
         $iklan = Properti::find($id)->iklan;
        	return view('customer.editIklan', compact('properti', 'kat', 'iklan'));
     }

@@ -100,12 +100,12 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            @foreach($properti as $properti)
+                            @foreach($properti as $p)
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-title">Detail Iklan Anda
                                         <?php
-                                            if($properti->iklan->status == 0){
+                                            if($p->iklan->status == 0){
                                                echo "<span class=\"badge badge-warning float-right\">Menunggu</span>";
                                             }else {
                                                echo "<span class=\"badge badge-success float-right\">Terverifikasi</span>";
@@ -153,63 +153,63 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td width="250px">Judul Iklan</td>
-                                                                <td><strong>{{$properti->nama_prop}}</td>
+                                                                <td><strong>{{$p->nama_prop}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Kategori</td>
                                                                 <td>
-                                                                    {{$properti->kategori->nama_kat}}
+                                                                    {{$p->kategori->nama_kat}}
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Harga</td>
                                                                 <td>
                                                                     <?php 		
-                                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($properti->harga)),3)));
+                                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->harga)),3)));
                                                                     ?>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Alamat</td>
-                                                                <td>{{$properti->provinsi}}, {{$properti->kabupaten}}, {{$properti->kecamatan}}</td>
+                                                                <td>{{$p->provinsi}}, {{$p->kabupaten}}, {{$p->kecamatan}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Alamat Lengkap</td>
-                                                                <td>{{$properti->alamat}}</td>
+                                                                <td>{{$p->alamat}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Deskripsi</td>
-                                                                <td>{{$properti->deskripsi}}</td>
+                                                                <td>{{$p->deskripsi}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Fasilitas</td>
-                                                                <td>{{$properti->fasilitas}}</td>
+                                                                <td>{{$p->fasilitas}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Tanggal</td>
                                                                 <td>
                                                                     <?php
-                                                                    $date = new DateTime($properti->created_at);
+                                                                    $date = new DateTime($p->created_at);
                                                                         echo $date->format('d F Y');
                                                                     ?>
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Maps</td>
-                                                                <td>{{$properti->alamatmaps}}</td>
+                                                                <td>{{$p->alamatmaps}}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Jenis</td>
                                                                 <td><?php 
-                                                                    if($properti->iklan->jenis == 0){
+                                                                    if($p->iklan->jenis == 0){
                                                                         echo "Iklan Jual";
-                                                                    }else if($properti->iklan->jenis == 1) {
+                                                                    }else if($p->iklan->jenis == 1) {
                                                                         echo "Iklan Sewa/Hari";
-                                                                    }else if($properti->iklan->jenis == 2) {
+                                                                    }else if($p->iklan->jenis == 2) {
                                                                         echo "Iklan Sewa/Minggu";
-                                                                    }else if($properti->iklan->jenis == 3) {
+                                                                    }else if($p->iklan->jenis == 3) {
                                                                         echo "Iklan Sewa/Bulan";
-                                                                    }else if($properti->iklan->jenis == 4) {
+                                                                    }else if($p->iklan->jenis == 4) {
                                                                         echo "Iklan Sewa/Tahun";
                                                                     }
                                                                     ?>
@@ -218,7 +218,7 @@
                                                             <tr>
                                                                 <td width="250px">Terjual</td>
                                                                 <td><?php
-                                                                    if($properti->sold == 0){
+                                                                    if($p->iklan->sold == 1){
                                                                         echo "Belum Terjual";
                                                                     }else {
                                                                         echo "Terjual";
@@ -228,27 +228,26 @@
                                                             </tr>
                                                             <tr>
                                                                 <td width="250px">Nego</td>
-                                                                <td><?php
-                                                                    if($properti->nego == 0){
-                                                                        echo "Iya";
-                                                                    }else {
-                                                                        echo "Tidak";
-                                                                    }
-                                                                ?>
+                                                                <td>
+                                                                    @if($p->iklan->nego == 0)
+                                                                        Iya
+                                                                    @else
+                                                                        Tidak
+                                                                    @endif
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                     <hr>
                                                     <div class="text-right" style="display:flex; float:right">
-                                                    {{-- <a href="{{route('iklan.edit', $properti->id)}}"> --}}
-                                                    @if($properti->iklan->status == 0)
-                                                        <form action="{{route('verifIklan', $properti->iklan->id)}}" method="post" enctype="multipart/form-data">
+                                                    {{-- <a href="{{route('iklan.edit', $p->id)}}"> --}}
+                                                    @if($p->iklan->status == 0)
+                                                        <form action="{{route('verifIklan', $p->iklan->id)}}" method="post" enctype="multipart/form-data">
                                                         {{ csrf_field() }}
                                                         <button type="submit" class="btn btn-success mr-1">Verifikasi</button>
                                                         </form>
                                                     @else
-                                                    <form action="{{route('batalVerif', $properti->iklan->id)}}" method="post" enctype="multipart/form-data">
+                                                    <form action="{{route('batalVerif', $p->iklan->id)}}" method="post" enctype="multipart/form-data">
                                                         {{ csrf_field() }}
                                                         <button type="submit" class="btn btn-warning mr-1">Batal Verifikasi</button>
                                                     </form>

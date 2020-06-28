@@ -1,5 +1,6 @@
 <?php
-
+use App\Properti;
+use App\Kategori;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,10 @@ Route::get('/ubah', function () {
 //     return view('properties');
 // });
 Route::get('/properties', 'HomeController@iklan')->name('properties');
+Route::get('/propJKT', 'HomeController@jakarta')->name('propJKT');
+Route::get('/propBDG', 'HomeController@bandung')->name('propBDG');
+Route::get('/propDIY', 'HomeController@jogja')->name('propDIY');
+Route::get('/propSMG', 'HomeController@semarang')->name('propSMG');
 Route::get('/lihat/{id}', 'HomeController@lihat')->name('lihat');
 Route::get('/properties1', function () {
     return view('hasil');
@@ -136,10 +141,33 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/adminDash', 'AdminController@dash')->name('adminDash');
     Route::get('/daftarUser', 'AdminController@user')->name('daftarUser');
     Route::get('/daftarIklan', 'AdminController@daftarIklan');
+    Route::get('/hargaTerendah', 'AdminController@iklanMurah');
+    Route::get('/hargaTertinggi', 'AdminController@iklanMahal');
+    Route::get('/iklanTerjual', 'AdminController@terjual');
+    Route::get('/belumTerjual', 'AdminController@belumTerjual');
+    Route::get('/iklanTerverifikasi', 'AdminController@terverifikasi');
+    Route::get('/belumTerverifikasi', 'AdminController@belumTerverifikasi');
     Route::get('/detailUser/{id}', 'AdminController@detailUser')->name('detailUser');
+
+    
+    Route::get('/iklan/cari', 'AdminController@cariIklan')->name('cariIklan');
+    Route::get('/user/cari', 'AdminController@cariUser')->name('cariUser');
+    Route::get('/transaksi/cari', 'AdminController@cariTransaksi')->name('cariTransaksi');
+
+    Route::get('/sembunyi/{id}', 'AdminController@sembunyikan')->name('sembunyi');
+    Route::get('/tampil/{id}', 'AdminController@tampilkan')->name('tampil');
+    Route::post('/update/{id}', 'AdminController@update')->name('update');
+    
 
     Route::post('/verifIklan/{id}', 'AdminController@verifIklan')->name('verifIklan');
     Route::post('/batalVerif/{id}', 'AdminController@batalVerif')->name('batalVerif');
+    Route::post('/verifBayar/{id}', 'AdminController@verifBayar')->name('verifBayar');
+    Route::get('/daftarPembayaran', 'AdminController@transaksi');
+    Route::get('/terendah', 'AdminController@terendah');
+    Route::get('/tertinggi', 'AdminController@tertinggi');
+    Route::get('/sudah_konf', 'AdminController@sudah_konf');
+    Route::get('/belum_konf', 'AdminController@belum_konf');
+    Route::get('/detailPembayaran/{id}', 'AdminController@detailPembayaran')->name('detailPembayaran');
     // Route::get('/daftarUser', function(){
     //     return view('admin/daftarUser');
     // })->name('daftarUser');
@@ -156,12 +184,12 @@ Route::group(['middleware' => 'auth'], function(){
     //     return view('admin/daftarKategori');
     // })->name('daftarKategori');
     Route::get('/daftarKategori', 'AdminController@kategori')->name('daftarKategori');
-    Route::get('/daftarPembayaran', function(){
-        return view('admin/daftarPembayaran');
-    })->name('daftarPembayaran');
-    Route::get('/detailPembayaran', function(){
-        return view('admin/detailPembayaran');
-    })->name('detailPembayaran');
+    // Route::get('/daftarPembayaran', function(){
+    //     return view('admin/daftarPembayaran');
+    // })->name('daftarPembayaran');
+    // Route::get('/detailPembayaran', function(){
+    //     return view('admin/detailPembayaran');
+    // })->name('detailPembayaran');
     Route::get('/laporan', function(){
         return view('admin/laporan');
     })->name('laporan');
@@ -193,6 +221,7 @@ Route::group(['middleware' => 'auth'], function(){
     
     // Route::get('/kirim_bukti', 'PesananController@CreateBukti');
     Route::post('/kirim_bukti/{id}', 'PesananController@bukti')->name('kirim_bukti');
+    Route::post('/kirim_lagi', 'PesananController@kirimLagi')->name('kirim_lagi');
     
     // Route::get('/edit/{id}', 'PropertiController@edit')->name('edit');
     // Route::get('/show/{id}', 'PropertiController@show')->name('show');
@@ -209,3 +238,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/pesanan/{id}', 'HomeController@pesanan')->name('pesanan');
     Route::post('/batalkan/{id}', 'HomeController@hapusPesanan')->name('batalkan');
     Route::post('/bayar/{id}', 'PesananController@pembayaran')->name('bayar');
+    Route::get('/properti/cari', 'HomeController@cariUtama')->name('cariProp');
+    Route::get('/properti/filter', 'HomeController@filter')->name('filter');
+
+    Route::get('/properti/terendah', 'HomeController@terendah')->name('terendah');
+    Route::get('/properti/tertinggi', 'HomeController@tertinggi')->name('tertinggi');

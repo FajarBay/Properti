@@ -39,14 +39,24 @@
 				<div class="d-flex justify-content-end align-items-center">
 					<ul class="list">
 						<li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
-						<li><a href="/iklan">Jual / Sewa Properti</a></li>
+						<?php
+							if(Auth::check()){
+								echo '<li><a href="/iklan">Jual / Sewa Properti</a></li>';
+							}else {
+								echo '<li><a href="#" data-toggle="modal" data-target="#exampleModal">Jual / Sewa Properti</a></li>';
+							}
+						?>
 						@guest
                         <li><a href="{{ route('login') }}">masuk</a></li>
 						@if (Route::has('register'))
                         <li><a href="{{ route('register') }}">daftar </a></li>
 						@endif
 						@else
+						@if (Auth::user()->name == 'admin')
+						<li><a href="/adminDash">Halo, {{ Auth::user()->name }}</a></li>
+						@else
 						<li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+						@endif
 						<li><a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -101,6 +111,29 @@
 		</div>
 	</section>
 	<!-- End banner Area -->
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Anda Belum <b>Masuk!</b></h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			</div>
+			<div class="modal-body">
+				<p>Untuk memasang iklan, anda harus memiliki akun terlebih dahulu.</p>
+				<p>Apakah anda sudah memiliki akun? Jika iya, klik tombol <b>Masuk</b></p>
+				<p>Jika belum, klik tombol <b>Daftar</b></p>
+			</div>
+			<div class="modal-footer justify-content-center">
+			<a href="{{ route('login') }}"><button type="button" class="btn btn-danger">Masuk</button></a>
+			<a href="{{ route('register') }}"><button type="submit" class="btn btn-secondary">Daftar</button></a>
+			</div>
+		</div>
+		</div>
+	</div>
 
 	<!-- Start About Area -->
 	<section class="about-area section-gap bg-white">

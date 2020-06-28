@@ -139,7 +139,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="squareInput">Jenis Iklan</label></br>
+                                                <label for="squareInput">Jenis Kategori</label></br>
                                                 <select class="form-control" name="id_kat">
                                                     <option data-display="Kategori">-- Kategori --</option>
                                                     @foreach ($kat as $k)
@@ -152,17 +152,18 @@
                                                     <option name="id_kat" {{{ (isset($properti->id_kat) && $properti->id_kat == '5') ? "selected" : "" }}} value="5">Ruko</option>
                                                     <option name="id_kat" {{{ (isset($properti->id_kat) && $properti->id_kat == '6') ? "selected" : "" }}} value="6">Kios/Toko</option> --}}
                                                 </select>
+                                                <small id="namaHelp" class="form-text text-muted">Pilih Jenis Kategori.</small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="nama_prop">Nama Properti</label>
-                                                <input for="nama_prop" name="nama_prop" type="text" class="form-control" id="properti" placeholder="Masukan nama properti" value="{{ session()->get('properti.nama_prop') }}">
+                                                <input for="nama_prop" name="nama_prop" type="text" class="form-control" id="properti" placeholder="Masukan nama properti" value="{{ session()->get('properti.nama_prop') }}" autocomplete="off">
                                                 <small id="namaHelp" class="form-text text-muted">Contoh : Rumah Idaman.</small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="harga">Harga</label>
-                                                <input for="harga" name="harga" type="text" class="form-control input-square" id="harga" placeholder="Masukan harga" onkeyup="copytextbox();" value="{{ session()->get('properti.harga') }}">
-                                                <input type="text" class="form-control" id="hasil" placeholder="Enter Input" disabled>
-                                                <small id="hargaHelp" class="form-text text-muted">Hanya masukan angka.</small>
+                                                <input for="harga" name="harga" type="text" class="form-control input-square" id="harga" placeholder="Masukan harga" onkeyup="copytextbox();" value="{{ session()->get('properti.harga') }}" autocomplete="off">
+                                                {{--  <input type="text" class="form-control" id="hasil" placeholder="Enter Input" disabled>  --}}
+                                                <small id="hargaHelp" class="form-text text-muted">Nominal : <b><span id="hasil"></span></b></small>
                                             </div>
                                         </div>
                             

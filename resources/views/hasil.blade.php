@@ -47,7 +47,11 @@
                         <li><a href="{{ route('register') }}">daftar </a></li>
 						@endif
 						@else
+						@if (Auth::user()->name == 'admin')
+						<li><a href="/adminDash">Halo, {{ Auth::user()->name }}</a></li>
+						@else
 						<li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+						@endif
 						<li><a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

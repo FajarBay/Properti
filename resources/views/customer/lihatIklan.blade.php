@@ -242,7 +242,7 @@
                                                         <a href="{{route('iklan.edit', $p->id)}}">
                                                             <button class="btn btn-warning">Ubah</button>
                                                         </a>
-                                                        <a href="/cek">
+                                                        <a href="/iklan">
                                                             <button class="btn btn-danger">Kembali</button>
                                                         </a>
                                                         {{-- </div>

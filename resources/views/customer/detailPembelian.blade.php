@@ -245,11 +245,12 @@
                                     <table class="table table-striped table-hover ">
                                         <tbody>
                                             <h6>Detail Bukti Pembayaran</h6>
+                                            @foreach ($bukti as $b)
                                             <tr>
                                                 <td width="250px">Tanggal</td>
                                                 <td>
                                                     <?php
-                                                    $date = new DateTime($p->bukti->created_at);
+                                                    $date = new DateTime($b->created_at);
                                                     echo $date->format('d F Y');
                                                     ?>
                                                 </td>
@@ -258,29 +259,34 @@
                                                 <td width="250px">Jumlah Nominal</td>
                                                 <td>
                                                     <?php 		
-                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->bukti->nominal)),3)));
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($b->nominal)),3)));
                                                     ?>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Catatan</td>
-                                                <td>{{$p->bukti->catatan}}</td>
+                                                <td>{{$b->catatan}}</td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Bukti Pembayaran</td>
                                                 <td><a href="assets/img/bukti.jpg" target="_blank">
-                                                    <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $p->bukti->bukti }}" width="200">
+                                                    <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $b->bukti }}" width="200">
                                                     </a>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
                                             <br>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                     <div class="text-right ">
                                             <button class="btn btn-success" data-toggle="modal" data-target="#bukti">Kirim Bukti</button>
                                        
                                         <a href="editIklan.html">
-                                            <button class="btn btn-warning ">Hubumgi Penjual</button>
+                                            <button class="btn btn-danger ">Hubumgi Penjual</button>
                                         </a>
                                     </div>
                                 </div>
@@ -288,6 +294,8 @@
                                 <div class="modal fade" id="bukti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                       <div class="modal-content">
+                                    <form method="POST" action="{{route('kirim_lagi')}}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
                                         <div class="modal-header">
                                           <h5 class="modal-title" id="exampleModalLabel">Kirim Bukti Pembayaran Lain</h5>
                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -297,7 +305,8 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="recipient-name" class="col-form-label">Jumlah Nominal:</label>
-                                                <input type="text" name="nominal" placeholder="Total yang harus dibayar" class="form-control" />
+                                                <input type="text" name="nominal" id="input" placeholder="Total yang harus dibayar" class="form-control" autocomplete="off"/>
+                                                <p class="small" >Nominal : <b><span id="rupiah"></span></b></p>
                                               </div>
                                               <div class="form-group">
                                                 <label for="message-text" class="col-form-label">Catatan:</label>
@@ -308,10 +317,12 @@
                                                 <input class="form-control" type="file" name="bukti">
                                               </div>
                                         </div>
+                                        <input type="hidden" name="id_transaksi" value="{{$p->id}}">
                                         <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Save changes</button>
+                                          <button type="submit" class="btn btn-danger">Kirim</button>
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                         </div>
+                                </form>
                                       </div>
                                     </div>
                                   </div>
@@ -321,6 +332,7 @@
                     </div>
                 </div>
             </div>
+            <br>
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">

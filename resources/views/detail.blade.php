@@ -14,7 +14,11 @@
                     <li><a href="{{ route('register') }}">daftar </a></li>
                     @endif
                     @else
+                    @if (Auth::user()->name == 'admin')
+                    <li><a href="/adminDash">Halo, {{ Auth::user()->name }}</a></li>
+                    @else
                     <li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+                    @endif
                     <li><a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
@@ -194,13 +198,17 @@
                     <div class="text-center">
                     <?php
                         if(Auth::check()){
-                            if($iklan->book == 1){
+                            if($iklan->book == 1 || $iklan->book == 2){
                                 echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Sudah Dipesan</button>';
+                            }else if($iklan->sold == 0){
+                                echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Iklan Terjual</button>';
                             }else {
                                 echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Pesan</button>';
                             }
-                        }else if($iklan->book == 1){
+                        }else if($iklan->book == 1 || $iklan->book == 2){
                             echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled>Sudah Dipesan</button>';
+                        }else if($iklan->sold == 0){
+                            echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Iklan Terjual</button>';
                         }else{
                             echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Pesan</button>';
                         }
@@ -222,13 +230,13 @@
 			</button>
 			</div>
 			<div class="modal-body">
-				<p>Untuk memasang iklan, anda harus memiliki akun terlebih dahulu.</p>
+				<p>Untuk memesan iklan, anda harus memiliki akun terlebih dahulu.</p>
 				<p>Apakah anda sudah memiliki akun? Jika iya, klik tombol <b>Masuk</b></p>
 				<p>Jika belum, klik tombol <b>Daftar</b></p>
 			</div>
 			<div class="modal-footer justify-content-center">
-			<button type="button" class="btn btn-danger" data-dismiss="modal">Masuk</button>
-			<button type="submit" class="btn btn-secondary">Daftar</button>
+                <a href="{{ route('login') }}"><button type="button" class="btn btn-danger">Masuk</button></a>
+                <a href="{{ route('register') }}"><button type="submit" class="btn btn-secondary">Daftar</button></a>
 			</div>
 		</div>
 		</div>

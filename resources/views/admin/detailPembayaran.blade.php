@@ -4,7 +4,7 @@
     <div class="wrapper">
     <div class="main-header">
             <div class="logo-header">
-                <a href="utama" class="logo"><img src="asset/img/logo-nav.png"></a>
+                <a href="utama" class="logo"><img src="{{ asset('asset/img/logo-nav.png') }}"></a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -25,10 +25,10 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="asset/img/support.png">
+                        <img src="{{ asset('asset/img/support.png')}}">
                     </div>
                     <div class="info">
-                        <a class="" href="adminDash">
+                        <a class="" href="/adminDash">
                             <span>
                                 Admin
                                 <span class="user-level">Pengelola</span>
@@ -39,19 +39,19 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="adminDash">
+                        <a href="/adminDash">
                             <i class="la la-dashboard"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="daftarIklan">
+                        <a href="/daftarIklan">
                             <i class="la la-tags"></i>
                             <p>Daftar Iklan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="daftarUser">
+                        <a href="/daftarUser">
                             <i class="la la-users"></i>
                             <p>Daftar User</p>
                         </a>
@@ -63,13 +63,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="daftarKategori">
+                        <a href="/daftarKategori">
                             <i class="la la-newspaper-o"></i>
                             <p>Kategori</p>
                         </a>
                     </li>
                     <li class="nav-item  active">
-                        <a href="daftarPembayaran">
+                        <a href="/daftarPembayaran">
                             <i class="la la-money"></i>
                             <p>Pembayaran</p>
                         </a>
@@ -100,6 +100,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
+                            @foreach($transaksi as $p)
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-title">Detail Pembayaran
@@ -117,16 +118,16 @@
                                         </ol>
                                         <div class="carousel-inner" style="height: 400px;">
                                             <div class="carousel-item active">
-                                                <img class="d-block w-100 img-fluid" src="{{asset ('assets/img/a2.jpg')}}" alt="First slide">
+                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto1/{{ $p->proper->foto1 }}" alt="First slide">
                                             </div>
                                             <div class="carousel-item">
-                                                <img class="d-block w-100 img-fluid" src="{{asset ('assets/img/a4.jpg')}}" alt="Second slide">
+                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto2/{{ $p->proper->foto2 }}" alt="Second slide">
                                             </div>
                                             <div class="carousel-item">
-                                                <img class="d-block w-100 img-fluid" src="{{asset ('assets/img/a1.jpg')}}" alt="Third slide">
+                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto3/{{ $p->proper->foto3 }}" alt="Third slide">
                                             </div>
                                             <div class="carousel-item">
-                                                <img class="d-block w-100 img-fluid" src="{{asset ('assets/img/a3.jpg')}}" alt="Third slide">
+                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto4/{{ $p->proper->foto4 }}" alt="Third slide">
                                             </div>
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -142,36 +143,52 @@
                                     <table class="table table-striped table-hover ">
                                         <tbody>
                                             <tr>
-                                                <td width="250px">Nomor Transaksi</td>
-                                                <td>INV/10001/2019</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">Konfirmasi Penjual</td>
-                                                <td>Dikonfirmasi</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">Penjual</td>
-                                                <td><a href="">Larry the Bird</a></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">Pembeli</td>
-                                                <td><a href="">Mark</a></td>
+                                                <td width="250px">Nomor Invoice</td>
+                                                <td>{{$p->invoice}}</td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Judul Iklan</td>
-                                                <td><a href="">Apartemen</a></td>
+                                                <td><a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td width="250px">Penjual</td>
+                                                <td><a href="">{{$p->penjual->name}}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td width="250px">Pembeli</td>
+                                                <td><a href="">{{$p->pembeli->name}}</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td width="250px">Konfirmasi Penjual</td>
+                                                <td>
+                                                    @if($p->konf_penjual == 0)
+                                                        Belum Dikonfirmasi
+                                                    @else
+                                                        Dikonfirmasi
+                                                    @endif
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Harga</td>
-                                                <td>Rp. 200.000.000</td>
+                                                <td>
+                                                    <?php 		
+                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->proper->harga)),3)));
+                                                        ?> 
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Alamat</td>
-                                                <td>Depok, Sleman, Yogyakarta</td>
+                                                <td>{{$p->proper->provinsi}}, {{$p->proper->kabupaten}}, {{$p->proper->kecamatan}}</td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Nego</td>
-                                                <td>Tidak</td>
+                                                <td>
+                                                    @if($p->proper->iklan->nego == 0)
+                                                    Iya
+                                                    @else
+                                                    Tidak
+                                                    @endif
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -181,32 +198,43 @@
                                             <h6>Detail Bukti Pembayaran</h6>
                                             <tr>
                                                 <td width="250px">Tanggal</td>
-                                                <td>27-02-2020</td>
+                                                <td>
+                                                    <?php
+                                                    $date = new DateTime($p->bukti->created_at);
+                                                    echo $date->format('d F Y');
+                                                    ?>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Jumlah Nominal</td>
-                                                <td>Rp. 200.000.000</td>
+                                                <td>
+                                                    <?php 		
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->bukti->nominal)),3)));
+                                                    ?>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Catatan</td>
-                                                <td>Pembayaran</td>
+                                                <td>{{$p->bukti->catatan}}</td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Bukti Pembayaran</td>
-                                                <td><a href="assets/img/bukti.jpg" target="_blank">
-                                                    <img class="thumbnail zoom" src="assets/img/bukti.jpg" width="200">
-                                                    </a>
-                                                </td>
+                                                    <td><a href="assets/img/bukti.jpg" target="_blank">
+                                                        <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $p->bukti->bukti }}" width="200">
+                                                        </a>
+                                                    </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div class="text-right ">
-                                        <a href="editIklan.html">
-                                            <button class="btn btn-success">Verifikasi</button>
-                                        </a>
+                                        <form action="{{route('verifBayar', $p->id)}}" method="post" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-success mr-1">Verifikasi</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

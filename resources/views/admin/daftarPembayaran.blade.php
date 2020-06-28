@@ -1,10 +1,10 @@
-@extends('layouts.adminBase')
+@extends('layouts.edit')
 
 @section('content')
     <div class="wrapper">
     <div class="main-header">
             <div class="logo-header">
-                <a href="utama" class="logo"><img src="asset/img/logo-nav.png"></a>
+                <a href="/utama" class="logo"><img src="{{asset ('asset/img/logo-nav.png') }}"></a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -25,10 +25,10 @@
             <div class="scrollbar-inner sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="asset/img/support.png">
+                        <img src="{{asset ('asset/img/support.png') }}">
                     </div>
                     <div class="info">
-                        <a class="" href="adminDash">
+                        <a class="" href="/adminDash">
                             <span>
                                 Admin
                                 <span class="user-level">Pengelola</span>
@@ -39,19 +39,19 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="adminDash">
+                        <a href="/adminDash">
                             <i class="la la-dashboard"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="daftarIklan">
+                        <a href="/daftarIklan">
                             <i class="la la-tags"></i>
                             <p>Daftar Iklan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="daftarUser">
+                        <a href="/daftarUser">
                             <i class="la la-users"></i>
                             <p>Daftar User</p>
                         </a>
@@ -63,13 +63,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="daftarKategori">
+                        <a href="/daftarKategori">
                             <i class="la la-newspaper-o"></i>
                             <p>Kategori</p>
                         </a>
                     </li>
                     <li class="nav-item  active">
-                        <a href="daftarPembayaran">
+                        <a href="/daftarPembayaran">
                             <i class="la la-money"></i>
                             <p>Pembayaran</p>
                         </a>
@@ -108,15 +108,15 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                                             <li class="nav-item dropdown hidden-caret">
-                                            <a class="dropdown-item" href="#">Terbaru</a>
-                                            <a class="dropdown-item" href="#">Dikonfirmasi</a>
-                                            <a class="dropdown-item" href="#">Belum Dikonfirmasi</a>
-                                            <a class="dropdown-item" href="#">Terverifikasi</a>
-                                            <a class="dropdown-item" href="#">Belum Tervrifikasi</a>
+                                            <a class="dropdown-item" href="/daftarPembayaran">Terbaru</a>
+                                            <a class="dropdown-item" href="/terendah">Harga Terendah</a>
+                                            <a class="dropdown-item" href="/tertinggi">Harga Tertinggi</a>
+                                            <a class="dropdown-item" href="/sudah_konf">Dikonfirmasi</a>
+                                            <a class="dropdown-item" href="belum_konf">Belum Dikonfirmasi</a>
                                         </ul>
-                                    <form class="nav-search col-md-3 float-right" action="">
+                                    <form class="nav-search col-md-3 float-right" action="{{ route('cariTransaksi') }}" method="GET">
                                         <div class="input-group">
-                                            <input type="text" placeholder="Cari" class="form-control">
+                                            <input type="text" name="cari" placeholder="Cari" class="form-control" value="{{ old('cari') }}">
                                             <div class="input-group-append">
                                                 <span class="input-group-text">
                                                     <i class="la la-search search-icon"></i>
@@ -131,77 +131,52 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">No</th>
-                                                <th scope="col">Tanggal</th>
+                                                <th scope="col">Invoice</th>
                                                 <th scope="col">Nama</th>
-                                                <th scope="col">Jumlah Pembayaran</th>
-                                                <th scope="col">Konfirmasi Penjual</th>
+                                                <th scope="col">Harga</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col">Tanggal</th>
                                                 <th scope="col">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @forelse ($penjualan as $p)
+                                            @php $no = 1; @endphp
                                             <tr>
-                                                <td>1</td>
-                                                <td>27-02-2020</td>
-                                                <td>Apartemen</td>
-                                                <td>Rp. 200.000.000</td>
-                                                <td>Dikonfirmasi</td>
-                                                <td>Menunggu</td>
+                                                <td>{{$no++}}</td>
+                                                <td>{{$p->invoice}}</td>
+                                                <td>{{$p->proper->nama_prop}}</td>
                                                 <td>
-                                                    <a href="/detailPembayaran">
+                                                    <?php 		
+                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->proper->harga)),3)));
+                                                        ?> 
+                                                </td>
+                                                    @if($p->konf_admin == 0)
+                                                        <td>Belum Dikonfirmasi</td>
+                                                    @else
+                                                        <td>Dikonfirmasi</td>
+                                                    @endif
+                                                <td>
+                                                    <?php
+                                                        $date = new DateTime($p->created_at);
+                                                        echo $date->format('d F Y');
+                                                        ?>
+                                                </td>
+                                                <td>
+                                                    <a href="{{route('detailPembayaran', $p->id)}}">
                                                         <button class="btn btn-primary btn-xs">Detail</button>
                                                     </a>
                                                 </td>
                                             </tr>
+                                            @empty
                                             <tr>
-                                                <td>2</td>
-                                                <td>22-02-2020</td>
-                                                <td>Kos</td>
-                                                <td>Rp. 5.000.000</td>
-                                                <td>Dikonfirmasi</td>
-                                                <td>Menunggu</td>
-                                                <td>
-                                                    <a href="/detailPembayaran">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
+                                                <td class="text-center" colspan="7">
+                                                    <h6 class="alert alert-warning"><strong>Maaf!</strong> Belum ada data yang ditampilkan.</h6>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>20-02-2020</td>
-                                                <td>Rumah</td>
-                                                <td>Rp. 200.000.000</td>
-                                                <td>Belum Dikonfirmasi</td>
-                                                <td>Menunggu</td>
-                                                <td>
-                                                    <a href="/detailPembayaran">
-                                                        <button class="btn btn-primary btn-xs">Detail</button>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            </tr> 
+                                            @endforelse
                                         </tbody>
                                     </table>
-                                    <div class="card-body">
-                                        <p class="demo">
-                                            <ul class="pagination pg-danger">
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                </li>
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>

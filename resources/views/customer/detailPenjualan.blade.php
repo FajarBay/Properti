@@ -111,7 +111,6 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="col-md-12">
                                 @foreach($transaksi as $p)
                                 <div class="card">
                                     <div class="card-header">
@@ -169,7 +168,7 @@
                                                     <td width="250px">Jumlah Yang Belum Dibayar</td>
                                                     <td>
                                                         <?php
-                                                        $hasil = $p->proper->harga - $p->nominal;
+                                                        $hasil = $p->proper->harga - $p->bukti->nominal;
                                                             if($hasil == 0){
                                                                 echo '-';
                                                             }else{
@@ -188,7 +187,7 @@
                                                     <td width="250px">Tanggal</td>
                                                     <td>
                                                         <?php
-                                                    $date = new DateTime($p->created_at);
+                                                    $date = new DateTime($p->bukti->created_at);
                                                     echo $date->format('d F Y');
                                                     ?>
                                                     </td>
@@ -197,18 +196,18 @@
                                                     <td width="250px">Jumlah Nominal</td>
                                                     <td>
                                                         <?php 		
-                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->nominal)),3)));
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->bukti->nominal)),3)));
                                                     ?>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Catatan</td>
-                                                    <td>{{$p->catatan}}</td>
+                                                    <td>{{$p->bukti->catatan}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Bukti Pembayaran</td>
                                                     <td><a href="assets/img/bukti.jpg" target="_blank">
-                                                        <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $p->bukti }}" width="200">
+                                                        <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $p->bukti->bukti }}" width="200">
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -227,11 +226,11 @@
                                     </div>
                                 </div>
                                 @endforeach
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <br>
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">

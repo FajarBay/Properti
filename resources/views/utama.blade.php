@@ -40,14 +40,24 @@
 				<div class="d-flex justify-content-end align-items-center">
 					<ul class="list">
 						<li><a href="tel:++6283897710862">+62 838 9771 0862</a></li>
-						<li><a href="/iklan">Jual / Sewa Properti</a></li>
+						<?php
+						if(Auth::check()){
+							echo '<li><a href="/iklan">Jual / Sewa Properti</a></li>';
+						}else {
+							echo '<li><a href="#" data-toggle="modal" data-target="#exampleModal">Jual / Sewa Properti</a></li>';
+						}
+						?>
 						@guest
                         <li><a href="{{ route('login') }}">masuk</a></li>
 						@if (Route::has('register'))
                         <li><a href="{{ route('register') }}">daftar </a></li>
 						@endif
 						@else
+						@if (Auth::user()->name == 'admin')
+						<li><a href="/adminDash">Halo, {{ Auth::user()->name }}</a></li>
+						@else
 						<li><a href="/dashboard">Halo, {{ Auth::user()->name }}</a></li>
+						@endif
 						<li><a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -95,9 +105,9 @@
 				<h1>IKLAN <b>PROPERTI</b>
 				{{-- <br><small><small>PASANG IKLAN PROPERTI ANDA DISINI!</small></small> --}}
 				</h1>
-					<form class="form-inline">
+					<form class="form-inline" action="{{ route('cariProp') }}" method="GET">
 						<div class="input-group md-form form-sm form-2 mb-100 col-lg-12">
-							<input type="input" class="form-control app-select" name="cari properti" placeholder="Cari berdasarkan lokasi atau nama">
+							<input type="input" class="form-control app-select" name="cari_properti" placeholder="Cari berdasarkan lokasi atau nama">
 							<button class="primary-btn ml-10" type="submit">Cari<span class="lnr lnr-arrow-right"></span></button>
 						</div>
 					</form>
@@ -213,8 +223,8 @@
 				<p>Jika belum, klik tombol <b>Daftar</b></p>
 			</div>
 			<div class="modal-footer justify-content-center">
-			<button type="button" class="btn btn-danger" data-dismiss="modal">Masuk</button>
-			<button type="submit" class="btn btn-secondary">Daftar</button>
+			<a href="{{ route('login') }}"><button type="button" class="btn btn-danger">Masuk</button></a>
+			<a href="{{ route('register') }}"><button type="submit" class="btn btn-secondary">Daftar</button></a>
 			</div>
 		</div>
 		</div>
@@ -233,7 +243,7 @@
 			<div class="row">
 				<div class="col-lg-4 col-md-4 mb-10">
 					<div class="content">
-						<a href="#" target="_blank">
+						<a href="propJKT" target="_blank">
 							<div class="content-overlay"></div>
 							<img class="content-image img-fluid d-block mx-auto" src="assets/img/jakarta.jpg" alt="">
 							<div class="content-details fadeIn-bottom">
@@ -244,7 +254,7 @@
 				</div>
 				<div class="col-lg-8 col-md-8 mb-10">
 					<div class="content">
-						<a href="#" target="_blank">
+						<a href="propBDG" target="_blank">
 							<div class="content-overlay"></div>
 							<img class="content-image img-fluid d-block mx-auto" src="assets/img/bandung.jpg" alt="">
 							<div class="content-details fadeIn-bottom">
@@ -255,7 +265,7 @@
 					<div class="row city-bottom">
 						<div class="col-lg-6 col-md-6 mt-30">
 							<div class="content">
-								<a href="#" target="_blank">
+								<a href="propDIY" target="_blank">
 									<div class="content-overlay"></div>
 									<img class="content-image img-fluid d-block mx-auto" src="assets/img/jogja.jpeg" alt="">
 									<div class="content-details fadeIn-bottom">
@@ -266,7 +276,7 @@
 						</div>
 						<div class="col-lg-6 col-md-6 mt-30">
 							<div class="content">
-								<a href="#" target="_blank">
+								<a href="propSMG" target="_blank">
 									<div class="content-overlay"></div>
 									<img class="content-image img-fluid d-block mx-auto" src="assets/img/semarang.jpg" alt="">
 									<div class="content-details fadeIn-bottom">
