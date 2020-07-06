@@ -128,8 +128,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $no = ($pesanan->currentpage()-1) * $pesanan->perPage() + 1; @endphp
                                             @forelse ($pesanan as $d)
-                                            @php $no = 1; @endphp
                                             {{-- @foreach($pesanan ?? '' as $d) --}}
                                             {{-- @forelse ($pesanan ?? '' as $d) --}}
                                                 <tr>

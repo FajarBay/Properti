@@ -144,10 +144,6 @@ class AdminController extends Controller
     }
 
     public function transaksi(){
-        // $status = Iklan::where('status', '1')->get();
-        // $iklan = $status->pluck('id_prop');
-
-        // $penjualan = Transaksi::where('id_prop', '=', $iklan->all())->orderBy('id', 'desc')->paginate(5);
         $penjualan = Transaksi::orderBy('id', 'desc')->paginate(5);
         // dd($penjualan);
         return view('admin.daftarPembayaran', compact('penjualan'));

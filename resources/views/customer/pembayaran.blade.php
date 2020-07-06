@@ -123,7 +123,10 @@
                                             <h6>Masukan Bukti Bukti Pembayaran</h6>
                                             <tr>
                                                 <td width="250px">Jumlah Nominal</td>
-                                                <td><input type="text" name="nominal" placeholder="Total yang harus dibayar" class="form-control" /></td>
+                                                <td>
+                                                    <input type="text" name="nominal" id="harga" placeholder="Total yang harus dibayar" class="form-control" autocomplete="off"/>
+                                                    <small id="hargaHelp" class="form-text text-muted">Nominal : <b><span id="hasil"></span></b></small>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Catatan</td>

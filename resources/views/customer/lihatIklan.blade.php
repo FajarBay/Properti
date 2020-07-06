@@ -131,11 +131,12 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title">Detail Iklan Anda
+                                            <span class="badge badge-count float-right">Dilihat : {{$p->iklan->dilihat}} kali</span>
                                             <?php
                                                 if($p->iklan->status == 0){
-                                                    echo "<span class=\"badge badge-warning float-right\">Menunggu Konfirmasi Admin</span>";
+                                                    echo "<span class=\"badge badge-warning float-right mr-1\">Menunggu Konfirmasi Admin</span>";
                                                 }else {
-                                                    echo "<span class=\"badge badge-success float-right\">Aktif</span>";
+                                                    echo "<span class=\"badge badge-success float-right mr-1\">Aktif</span>";
                                                 }
                                             ?>
                                         </div>

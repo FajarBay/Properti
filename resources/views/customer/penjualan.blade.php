@@ -122,6 +122,7 @@
                                             <tr>
                                                 <th scope="col">No</th>
                                                 <th scope="col">Invoice</th>
+                                                <th scope="col">Judul Iklan</th>
                                                 <th scope="col">Pembeli</th>
                                                 <th scope="col">Konfirmasi Admin</th>
                                                 <th scope="col">Tanggal</th>
@@ -129,11 +130,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $no = ($penjualan->currentpage()-1) * $penjualan->perPage() + 1; @endphp
                                             @forelse ($penjualan as $p)
-                                            @php $no = 1; @endphp
                                             <tr>
                                                 <td>{{$no++}}</td>
                                                 <td>{{$p->invoice}}</td>
+                                                <td>{{$p->proper->nama_prop}}</td>
                                                 <td>{{$p->pembeli->name}}</td>
                                                     @if($p->konf_admin == 0)
                                                         <td>Belum Dikonfirmasi</td>
@@ -155,7 +157,7 @@
                                             </tr>
                                             @empty
                                             <tr>
-                                                <td class="text-center" colspan="6">
+                                                <td class="text-center" colspan="7">
                                                     <h6 class="alert alert-warning"><strong>Maaf!</strong> Belum ada data yang ditampilkan.</h6>
                                                 </td>
                                             </tr> 

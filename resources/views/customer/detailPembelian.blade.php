@@ -115,8 +115,13 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-title">Detail Pembelian
-                                        <!-- <span class="badge badge-warning float-right">Menunggu</span> -->
-                                        <span class="badge badge-success float-right">Terverifikasi</span>
+                                        <?php
+                                            if($p->konf_admin == 0){
+                                                echo '<span class="badge badge-warning float-right">Menunggu Konfirmasi Admin</span>';
+                                            }else{
+                                                echo '<span class="badge badge-success float-right">Terverifikasi</span>';
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                                 <div class=" card-body table-responsive ">
@@ -159,11 +164,17 @@
                                             </tr>
                                             <tr>
                                                 <td width="250px">Penjual</td>
-                                                <td><a href="">{{$p->penjual->name}}</a></td>
+                                                <td><a style="text-decoration: none;" href="">{{$p->penjual->name}}</a></td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Judul Iklan</td>
-                                                <td><a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a></td>
+                                                <td>
+                                                    <form id="kirim" action="{{route('lihat', $p->proper->id)}}" method="post" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" name="dilihat" value="{{$p->proper->iklan->dilihat+1}}">
+                                                        <input class="sub" type="submit" value="{{$p->proper->nama_prop}}"></button>
+                                                    </form>
+                                                    {{--  <a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a></td>  --}}
                                             </tr>
                                             <tr>
                                                 <td width="250px">Harga</td>
@@ -217,8 +228,8 @@
                                                 <td width="250px">Status Pembayaran</td>
                                                 <td>
                                                     <?php
-                                                        $hasil = $p->proper->harga - $p->nominal;
-                                                        if($hasil != 0){
+                                                        $hasil = $p->proper->harga - $nominal;
+                                                        if($hasil != 0 && $hasil >= 0){
                                                             echo "<span class=\"badge badge-warning\">Belum Lunas</span>";
                                                         }else{
                                                             echo "<span class=\"badge badge-success\">Lunas</span>";
@@ -227,17 +238,19 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td width="250px">Jumlah Yang Belum Dibayar</td>
-                                                <td>
-                                                    <?php
-                                                    $hasil = $p->proper->harga - $p->bukti->nominal;
-                                                        if($hasil == 0){
-                                                            echo '-';
-                                                        }else{
-                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($hasil)),3)));
-                                                        }
-                                                    ?>
-                                                </td>
+                                                <?php
+                                                    $hasil = $p->proper->harga - $nominal;
+                                                    if($hasil == 0){
+                                                        echo    '<td width="250px">Jumlah Yang Belum Dibayar</td>'.
+                                                                '<td>'.'-'.'</td>';
+                                                    }else if($hasil <= 0){
+                                                        echo    '<td width="250px">Sisa Pembayaran</td>'.
+                                                                '<td>'.'Rp. '.strrev(implode('.',str_split(strrev(strval(-$hasil)),3))).'</td>';
+                                                    }else{
+                                                        echo    '<td width="250px">Jumlah Yang Belum Dibayar</td>'.
+                                                                '<td>'.'Rp. '.strrev(implode('.',str_split(strrev(strval($hasil)),3))).'</td>';
+                                                    }
+                                                ?>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -283,10 +296,18 @@
                                         </tbody>
                                     </table>
                                     <div class="text-right ">
-                                            <button class="btn btn-success" data-toggle="modal" data-target="#bukti">Kirim Bukti</button>
+                                        <?php
+                                            $hasil = $p->proper->harga - $nominal;
+                                            if($hasil != 0 && $hasil >= 0){
+                                                echo '<button class="btn btn-success" data-toggle="modal" data-target="#bukti">Kirim Bukti</button>';
+                                            }else{
+                                                echo '<button class="btn btn-secondary" disabled>Kirim Bukti</button>';
+                                            }
+                                        ?>
+                                            {{--  <button class="btn btn-success" data-toggle="modal" data-target="#bukti">Kirim Bukti</button>  --}}
                                        
-                                        <a href="editIklan.html">
-                                            <button class="btn btn-danger ">Hubumgi Penjual</button>
+                                        <a href="{{route('invoice', $p->id)}}">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cetak Invoice</button>
                                         </a>
                                     </div>
                                 </div>

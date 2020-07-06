@@ -21,10 +21,7 @@ class PesananController extends Controller
     {
         $status = Iklan::where('book', '1')->get();
         $iklan = $status->pluck('id_prop');
-        // $data = Properti::where('id', '=', $iklan->all())get();  
-        // $properti = $data->pluck('id');
-        // dd($data);
-        $pesanan = Pesanan::whereIn('id_prop', $iklan->all())->where('id_user', '=', Auth::user()->id)->get();
+        $pesanan = Pesanan::whereIn('id_prop', $iklan->all())->where('id_user', '=', Auth::user()->id)->paginate(6);
         // dd($pesanan);
 
         return view('customer.grafik', compact('pesanan'));
@@ -86,12 +83,7 @@ class PesananController extends Controller
     public function pembelian(){
         $status = Iklan::where('book', '2')->get();
         $iklan = $status->pluck('id_prop');
-        // $data = Properti::where('id', '=', $iklan->all())get();  
-        // $properti = $data->pluck('id');
-        // dd($data);
-        $pembelian = Transaksi::whereIn('id_prop', $iklan->all())->where('id_user', '=', Auth::user()->id)->get();
-        // dd($pembelian);
-        // $bayar = Transaksi::whereIn('id_prop', $iklan->all())->where('id_user', '=', Auth::user()->id)->sum('nominal');
+        $pembelian = Transaksi::whereIn('id_prop', $iklan->all())->where('id_user', '=', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
 
         return view('customer.pembelian', compact('pembelian'));
     }
@@ -99,10 +91,8 @@ class PesananController extends Controller
     public function penjualan(){
         $status = Iklan::where('status', '1')->get();
         $iklan = $status->pluck('id_prop');
-        // $user = $status->pluck('id_user');
-        // $data = Properti::where('id', '=', $iklan->all())->get();  
 
-        $penjualan = Transaksi::where('id_penjual', '=', Auth::user()->id)->where('id_prop', '=', $iklan->all())->get();
+        $penjualan = Transaksi::whereIn('id_prop', $iklan->all())->where('id_penjual', '=', Auth::user()->id)->orderBy('id', 'desc')->paginate(6);
         // dd($penjualan);
 
         return view('customer.penjualan', compact('penjualan'));
@@ -147,32 +137,70 @@ class PesananController extends Controller
     {
         $properti = Properti::where('id', $id)->orderBy('id', 'desc')->get();
         $user = Properti::find($id)->user;
-        // $trans = Properti::find($id)->trans;
+        $trans = Properti::find($id)->trans;
 
         // dd($trans);
-        return view('customer.detailPesanan', compact('properti'));
+        return view('customer.detailPesanan', compact('properti', 'trans'));
     }
 
-    public function pembayaran($id){
+    public function pembayaranLagi($id){
         $bayar = Transaksi::where('id', $id)->first();
+        // dd($bayar);
+        return view('customer.pembayaran', compact('bayar'));
+    }
+
+    public function pembayaran(Request $request, $id){
+        $bayar = new Transaksi();
+
+        $iklan = Properti::find($id)->iklan;
+        $iklan->transaksi = 1;
+
+        $bayar->id_prop = $request->id_prop;
+        $bayar->id_user = $request->id_user;
+        $bayar->id_penjual = $request->id_penjual;
+        $bayar->invoice = $request->invoice;
+        $bayar->konf_penjual = $request->konf_penjual;
+        $bayar->konf_admin = $request->konf_admin;
+
+        $iklan->save();
+        $bayar->save();
+
         return view('customer.pembayaran', compact('bayar'));
     }
 
     public function detailPembelian($id){
         $transaksi = Transaksi::where('id', $id)->orderBy('id', 'desc')->get();
 
-        $trans = Transaksi::find($id);
-        $data = $trans->pluck('id');
+        $trans = Transaksi::where('id', $id)->first();
+        $nominal = Bukti::where('id_transaksi', '=', $trans->id)->sum('nominal');
         
-        $bukti = Bukti::where('id_transaksi', $data->all())->get();
-        // dd($bukti);
+        $bukti = Bukti::where('id_transaksi', $trans->id)->get();
+        // dd($nominal);
 
-        return view('customer.detailPembelian', compact('transaksi', 'bukti'));
+        return view('customer.detailPembelian', compact('transaksi', 'bukti', 'nominal'));
     }
 
-    public function detailpenjualan($id){
+    public function detailPenjualan($id){
         $transaksi = Transaksi::where('id', $id)->orderBy('id', 'desc')->get();
-        return view('customer.detailPenjualan', compact('transaksi'));
+
+        $trans = Transaksi::where('id', $id)->first();
+        $nominal = Bukti::where('id_transaksi', '=', $trans->id)->sum('nominal');
+        
+        $bukti = Bukti::where('id_transaksi', $trans->id)->get();
+        // dd($data);
+        return view('customer.detailPenjualan', compact('transaksi', 'bukti', 'nominal'));
+    }
+
+    public function invoice($id){
+        $transaksi = Transaksi::where('id', $id)->orderBy('id', 'desc')->get();
+
+        $trans = Transaksi::where('id', $id)->first();
+        $nominal = Bukti::where('id_transaksi', '=', $trans->id)->sum('nominal');
+        
+        $bukti = Bukti::where('id_transaksi', $trans->id)->get();
+        // dd($nominal);
+
+        return view('invoice', compact('transaksi', 'bukti', 'nominal'));
     }
 
     /**

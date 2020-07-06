@@ -168,7 +168,7 @@
                         ?>
                         
                     </h6>
-                    <p><i class="fa fa-check-square-o pr-2" aria-hidden="true"></i> 
+                    <p><i class="fa fa-check-square-o pr-2" style="margin-right: 2px" aria-hidden="true"></i> 
                         <?php
                             if($iklan->status == 0){
                                 echo 'Belum Terverifiksi';
@@ -186,7 +186,7 @@
                             }
                         ?>
                     </p>
-                    <p><i class="fa fa-handshake-o pr-2" aria-hidden="true"></i>Nego : 
+                    <p><i class="fa fa-handshake-o pr-2" style="margin-right: 1px" aria-hidden="true"></i>Nego : 
                         <?php
                             if($iklan->nego == 0){
                                 echo 'Iya';
@@ -194,6 +194,9 @@
                                 echo 'Tidak';
                             }
                         ?>
+                    </p>
+                    <p><i class="fa fa-eye" style="margin-right: 13px" aria-hidden="true"></i>Dilihat 
+                        {{$iklan->dilihat}} kali
                     </p><br>
                     <div class="text-center">
                     <?php
@@ -256,7 +259,7 @@
                     Setelah memesan, harap menghubingi pemilik properti sebelum melakukan pembelian.<hr>
                     <b>Jika dalam 1x24 jam anda tidak menyelesaikan pembelian, maka iklan akan hangus!</b>
                 </div>
-                <form action="{{route('pesanan', $d->id)}}" method="post" enctype="multipart/form-data">
+                <form action="{{route('book', $d->id)}}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                 <input type="hidden" name="book" value="1">
                 @if (Auth::check())

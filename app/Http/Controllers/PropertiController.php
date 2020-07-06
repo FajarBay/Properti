@@ -191,9 +191,6 @@ class PropertiController extends Controller
         // dd($properti);
         $properti->save();
         return redirect('/properti5');
-
-        // return redirect('/data1');
-        // return view('properti.step5',compact('properti'));
     }
     public function CreateIklan(Request $request)
     {
@@ -207,14 +204,12 @@ class PropertiController extends Controller
         $validatedData = $request->validate([
             'id_prop' => 'required',
             'id_user' => 'required',
-            // 'judul' => 'required',
             'jenis' => 'required',
             'nego' => 'required',
             'sold' => 'required',
             'status' => 'required',
             'book' => 'required',
             'dilihat' => 'required',
-            // 'tanggal' => 'required',
         ]);
         if(empty($request->session()->get('iklan'))){
             $iklan = new Iklan();
@@ -260,8 +255,6 @@ class PropertiController extends Controller
     public function show($id)
     {
         $properti = Properti::where('id', $id)->orderBy('id', 'desc')->get();
-        // $iklan = Properti::find('$id')->iklan;
-        // $kat = Properti::find(1)->myKat;
            return view('customer.lihatIklan', compact('properti'));
         //    return $kat;
     }
@@ -358,38 +351,18 @@ class PropertiController extends Controller
             'kecamatan' =>  $request->kecamatan,
             'alamat'    =>  $request->alamat,
             'alamatmaps'=>  $request->alamatmaps,
-            // 'jenis'     =>  $request->jenis,
-            // 'nego'      =>  $request->nego,
-            // 'sold'      =>  $request->sold,
             'foto1'     =>  $foto1_name,
             'foto2'     =>  $foto2_name,
             'foto3'     =>  $foto3_name,
             'foto4'     =>  $foto4_name
         );
 
-        // $form = array(
-        //     'jenis'     =>  $request->jenis,
-        //     'nego'      =>  $request->nego,
-        //     'sold'      =>  $request->sold,
-        // );
 
         $iklan = Properti::find($id)->iklan;
-        // $validatedData = $request->validate([
-        //     'jenis' => 'required',
-        //     'nego' => 'required',
-        //     'sold' => 'required',
-        // ]);
-        // $valid = $request->validate([
-        //     'jenis'     =>  'required',
-        //     'nego'      =>  'required',
-        //     'sold'      =>  'required',
-        // ]);
         $iklan->jenis = $request->jenis;
         $iklan->nego = $request->nego;
         $iklan->sold = $request->sold;
-        // $iklan->update($form);
         $properti->update($form_data);
-        // $iklan->update($valid);
         $iklan->save();
         // dd($properti);
         return redirect('/iklan');

@@ -132,7 +132,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php $no = 1; @endphp
+                                            @php $no = ($data->currentpage()-1) * $data->perPage() + 1; @endphp
                                             @foreach($data as $d)
                                             <tr>
                                                 <td>{{$no++}}</td>

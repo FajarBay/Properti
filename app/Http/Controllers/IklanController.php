@@ -31,13 +31,11 @@ class IklanController extends Controller
         $validatedData = $request->validate([
             'id_prop' => 'required',
             'id_user' => 'required',
-            // 'judul' => 'required',
             'jenis' => 'required',
             'nego' => 'required',
             'sold' => 'required',
             'status' => 'required',
             'dilihat' => 'required',
-            // 'tanggal' => 'required',
         ]);
         if(empty($request->session()->get('iklan'))){
             $iklan = new Iklan();

@@ -155,12 +155,19 @@
                                         <tbody>
                                             <tr>
                                                 <td width="250px">Penjual</td>
-                                                <td><a href="">{{$p->user->name}}</a></td>
+                                                <td><a style="text-decoration: none;" href="">{{$p->user->name}}</a></td>
                                                 {{-- {{route('detailUser', $p->user->id)}} --}}
                                             </tr>
                                             <tr>
                                                 <td width="250px">Judul Iklan</td>
-                                                <td><a href="{{route('lihat', $p->id)}}">{{$p->nama_prop}}</a></td>
+                                                <td>
+                                                    <form id="kirim" action="{{route('lihat', $p->id)}}" method="post" enctype="multipart/form-data">
+                                                        {{ csrf_field() }}
+                                                        <input type="hidden" name="dilihat" value="{{$p->iklan->dilihat+1}}">
+                                                        <input class="sub" type="submit" value="{{$p->nama_prop}}"></button>
+                                                    </form>
+                                                    {{--  <a href="{{route('lihat', $p->id)}}">{{$p->nama_prop}}</a>  --}}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Harga</td>
@@ -193,8 +200,8 @@
                                         </tbody>
                                     </table>
                                     <div class="text-right" style="display:flex; float:right">
-                                @if ($p->trans->id === null)
-                                <form action="{{route('bayar', $p->id)}}" method="post" enctype="multipart/form-data">
+                                @if ($trans === null)
+                                <form action="{{route('pembayaran', $p->id)}}" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="id_prop" value="{{$p->id}}">
                                         <input type="hidden" name="id_user" value="{{Auth::user()->id}}">
@@ -205,7 +212,7 @@
                                         <button type="submit" class="btn btn-success mr-1">Bayar</button>
                                 </form>
                                 @else
-                                    <form action="{{route('bayar', $p->trans->id)}}" method="post" enctype="multipart/form-data">
+                                    <form action="{{route('pembayaranLagi', $trans->id)}}" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <button type="submit" class="btn btn-success mr-1">Bayar</button>
                                     </form>

@@ -133,11 +133,18 @@
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Pembeli</td>
-                                                    <td><a href="">{{$p->pembeli->name}}</a></td>
+                                                    <td><a style="text-decoration: none;" href="">{{$p->pembeli->name}}</a></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Judul Iklan</td>
-                                                    <td><a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a></td>
+                                                    <td>
+                                                        <form id="kirim" action="{{route('lihat', $p->proper->id)}}" method="post" enctype="multipart/form-data">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" name="dilihat" value="{{$p->proper->iklan->dilihat+1}}">
+                                                            <input class="sub" type="submit" value="{{$p->proper->nama_prop}}"></button>
+                                                        </form>
+                                                        {{--  <a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a>  --}}
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Harga</td>
@@ -155,8 +162,8 @@
                                                     <td width="250px">Status Pembayaran</td>
                                                     <td>
                                                         <?php
-                                                            $hasil = $p->proper->harga - $p->nominal;
-                                                            if($hasil != 0){
+                                                            $hasil = $p->proper->harga - $nominal;
+                                                            if($hasil != 0 && $hasil >= 0){
                                                                 echo "<span class=\"badge badge-warning\">Belum Lunas</span>";
                                                             }else{
                                                                 echo "<span class=\"badge badge-success\">Lunas</span>";
@@ -165,17 +172,19 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="250px">Jumlah Yang Belum Dibayar</td>
-                                                    <td>
-                                                        <?php
-                                                        $hasil = $p->proper->harga - $p->bukti->nominal;
-                                                            if($hasil == 0){
-                                                                echo '-';
-                                                            }else{
-                                                                echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($hasil)),3)));
-                                                            }
-                                                        ?>
-                                                    </td>
+                                                    <?php
+                                                        $hasil = $p->proper->harga - $nominal;
+                                                        if($hasil == 0){
+                                                            echo    '<td width="250px">Jumlah Yang Belum Dibayar</td>'.
+                                                                    '<td>'.'-'.'</td>';
+                                                        }else if($hasil <= 0){
+                                                            echo    '<td width="250px">Sisa Pembayaran</td>'.
+                                                                    '<td>'.'Rp. '.strrev(implode('.',str_split(strrev(strval(-$hasil)),3))).'</td>';
+                                                        }else{
+                                                            echo    '<td width="250px">Jumlah Yang Belum Dibayar</td>'.
+                                                                    '<td>'.'Rp. '.strrev(implode('.',str_split(strrev(strval($hasil)),3))).'</td>';
+                                                        }
+                                                    ?>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -183,40 +192,53 @@
                                         <table class="table table-striped table-hover ">
                                             <tbody>
                                                 <h6>Detail Bukti Pembayaran</h6>
-                                                <tr>
-                                                    <td width="250px">Tanggal</td>
-                                                    <td>
-                                                        <?php
-                                                    $date = new DateTime($p->bukti->created_at);
-                                                    echo $date->format('d F Y');
-                                                    ?>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="250px">Jumlah Nominal</td>
-                                                    <td>
-                                                        <?php 		
-                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->bukti->nominal)),3)));
-                                                    ?>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="250px">Catatan</td>
-                                                    <td>{{$p->bukti->catatan}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="250px">Bukti Pembayaran</td>
-                                                    <td><a href="assets/img/bukti.jpg" target="_blank">
-                                                        <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $p->bukti->bukti }}" width="200">
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                @foreach ($bukti as $b)
+                                                    <tr>
+                                                        <td width="250px">Tanggal</td>
+                                                        <td>
+                                                            <?php
+                                                            $date = new DateTime($b->created_at);
+                                                            echo $date->format('d F Y');
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="250px">Jumlah Nominal</td>
+                                                        <td>
+                                                            <?php 		
+                                                                echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($b->nominal)),3)));
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="250px">Catatan</td>
+                                                        <td>{{$b->catatan}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="250px">Bukti Pembayaran</td>
+                                                        <td><a href="assets/img/bukti.jpg" target="_blank">
+                                                            <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $b->bukti }}" width="200">
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <br>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                         <div class="text-right" style="display:flex; float:right">
                                             <form action="{{route('verifikasiPenjualan', $p->id)}}" method="post" enctype="multipart/form-data">
                                                 {{ csrf_field() }}
-                                                <button type="submit" class="btn btn-success mr-1">Verifikasi</button>
+                                                <?php
+                                                    if($p->konf_penjual == 0){
+                                                        echo '<button type="submit" class="btn btn-success mr-1">Verifikasi</button>';
+                                                    }else{
+                                                        echo '<button type="submit" class="btn btn-secondary mr-1" disabled>Sudah diverifikasi</button>';
+                                                    }
+                                                ?>
                                             </form>
                                             <a href="editIklan.html">
                                                 <button class="btn btn-danger ">Kembali</button>

@@ -129,8 +129,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $no = ($pembelian->currentpage()-1) * $pembelian->perPage() + 1; @endphp
                                             @forelse ($pembelian as $d)
-                                            @php $no = 1; @endphp
                                             <tr>
                                                 <td>{{$no++}}</td>
                                                 <td>{{$d->invoice}}</td>
@@ -142,7 +142,7 @@
                                                 @endif
                                                 <td>
                                                     <?php
-                                                    $date = new DateTime($d->proper->created_at);
+                                                    $date = new DateTime($d->created_at);
                                                     echo $date->format('d F Y');
                                                     ?>
                                                 </td>

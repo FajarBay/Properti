@@ -148,7 +148,8 @@
                                             </tr>
                                             <tr>
                                                 <td width="250px">Judul Iklan</td>
-                                                <td><a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a></td>
+                                                <td>
+                                                    <a href="{{route('lihatlah', $p->proper->id)}}">{{$p->proper->nama_prop}}</a></td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Penjual</td>

@@ -129,7 +129,19 @@ class HomeController extends Controller
      * @param  \App\Properti  $properti
      * @return \Illuminate\Http\Response
      */
-    public function lihat($id)
+    public function lihat(Request $request, $id)
+    {
+        $data = Properti::where('id', $id)->get();
+        $iklan = Properti::find($id)->iklan;
+
+        $iklan->dilihat = $request->dilihat;
+
+        $iklan->save();
+        return view('detail', compact('data', 'iklan'));
+        //    return $data;
+    }
+
+    public function lihatlah($id)
     {
         $data = Properti::where('id', $id)->get();
         $iklan = Properti::find($id)->iklan;
@@ -138,8 +150,6 @@ class HomeController extends Controller
     }
 
     public function pesanan(Request $request, $id){
-        // $data = Properti::where('id',$request->id)->first();
-        // $data = Properti::where('id', $id)->get();
         $iklan = Properti::find($id)->iklan;
         $iklan->book = $request->book;
 
@@ -150,7 +160,7 @@ class HomeController extends Controller
         $iklan->save();
         $pesanan->save();
         // dd($pesanan);
-        return back();
+        return redirect('/grafik');
     }
 
     public function hapusPesanan($id){
@@ -203,7 +213,6 @@ class HomeController extends Controller
         $cari = $request->cari_properti;
         $kategori = $request->kategori;
         $jenis = $request->jenis;
-        // $sort = $request->jenis;
         $nego = $request->nego;
         $min_price = $request->min_price;
         $max_price = $request->max_price;
@@ -357,44 +366,5 @@ class HomeController extends Controller
             // dd($sold);
         }
     }
-
-    // $data = Properti::join('kategori', 'propertis.id_kat', '=', 'kategori.id')
-    //     ->join('iklans', 'propertis.id', '=', 'iklans.id_prop')->newQuery();
-    //         if(!empty($cari)){
-    //             $data->where('nama_prop', 'like', "%".$cari."%")->orWhere('provinsi', 'like', "%".$cari."%")
-    //                 ->orWhere('kabupaten', 'like', "%".$cari."%")->orWhere('kecamatan', 'like', "%".$cari."%")
-    //                 ->orWhere('alamat', 'like', "%".$cari."%")->orderBy('id', 'desc');
-    //         }
-    //         if(!empty($kategori)){
-    //             $data->where('kategori.id', '=', $kategori)->orderBy('id', 'desc');
-    //         }
-
-    //         if(isset($jenis)){
-    //             $data->where('jenis', '=', $jenis)->orderBy('id', 'desc');
-    //         }
-
-    //         if(isset($nego)){
-    //             $data->where('nego', '=', $nego)->orderBy('id', 'desc');
-    //         }
-
-    //         if($sort === '1'){
-    //             $data->orderBy('id', 'desc');
-    //         }
-    //         if($sort === '2'){
-    //             $data->orderBy('harga', 'asc');
-    //         }
-    //         if($sort === '3'){
-    //             $data->orderBy('harga', 'desc');
-    //         }
-
-    //         if(!empty($min_price)){
-    //             $data->where('harga', '>=', $min_price)->orderBy('id', 'desc');
-    //         }
-            
-    //         if(!empty($max_price)){
-    //             $data->where('harga', '<=', $max_price)->orderBy('id', 'desc');
-    //         }
-        
-    //     return $data->select('propertis.*', 'jenis', 'nego')->paginate(6);
     
 }

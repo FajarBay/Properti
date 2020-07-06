@@ -110,7 +110,38 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Admin
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chat-history" style="background-color: #f6f6f6; height:230px; padding:20px 5px">
+                                        <div class="outgoing_msg">
+                                            <div class="sent_msg">
+                                                <p>Hallo.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="incoming_msg">
+                                            <div class="received_msg">
+                                                <div class="received_withd_msg">
+                                                    <p>Hallo juga</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- end chat-history -->
+                                </div>
+                                <div class="card-body">
+                                    <input type="text" class="form-control input-full" id="defaultInput" placeholder="Masukan pesan anda">
+                                </div>
+                                <div class="card-body">
+                                    <button class="btn btn-success float-right">Kirim</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-title">Admin

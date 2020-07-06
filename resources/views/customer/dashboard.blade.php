@@ -160,7 +160,7 @@
                                         <div class="col-7 d-flex align-items-center">
                                             <div class="numbers">
                                                 <p class="card-category">Pembelian</p>
-                                                <h4 class="card-title">4</h4>
+                                                <h4 class="card-title">{{ DB::table('transaksis')->where('id_user', '=', Auth::user()->id)->count()}}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -179,7 +179,7 @@
                                         <div class="col-7 d-flex align-items-center">
                                             <div class="numbers">
                                                 <p class="card-category">Penjualan</p>
-                                                <h4 class="card-title">3</h4>
+                                                <h4 class="card-title">{{ DB::table('transaksis')->where('id_penjual', '=', Auth::user()->id)->count()}}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +206,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @php $no = 1; @endphp
+                                            @php $no = ($data->currentpage()-1) * $data->perPage() + 1; @endphp
                                             @foreach($data as $d)
                                             <tr>
                                                 <td>{{$no++}}</td>

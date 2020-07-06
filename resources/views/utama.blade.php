@@ -29,6 +29,17 @@
 	<link rel="stylesheet" href="assets/css/bootstrap.css">
 	<link rel="stylesheet" href="assets/css/owl.carousel.css">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<style>
+		.sub{
+			background: none;
+			color: inherit;
+			border: none;
+			padding: 0;
+			font: inherit;
+			cursor: pointer;
+			outline: inherit;
+		}
+	</style>
 </head>
 
 <body>
@@ -144,7 +155,13 @@
 						</div>
 						<div class="desc">
 							<div class="top d-flex justify-content-between">
-								<h4><a href="{{route('lihat', $d->id)}}">{{$d->nama_prop}}</a></h4>
+								<h4>
+									<form id="kirim" action="{{route('lihat', $d->id)}}" method="post" enctype="multipart/form-data">
+										{{ csrf_field() }}
+										<input type="hidden" name="dilihat" value="{{$d->iklan->dilihat+1}}">
+										<input class="sub" type="submit" value="{{$d->nama_prop}}"></button>
+									</form>
+								</h4>
 							</div>
 							<div class="middle">
 								<div class="d-flex justify-content-start">
