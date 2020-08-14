@@ -4,7 +4,7 @@
 <div class="wrapper" style="background-image: url('asset/img/14836.jpg'); background-size: cover;">
     <div class="inner">
         <div class="image-holder">
-            <img src="asset/img/1.jpg" alt="">
+            <a href="/utama"><img src="asset/img/1.jpg" alt=""></a>
         </div>
             @if(Session::has('message'))
                 <div class="alert alert-success">{{Session::get('message')}}</div>
@@ -30,9 +30,7 @@
                 @endif
                 {{-- {{ route('password.request') }} --}}
             </div>
-            <button>{{ __('Masuk') }}
-                <i class="zmdi zmdi-arrow-right"></i>
-            </button><br>
+            <button>{{ __('Masuk') }}</button><br>
             <p class="text-center">Belum punya akun? <a class="a" href="{{ route('register') }}">Daftar sekarang</a></p>
         </form>
     </div>

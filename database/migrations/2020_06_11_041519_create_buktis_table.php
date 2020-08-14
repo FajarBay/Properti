@@ -15,9 +15,11 @@ class CreateBuktisTable extends Migration
     {
         Schema::create('buktis', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('id_transaksi');
+            $table->unsignedBigInteger('id_transaksi');
+            $table->integer('nominal');
             $table->string('bukti');
             $table->string('catatan');
+            $table->tinyInteger('refund');
             $table->timestamps();
         });
     }

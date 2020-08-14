@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a href="/grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -68,12 +68,12 @@
                             <ul class="nav">
                                 <li>
                                     <a href="/chatAdmin">
-                                        <span class="link-collapse">Admin Message</span>
+                                        <span class="link-collapse">Pesan Admin</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/chatCustomer">
-                                        <span class="link-collapse">Customers Message</span>
+                                        <span class="link-collapse">Pesan</span>
                                     </a>
                                 </li>
                             </ul>
@@ -81,7 +81,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="/pembelian">
-                            <i class="la la-dollar"></i>
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -89,6 +89,12 @@
                         <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -120,28 +126,40 @@
                                     <div class=" card-body table-responsive ">
                                     <table class="table table-striped table-hover ">
                                         <tbody>
-                                            <h6>Masukan Bukti Bukti Pembayaran</h6>
+                                            <h6>Masukan Bukti Pembayaran</h6>
                                             <tr>
-                                                <td width="250px">Jumlah Nominal</td>
+                                                <td width="250px">Nama Bank</td>
+                                                <td>{{$bayar->penjual->bank}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nomor Rekening</td>
+                                                <td>{{$bayar->penjual->no_rek}}</td>
+                                            </tr>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumlah Nominal</td>
                                                 <td>
-                                                    <input type="text" name="nominal" id="harga" placeholder="Total yang harus dibayar" class="form-control" autocomplete="off"/>
+                                                    <input type="text" name="nominal" id="harga" placeholder="Masukan nominal transfer" class="form-control" autocomplete="off"/>
                                                     <small id="hargaHelp" class="form-text text-muted">Nominal : <b><span id="hasil"></span></b></small>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td width="250px">Catatan</td>
+                                                <td>Catatan</td>
                                                 <td><input type="text" name="catatan" placeholder="Tambahkan catatan atau keterangan" class="form-control" /></td>
                                             </tr>
                                             <tr>
-                                                <td width="250px">Bukti Pembayaran</td>
+                                                <td>Bukti Pembayaran</td>
                                                 <td><input class="form-control" type="file" name="bukti"></td>
                                             </tr>
                                         </tbody>
                                         <input type="hidden" name="id_transaksi" value="{{$bayar->id}}">
+                                        <input type="hidden" name="refund" value="0">
+                                        <input type="hidden" name="berhasil" value="1">
+                                        <input type="hidden" name="bayar" value="1">
                                     </table>
                                     <div class="text-right" style="display:flex; float:right">
-                                        <button type="submit" class="btn btn-success mr-1">Bayar</button>
-                                        <a type="button" href="/grafik" class="btn btn-danger">Kembali</a>
+                                        <button type="submit" class="btn btn-success mr-1">Kirim</button>
+                                        <a type="button" href="/pesanan" class="btn btn-danger">Batal</a>
                                     </div>
                                 </div>
                             </form>

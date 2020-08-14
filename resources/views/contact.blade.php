@@ -1,38 +1,6 @@
-<!DOCTYPE html>
-<html lang="zxx" class="no-js">
+@extends('layouts.landing')
 
-<head>
-	<!-- Mobile Specific Meta -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Favicon-->
-	<link rel="shortcut icon" href="assets/img/fav.png">
-	<!-- Author Meta -->
-	<meta name="author" content="CodePixar">
-	<!-- Meta Description -->
-	<meta name="description" content="">
-	<!-- Meta Keyword -->
-	<meta name="keywords" content="">
-	<!-- meta character set -->
-	<meta charset="UTF-8">
-	<!-- Site Title -->
-	<title>Contact Us</title>
-
-	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-	<!--
-			CSS
-			============================================= -->
-	<link rel="stylesheet" href="assets/css/linearicons.css">
-	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/css/nice-select.css">
-	<link rel="stylesheet" href="assets/css/ion.rangeSlider.css" />
-	<link rel="stylesheet" href="assets/css/ion.rangeSlider.skinFlat.css" />
-	<link rel="stylesheet" href="assets/css/bootstrap.css">
-	<link rel="stylesheet" href="assets/css/owl.carousel.css">
-	<link rel="stylesheet" href="assets/css/main.css">
-</head>
-
-<body>
-
+@section('content')
 	<!-- Start Header Area -->
 	<header class="default-header">
 		<div class="menutop-wrap">
@@ -225,11 +193,9 @@
 					<div class="single-footer-widget mail-chimp">
 						<h6 class="mb-20">Informasi <b style="font-size:14px">Properti</b></h6>
 						<ul class="nav-menui">
-							<li><a href="">Perumahan</a></li>
-							<li><a href="">Pertanahan</a></li>
-							<li><a href="">Apartement</a></li>
-							<li><a href="">Kos-kosan</a></li>
-							<li><a href="">Pertokoan</a></li>
+							@foreach($kat as $k)
+							<li><a href="">{{$k->nama_kat}}</a></li>
+							@endforeach
 						</ul>
 					</div>
 				</div>
@@ -271,20 +237,4 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</footer>
 	<!-- End footer Area -->
-
-	<script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
-	 crossorigin="anonymous"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-	<script src="assets/js/vendor/bootstrap.min.js"></script>
-	<script src="assets/js/jquery.ajaxchimp.min.js"></script>
-	<script src="assets/js/jquery.nice-select.min.js"></script>
-	<script src="assets/js/jquery.sticky.js"></script>
-	<script src="assets/js/ion.rangeSlider.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="assets/js/jquery.magnific-popup.min.js"></script>
-	<script src="assets/js/owl.carousel.min.js"></script>
-	<script src="assets/js/main.js"></script>
-</body>
-
-</html>
+	@endsection

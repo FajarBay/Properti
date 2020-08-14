@@ -2,9 +2,9 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Tables - Ready Bootstrap Dashboard</title>
+    <title>Dashboard</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" href="{{ asset('assets/img/fav.png') }}">
+    <link rel="shortcut icon" href="{{ asset('assets/img/icon.png') }}">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <link rel="stylesheet" href="{{ asset('asset/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
@@ -85,7 +85,7 @@
     <div id="app">
         
 
-        <main">
+        <main>
             @yield('content')
         </main>
     </div>
@@ -276,6 +276,16 @@ $(document).ready(function() {
 		var angkarev = input.toString().split('').reverse().join('');
 		for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
 		$('#rupiah').text("Rp. "+rupiah.split('',rupiah.length-1).reverse().join(''));
+	 });
+
+</script>
+<script>
+	$('#harga').on('keyup', function(){
+		var input = $(this).val();
+		var rupiah = '';
+		var angkarev = input.toString().split('').reverse().join('');
+		for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+		$('#hasil').text("Rp. "+rupiah.split('',rupiah.length-1).reverse().join(''));
 	 });
 
 </script>

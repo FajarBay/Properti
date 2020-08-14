@@ -15,13 +15,13 @@ class CreateTransaksisTable extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('id_prop');
-            $table->string('id_user');
+            $table->unsignedBigInteger('id_prop');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_penjual');
             $table->string('invoice');
-            $table->string('bukti');
-            $table->string('catatan');
             $table->string('konf_penjual');
             $table->string('konf_admin');
+            $table->tinyInteger('berhasil');
             $table->timestamps();
         });
     }

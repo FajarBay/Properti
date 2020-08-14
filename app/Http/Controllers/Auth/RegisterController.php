@@ -20,7 +20,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/verify';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -31,13 +31,13 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-public function register(Request $request)
-{
-    $this->validator($request->all())->validate();
-    event(new Registered($user = $this->create($request->all())));
-    return $this->registered($request,$user) ?:
-    redirect('/verify?phone='.$request->phone);
-}
+    // public function register(Request $request)
+    // {
+    //     $this->validator($request->all())->validate();
+    //     event(new Registered($user = $this->create($request->all())));
+    //     return $this->registered($request,$user) ?:
+    //     redirect('/verify?phone='.$request->phone);
+    // }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -62,17 +62,17 @@ public function register(Request $request)
      */
     protected function create(array $data)
     {
-        $user = User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'phone'=>$data['phone'],
             'active'=>0,
         ]);
-        if($user){
-            $user->code=SendOTP::sendOTP($user->phone);
-            $user->save();
-            return redirect('verify');
-        }
+        // if($user){
+        //     $user->code=SendOTP::sendOTP($user->phone);
+        //     $user->save();
+        //     return redirect('verify');
+        // }
     }
 }

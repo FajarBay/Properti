@@ -4657,5 +4657,59 @@ h6 {
     color: #ea6c5d;
 }
 
+.alert1 {
+    border: 0px;
+    color: #ffffff;
+    position: relative;
+    text-align: center;
+}
+
+.alert1 [data-notify="icon"] {
+    font-size: 30px;
+    display: block;
+    left: 15px;
+    position: absolute;
+    top: 50%;
+    margin-top: -15px;
+}
+
+.alert1 [data-notify="title"] {
+    display: block;
+    font-weight: bold;
+}
+
+.alert1 [data-notify="message"] {
+    font-size: 14px;
+}
+
+.alert1 .close {
+    background: rgba(255, 255, 255, 0.8);
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    top: auto !important;
+    border-radius: 50%;
+}
+
+.alert1-primary {
+    background-color: #1D62F0;
+}
+
+.alert1-info {
+    background-color: #23CCEF;
+}
+
+.alert1-success {
+    background-color: #59d05d;
+}
+
+.alert1-warning {
+    background-color: #fbad4c;
+}
+
+.alert1-danger {
+    background-color: #ff646d;
+}
+
 
 /*# sourceMappingURL=main.css.map */

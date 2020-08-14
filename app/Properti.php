@@ -25,6 +25,10 @@ class Properti extends Model
     }
     
     public function trans(){
-        return $this->belongsTo('App\Transaksi', 'id', 'id_prop');
+        return $this->hasMany('App\Transaksi', 'id_prop');
+    }
+
+    public function refund(){
+        return $this->belongsTo('App\Pengembalian', 'id', 'id_prop');
     }
 }

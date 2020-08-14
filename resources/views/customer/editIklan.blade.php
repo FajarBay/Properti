@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="grafik">
+                        <a href="pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -81,7 +81,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="/pembelian">
-                            <i class="la la-dollar"></i>
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -89,6 +89,12 @@
                         <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -175,7 +181,8 @@
                                                                 <tr>
                                                                     <td width="200px">Harga</td>
                                                                     <td width="20px">:</td>
-                                                                    <td><input type="text" name="harga" value="{{$properti->harga}}" placeholder="Input" class="form-control" /></td>
+                                                                    <td><input type="text" name="harga" id="harga" onkeyup="copytextbox();" value="{{$properti->harga}}" placeholder="Input" class="form-control" autocomplete="off"/>
+                                                                    <small id="hargaHelp" class="form-text text-muted">Nominal : <b><span id="hasil"></span></b></small></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td width="200px">Alamat</td>
@@ -327,6 +334,8 @@
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <br>
                 <footer class="footer">
                     <div class="container-fluid">
                         <nav class="pull-left">

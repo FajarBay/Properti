@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -68,12 +68,12 @@
                             <ul class="nav">
                                 <li>
                                     <a href="/chatAdmin">
-                                        <span class="link-collapse">Admin Message</span>
+                                        <span class="link-collapse">Pesan Admin</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/chatCustomer">
-                                        <span class="link-collapse">Customers Message</span>
+                                        <span class="link-collapse">Pesan</span>
                                     </a>
                                 </li>
                             </ul>
@@ -81,7 +81,7 @@
                     </li>
                     <li class="nav-item active">
                         <a href="/pembelian">
-                            <i class="la la-dollar"></i>
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -89,6 +89,12 @@
                         <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -119,7 +125,7 @@
                                             if($p->konf_admin == 0){
                                                 echo '<span class="badge badge-warning float-right">Menunggu Konfirmasi Admin</span>';
                                             }else{
-                                                echo '<span class="badge badge-success float-right">Terverifikasi</span>';
+                                                echo '<span class="badge badge-success float-right">Sudah Dikonfirmasi</span>';
                                             }
                                         ?>
                                     </div>
@@ -163,10 +169,6 @@
                                                 <td>{{$p->invoice}}</td>
                                             </tr>
                                             <tr>
-                                                <td width="250px">Penjual</td>
-                                                <td><a style="text-decoration: none;" href="">{{$p->penjual->name}}</a></td>
-                                            </tr>
-                                            <tr>
                                                 <td width="250px">Judul Iklan</td>
                                                 <td>
                                                     <form id="kirim" action="{{route('lihat', $p->proper->id)}}" method="post" enctype="multipart/form-data">
@@ -175,9 +177,22 @@
                                                         <input class="sub" type="submit" value="{{$p->proper->nama_prop}}"></button>
                                                     </form>
                                                     {{--  <a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a></td>  --}}
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">Harga</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Penjual</td>
+                                                    <td>
+                                                        <form action="{{route('pesanPertama')}}" method="post" enctype="multipart/form-data">
+                                                            {{ csrf_field() }}
+                                                            {{$p->penjual->name}}
+                                                            <input type="hidden" name="message" value="{{$p->invoice}} : {{$p->proper->nama_prop}}">
+                                                            <input type="hidden" name="from" value="{{ Auth::user()->id }}">
+                                                            <input type="hidden" name="to" value="{{$p->penjual->id}}">
+                                                        <button type="submit" class="btn btn-danger btn-sm">Hubungi Penjual</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Harga</td>
                                                 <td>
                                                     <?php 		
                                                         echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->proper->harga)),3)));
@@ -191,28 +206,24 @@
                                             <tr>
                                                 <td width="250px">konfirmasi Penjual</td>
                                                 <td>
-                                                    <?php
-                                                    if ($p->konf_penjual == 1){
-                                                        echo 'Dikonfirmasi';
-                                                    }else{
-                                                        echo 'Belum Dikonfirmasi';
-                                                    }
-                                                    ?>
+                                                    @if($p->konf_user == 0)
+                                                        <span class="badge badge-warning">Belum Dikonfirmasi</span>
+                                                    @else
+                                                        <span class="badge badge-success">Dikonfirmasi</span>
+                                                    @endif
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Konfirmasi Admin</td>
                                                 <td>
-                                                    <?php
-                                                    if ($p->konf_admin == 1){
-                                                        echo 'Dikonfirmasi';
-                                                    }else{
-                                                        echo 'Belum Dikonfirmasi';
-                                                    }
-                                                    ?>
+                                                    @if($p->konf_admin == 0)
+                                                        <span class="badge badge-warning">Belum Dikonfirmasi</span>
+                                                    @else
+                                                        <span class="badge badge-success">Dikonfirmasi</span>
+                                                    @endif
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!--<tr>
                                                 <td width="250px">Nego</td>
                                                 <td>
                                                     <?php
@@ -223,7 +234,7 @@
                                                     }
                                                     ?>
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                             <tr>
                                                 <td width="250px">Status Pembayaran</td>
                                                 <td>
@@ -263,8 +274,9 @@
                                                 <td width="250px">Tanggal</td>
                                                 <td>
                                                     <?php
+                                                    setlocale(LC_ALL, 'IND');
                                                     $date = new DateTime($b->created_at);
-                                                    echo $date->format('d F Y');
+                                                    echo strftime("%d %B %Y", $date->getTimestamp());
                                                     ?>
                                                 </td>
                                             </tr>
@@ -306,7 +318,7 @@
                                         ?>
                                             {{--  <button class="btn btn-success" data-toggle="modal" data-target="#bukti">Kirim Bukti</button>  --}}
                                        
-                                        <a href="{{route('invoice', $p->id)}}">
+                                        <a href="{{route('invoice', $p->id)}}" target="_blank">
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">Cetak Invoice</button>
                                         </a>
                                     </div>
@@ -325,6 +337,10 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
+                                                <div>Bank<a style="margin-left: 103px">: {{$p->penjual->bank}}</a></div>
+                                                <div>Nomor Rekening<a style="margin-left: 30px">: {{$p->penjual->no_rek}}</a></div>
+                                              </div>
+                                            <div class="form-group">
                                                 <label for="recipient-name" class="col-form-label">Jumlah Nominal:</label>
                                                 <input type="text" name="nominal" id="input" placeholder="Total yang harus dibayar" class="form-control" autocomplete="off"/>
                                                 <p class="small" >Nominal : <b><span id="rupiah"></span></b></p>
@@ -339,20 +355,22 @@
                                               </div>
                                         </div>
                                         <input type="hidden" name="id_transaksi" value="{{$p->id}}">
+                                        <input type="hidden" name="refund" value="0">
                                         <div class="modal-footer">
                                           <button type="submit" class="btn btn-danger">Kirim</button>
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                                         </div>
-                                </form>
+                                    </form>
                                       </div>
                                     </div>
-                                  </div>
+                                </div>
                             </div>
                         </div>
                         @endforeach
                     </div>
                 </div>
             </div>
+            <br>
             <br>
             <footer class="footer">
                 <div class="container-fluid">

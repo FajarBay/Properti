@@ -5,15 +5,15 @@
         <div class="image-holder">
             <img src="asset/img/1.jpg" alt="">
         </div>
-        @if(Session::has('message'))
-        <div class="alert alert-danger">{{Session::get('message')}}</div>
-        @endif
         <form method="POST" action="{{ url('verify') }}" style="padding-top: 100px">
             @csrf
             <div class="hidden" style="height:50px"></div>
             <h3>Verifikasi Akun</h3>
             <div class="form-wrapper">
                 <input type="text" placeholder="Masukan Kode" class="form-control" name="code" required>
+                @if(Session::has('message'))
+                <div class="alert1 alert1-danger">{{Session::get('message')}}</div>
+                @endif
                 <i class="zmdi zmdi-email"></i>
             </div>
             @if ($errors->has('code'))
@@ -25,7 +25,7 @@
                 <a class="a" href="">Kirim kode baru</a>
                 <input type="hidden" name="phone" value="$request['phone']">
             </div>
-            <button>Kirim
+            <button>KIRIM
                 <i class="zmdi zmdi-arrow-right"></i>
             </button>
         </form>

@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'code', 'active', 'profil', 'ktp', 'provinsi', 'kabupaten', 'kecamatan',
+        'name', 'email', 'password', 'phone', 'code', 'active', 'profil', 'ktp', 'provinsi', 'kabupaten', 'kecamatan', 'bank', 'no_rek',
     ];
 
     /**
@@ -51,5 +51,9 @@ class User extends Authenticatable
 
     public function booking(){
         return $this->belongsTo('App\Pesanan');
+    }
+
+    public function messages(){
+        return $this->hasMany(Message::class, 'from');
     }
 }

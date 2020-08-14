@@ -14,7 +14,7 @@
                     <ul class="navbar-nav topbar-nav md-auto align-items-center">
                         <li class="nav-item">
                             <a class="nav-link" href="/daftarKategori" role="button">
-                                Kategori
+                                Daftar Kategori
                             </a>
                         </li>
                     </ul>
@@ -71,15 +71,15 @@
                     <li class="nav-item">
                         <a href="daftarPembayaran">
                             <i class="la la-money"></i>
-                            <p>Pembayaran</p>
+                            <p>Transaksi</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="laporan">
-                            <i class="la la-file-pdf-o"></i>
-                            <p>Laporan</p>
+                    <li class="nav-item">
+                        <a href="/daftarPengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Daftar Pengembalian</p>
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -102,7 +102,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Kategori
+                                    <div class="card-title">Daftar Kategori
                                         {{-- <a href="tambah1">
                                             <button class="btn btn-success">+ Tambah</button>
                                         </a> --}}

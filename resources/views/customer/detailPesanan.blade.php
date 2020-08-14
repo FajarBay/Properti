@@ -4,7 +4,7 @@
     <div class="wrapper">
         <div class="main-header">
             <div class="logo-header">
-                <a href="utama" class="logo"><img src="{{ asset('asset/img/logo-nav.png') }}"></a>
+                <a href="/utama" class="logo"><img src="{{ asset('asset/img/logo-nav.png') }}"></a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -28,7 +28,7 @@
                         <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                     </div>
                     <div class="info">
-                        <a class="" href="cek">
+                        <a class="" href="/cek">
                             <span>
                                 {{Auth::user()->name}}
 									<span class="user-level">Pengguna</span>
@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a href="/grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -68,12 +68,12 @@
                             <ul class="nav">
                                 <li>
                                     <a href="/chatAdmin">
-                                        <span class="link-collapse">Admin Message</span>
+                                        <span class="link-collapse">PesanAdmin</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/chatCustomer">
-                                        <span class="link-collapse">Customers Message</span>
+                                        <span class="link-collapse">Pesan</span>
                                     </a>
                                 </li>
                             </ul>
@@ -81,7 +81,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="/pembelian">
-                            <i class="la la-dollar"></i>
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -89,6 +89,12 @@
                         <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -129,16 +135,16 @@
                                         </ol>
                                         <div class="carousel-inner" style="height: 400px;">
                                             <div class="carousel-item active">
-                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto1/{{ $p->foto1 }}" alt="First slide">
+                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto1/{{ $p->properti->foto1 }}" alt="First slide">
                                             </div>
                                             <div class="carousel-item">
-                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto2/{{ $p->foto2 }}" alt="Second slide">
+                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto2/{{ $p->properti->foto2 }}" alt="Second slide">
                                             </div>
                                             <div class="carousel-item">
-                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto3/{{ $p->foto3 }}" alt="Third slide">
+                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto3/{{ $p->properti->foto3 }}" alt="Third slide">
                                             </div>
                                             <div class="carousel-item">
-                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto4/{{ $p->foto4 }}" alt="Third slide">
+                                                <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto4/{{ $p->properti->foto4 }}" alt="Third slide">
                                             </div>
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -155,16 +161,16 @@
                                         <tbody>
                                             <tr>
                                                 <td width="250px">Penjual</td>
-                                                <td><a style="text-decoration: none;" href="">{{$p->user->name}}</a></td>
+                                                <td><a style="text-decoration: none;" href="#">{{$p->properti->user->name}}</a></td>
                                                 {{-- {{route('detailUser', $p->user->id)}} --}}
                                             </tr>
                                             <tr>
                                                 <td width="250px">Judul Iklan</td>
                                                 <td>
-                                                    <form id="kirim" action="{{route('lihat', $p->id)}}" method="post" enctype="multipart/form-data">
+                                                    <form id="kirim" action="{{route('lihat', $p->properti->id)}}" method="post" enctype="multipart/form-data">
                                                         {{ csrf_field() }}
-                                                        <input type="hidden" name="dilihat" value="{{$p->iklan->dilihat+1}}">
-                                                        <input class="sub" type="submit" value="{{$p->nama_prop}}"></button>
+                                                        <input type="hidden" name="dilihat" value="{{$p->properti->iklan->dilihat+1}}">
+                                                        <input class="sub" type="submit" value="{{$p->properti->nama_prop}}"></button>
                                                     </form>
                                                     {{--  <a href="{{route('lihat', $p->id)}}">{{$p->nama_prop}}</a>  --}}
                                                 </td>
@@ -173,23 +179,23 @@
                                                 <td width="250px">Harga</td>
                                                 <td>
                                                     <?php 		
-                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->harga)),3)));
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->properti->harga)),3)));
                                                     ?>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Alamat</td>
-                                                <td>{{$p->provinsi}}, {{$p->kabupaten}}, {{$p->kecamatan}}</td>
+                                                <td>{{$p->properti->provinsi}}, {{$p->properti->kabupaten}}, {{$p->properti->kecamatan}}</td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Alamat Lengkap</td>
-                                                <td>{{$p->alamat}}</td>
+                                                <td>{{$p->properti->alamat}}</td>
                                             </tr>
                                             <tr>
-                                                <td width="250px">Jenis Iklan</td>
+                                                <td width="250px">Nego</td>
                                                 <td>
                                                     <?php
-                                                        if($p->iklan->nego == 0){
+                                                        if($p->properti->iklan->nego == 0){
                                                             echo 'Ya';
                                                         }else {
                                                             echo 'Tidak';
@@ -197,38 +203,71 @@
                                                     ?>
                                                 </td>
                                             </tr>
+                                            @if($trans != null && $bukti != null)
+                                            <tr class="table-success">
+                                                <td><b>Informasi</b></td>
+                                                <td>Anda sudah mengirimkan bukti pembayaran, silahkan buka menu <b>Pembelian</b> atau klik <b>Lihat Pembelian</b></td>
+                                            </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                     <div class="text-right" style="display:flex; float:right">
-                                @if ($trans === null)
-                                <form action="{{route('pembayaran', $p->id)}}" method="post" enctype="multipart/form-data">
+                                @if ($trans == null)
+                                <form action="{{route('pembayaran', $p->properti->id)}}" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
-                                        <input type="hidden" name="id_prop" value="{{$p->id}}">
+                                        <input type="hidden" name="id_prop" value="{{$p->properti->id}}">
                                         <input type="hidden" name="id_user" value="{{Auth::user()->id}}">
-                                        <input type="hidden" name="id_penjual" value="{{$p->id_user}}">
+                                        <input type="hidden" name="id_penjual" value="{{$p->properti->id_user}}">
                                         <input type="hidden" class="form-control" name="invoice" value="<?php echo 'INV//'.rand(10000,99999). '//'. date("dmY");?>">
-                                        <input type="hidden" name="konf_penjual" value="0">
+                                        <input type="hidden" name="konf_user" value="0">
                                         <input type="hidden" name="konf_admin" value="0">
+                                        <input type="hidden" name="berhasil" value="0">
                                         <button type="submit" class="btn btn-success mr-1">Bayar</button>
                                 </form>
-                                @else
-                                    <form action="{{route('pembayaranLagi', $trans->id)}}" method="post" enctype="multipart/form-data">
+                                @elseif($trans != null && $bukti == null)
+                                    <form action="{{route('pembayaranLagi', $trans)}}" method="post" enctype="multipart/form-data">
                                         {{ csrf_field() }}
                                         <button type="submit" class="btn btn-success mr-1">Bayar</button>
                                     </form>
+                                @else
+                                <a href="/pembelian"><button type="submit" class="btn btn-success mr-1">Lihat Pembelian</button></a>
                                 @endif
-                                        <form action="{{route('batalkan', $p->id)}}" method="post" enctype="multipart/form-data">
-                                            {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-danger ">Batalkan Pemesanan</button>
-                                        </form>
+                                @if($trans != null && $bukti != null)
+                                <button class="btn btn-danger" data-toggle="modal" data-target="#hapus" disabled>Batalkan Pemesanan</button>
+                                @else
+                                <button class="btn btn-danger" data-toggle="modal" data-target="#hapus">Batalkan Pemesanan</button>
+                                @endif
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="hapus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <form action="{{route('batalkan', $p->id)}}" method="post" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Batalkan Pesanan</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h6>Apakah anda yakin akan membatalkan pesanan ini?</h6>
+                                <div class="modal-footer">
+                                  <button type="submit" class="btn btn-danger">Batalkan</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                </div>
+                            </form>
+                              </div>
                             </div>
                         </div>
                         @endforeach
                     </div>
                 </div>
             </div>
+        </div>
+        <br>
             <br>
             <footer class="footer">
                 <div class="container-fluid">

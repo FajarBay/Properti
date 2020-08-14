@@ -15,12 +15,13 @@ class CreateIklansTable extends Migration
     {
         Schema::create('iklans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('id_prop');
-            $table->string('id_user');
-            $table->string('judul');
-            $table->boolean('jenis');
-            $table->boolean('nego');
-            $table->boolean('sold');
+            $table->unsignedBigInteger('id_prop');
+            $table->unsignedBigInteger('id_user');
+            $table->tinyInteger('jenis');
+            $table->tinyInteger('nego');
+            $table->tinyInteger('sold');
+            $table->tinyInteger('status');
+            $table->tinyInteger('book');
             $table->string('dilihat');
             $table->timestamps();
         });

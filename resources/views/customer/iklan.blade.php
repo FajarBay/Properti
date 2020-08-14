@@ -39,19 +39,19 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="dashboard">
+                        <a href="/dashboard">
                             <i class="la la-dashboard"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a href="iklan">
+                        <a href="/iklan">
                             <i class="la la-tags"></i>
                             <p>Daftar Iklan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -67,12 +67,12 @@
                         <div class="collapse in" id="collapseExample1" aria-expanded="true" style="">
                             <ul class="nav">
                                 <li>
-                                    <a href="chatAdmin">
+                                    <a href="/chatAdmin">
                                         <span class="link-collapse">Pesan Admin</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="chatCustomer">
+                                    <a href="/chatCustomer">
                                         <span class="link-collapse">Pesan</span>
                                     </a>
                                 </li>
@@ -80,15 +80,21 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="pembelian">
-                            <i class="la la-dollar"></i>
+                        <a href="/pembelian">
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="penjualan">
+                        <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -114,9 +120,15 @@
                             <div class="card">
                                 <div class="card-header">
                                     <div class="card-title">Daftar Iklan Anda
+                                        @if(Auth::user()->profil == null || Auth::user()->ktp == null || Auth::user()->provinsi == null ||
+                                        Auth::user()->kabupaten == null || Auth::user()->kecamatan == null || Auth::user()->bank == null ||
+                                        Auth::user()->no_rek == null)
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#lengkapi">+ Tambah</button>
+                                        @else
                                         <a href="/properti2">
                                             <button class="btn btn-success">+ Tambah</button>
                                         </a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-body table-responsive">
@@ -126,6 +138,7 @@
                                                 <th scope="col">No</th>
                                                 <th scope="col">Nama</th>
                                                 <th scope="col">Kategori</th>
+                                                <th scope="col">Harga</th>
                                                 <th scope="col">Terjual</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Aksi</th>
@@ -133,7 +146,7 @@
                                         </thead>
                                         <tbody>
                                             @php $no = ($data->currentpage()-1) * $data->perPage() + 1; @endphp
-                                            @foreach($data as $d)
+                                            @forelse($data as $d)
                                             <tr>
                                                 <td>{{$no++}}</td>
                                                 <td>{{$d->nama_prop}}</td>
@@ -141,10 +154,15 @@
                                                     {{$d->kategori->nama_kat}}
                                                 </td>
                                                 <td>
+                                                    <?php 		
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->harga)),3)));
+                                                    ?>    
+                                                </td>
+                                                <td>
                                                     <?php
                                                     if ($d->sold == 0) {
                                                         echo "Belum Terjual";
-                                                    }else{
+                                                    }else if($d->sold == 1){
                                                         echo "Terjual";
                                                     }
                                                 ?>
@@ -170,10 +188,36 @@
                                                     </a>
                                                 </td>
                                             </tr>
-                                            @endforeach
+                                            @empty
+                                            <tr>
+                                                <td class="text-center" colspan="7">
+                                                    <h6 class="alert alert-warning"><strong>Maaf!</strong> Belum ada data yang ditampilkan.</h6>
+                                                </td>
+                                            </tr> 
+                                            @endforelse
                                         </tbody>
                                     </table>
                                     {{ $data->links("pagination::bootstrap-4") }}
+                                    <div class="modal fade" id="lengkapi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Data Diri Belum Lengkap</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Untuk menambah iklan, anda harus melengkapi data diri terlebih dahulu.</p>
+                                                <p>Silahkan lengkapi data diri anda pada menu <b>Profil</b></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="/cek"><button type="button" class="btn btn-danger">Buka Profil</button></a>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

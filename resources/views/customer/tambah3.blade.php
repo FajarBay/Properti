@@ -39,19 +39,19 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="dashboard">
+                        <a href="/dashboard">
                             <i class="la la-dashboard"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a href="iklan">
+                        <a href="/iklan">
                             <i class="la la-tags"></i>
                             <p>Daftar Iklan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -67,12 +67,12 @@
                         <div class="collapse in" id="collapseExample1" aria-expanded="true" style="">
                             <ul class="nav">
                                 <li>
-                                    <a href="chatAdmin">
+                                    <a href="/chatAdmin">
                                         <span class="link-collapse">Pesan Admin</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="chatCustomer">
+                                    <a href="/chatCustomer">
                                         <span class="link-collapse">Pesan</span>
                                     </a>
                                 </li>
@@ -80,15 +80,21 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="pembelian">
-                            <i class="la la-dollar"></i>
+                        <a href="/pembelian">
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="penjualan">
+                        <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -188,6 +194,8 @@
                         </div>
                     </div>
                 </div>
+                <br>
+                <br>
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">

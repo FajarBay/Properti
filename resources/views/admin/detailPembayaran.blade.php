@@ -4,7 +4,7 @@
     <div class="wrapper">
     <div class="main-header">
             <div class="logo-header">
-                <a href="utama" class="logo"><img src="{{ asset('asset/img/logo-nav.png') }}"></a>
+                <a href="/utama" class="logo"><img src="{{ asset('asset/img/logo-nav.png') }}"></a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -14,7 +14,7 @@
                     <ul class="navbar-nav topbar-nav md-auto align-items-center">
                         <li class="nav-item">
                             <a class="nav-link" href="/daftarPembayaran" role="button">
-                                Pembayaran
+                                Detail Transaksi
                             </a>
                         </li>
                     </ul>
@@ -71,15 +71,15 @@
                     <li class="nav-item  active">
                         <a href="/daftarPembayaran">
                             <i class="la la-money"></i>
-                            <p>Pembayaran</p>
+                            <p>Transaksi</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="laporan">
-                            <i class="la la-file-pdf-o"></i>
-                            <p>Laporan</p>
+                    <li class="nav-item">
+                        <a href="/daftarPengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Daftar Pengembalian</p>
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -103,8 +103,15 @@
                             @foreach($transaksi as $p)
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Detail Pembayaran
-                                        <span class="badge badge-warning float-right">Menunggu</span>
+                                    <div class="card-title">Detail Transaksi
+                                        {{--  <span class="badge badge-warning float-right">Menunggu</span>  --}}
+                                        <?php
+                                                if($p->konf_admin == 0){
+                                                    echo "<span class=\"badge badge-warning float-right\">Menunggu</span>";
+                                                }else{
+                                                    echo "<span class=\"badge badge-success float-right\">Dikonfirmasi</span>";
+                                                }
+                                            ?>
                                         {{-- <span class="badge badge-success float-right">Terverifikasi</span> --}}
                                     </div>
                                 </div>
@@ -143,7 +150,7 @@
                                     <table class="table table-striped table-hover ">
                                         <tbody>
                                             <tr>
-                                                <td width="250px">Nomor Invoice</td>
+                                                <td width="250px">Nomor Transaksi</td>
                                                 <td>{{$p->invoice}}</td>
                                             </tr>
                                             <tr>
@@ -153,19 +160,19 @@
                                             </tr>
                                             <tr>
                                                 <td width="250px">Penjual</td>
-                                                <td><a href="">{{$p->penjual->name}}</a></td>
+                                                <td><a href="#">{{$p->penjual->name}}</a></td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Pembeli</td>
-                                                <td><a href="">{{$p->pembeli->name}}</a></td>
+                                                <td><a href="#">{{$p->pembeli->name}}</a></td>
                                             </tr>
                                             <tr>
                                                 <td width="250px">Konfirmasi Penjual</td>
                                                 <td>
-                                                    @if($p->konf_penjual == 0)
-                                                        Belum Dikonfirmasi
+                                                    @if($p->konf_user == 0)
+                                                        <span class="badge badge-warning">Belum Dikonfirmasi</span>
                                                     @else
-                                                        Dikonfirmasi
+                                                        <span class="badge badge-success">Dikonfirmasi</span>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -181,7 +188,7 @@
                                                 <td width="250px">Alamat</td>
                                                 <td>{{$p->proper->provinsi}}, {{$p->proper->kabupaten}}, {{$p->proper->kecamatan}}</td>
                                             </tr>
-                                            <tr>
+                                            {{--  <tr>
                                                 <td width="250px">Nego</td>
                                                 <td>
                                                     @if($p->proper->iklan->nego == 0)
@@ -190,6 +197,34 @@
                                                     Tidak
                                                     @endif
                                                 </td>
+                                            </tr>  --}}
+                                            <tr>
+                                                <td width="250px">Status Pembayaran</td>
+                                                <td>
+                                                    <?php
+                                                        $hasil = $p->proper->harga - $nominal;
+                                                        if($hasil != 0 && $hasil >= 0){
+                                                            echo "<span class=\"badge badge-warning\">Belum Lunas</span>";
+                                                        }else{
+                                                            echo "<span class=\"badge badge-success\">Lunas</span>";
+                                                        }
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <?php
+                                                    $hasil = $p->proper->harga - $nominal;
+                                                    if($hasil == 0){
+                                                        echo    '<td width="250px">Jumlah Yang Belum Dibayar</td>'.
+                                                                '<td>'.'-'.'</td>';
+                                                    }else if($hasil <= 0){
+                                                        echo    '<td width="250px">Sisa Pembayaran</td>'.
+                                                                '<td>'.'Rp. '.strrev(implode('.',str_split(strrev(strval(-$hasil)),3))).'</td>';
+                                                    }else{
+                                                        echo    '<td width="250px">Jumlah Yang Belum Dibayar</td>'.
+                                                                '<td>'.'Rp. '.strrev(implode('.',str_split(strrev(strval($hasil)),3))).'</td>';
+                                                    }
+                                                ?>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -197,49 +232,151 @@
                                     <table class="table table-striped table-hover ">
                                         <tbody>
                                             <h6>Detail Bukti Pembayaran</h6>
-                                            <tr>
-                                                <td width="250px">Tanggal</td>
-                                                <td>
-                                                    <?php
-                                                    $date = new DateTime($p->bukti->created_at);
-                                                    echo $date->format('d F Y');
-                                                    ?>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">Jumlah Nominal</td>
-                                                <td>
-                                                    <?php 		
-                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->bukti->nominal)),3)));
-                                                    ?>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">Catatan</td>
-                                                <td>{{$p->bukti->catatan}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">Bukti Pembayaran</td>
+                                            @foreach ($bukti as $b)
+                                                <tr>
+                                                    <td width="250px">Tanggal</td>
+                                                    <td>
+                                                        <?php
+                                                        $date = new DateTime($b->created_at);
+                                                        echo $date->format('d F Y');
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Jumlah Nominal</td>
+                                                    <td>
+                                                        <?php 		
+                                                            echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($b->nominal)),3)));
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Catatan</td>
+                                                    <td>{{$b->catatan}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Bukti Pembayaran</td>
                                                     <td><a href="assets/img/bukti.jpg" target="_blank">
-                                                        <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $p->bukti->bukti }}" width="200">
+                                                        <img class="thumbnail zoom" src="{{ URL::to('/') }}/bukti/{{ $b->bukti }}" width="200">
                                                         </a>
                                                     </td>
-                                            </tr>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <br>
+                                            @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="text-right ">
-                                        <form action="{{route('verifBayar', $p->id)}}" method="post" enctype="multipart/form-data">
-                                            {{ csrf_field() }}
-                                            <button type="submit" class="btn btn-success mr-1">Verifikasi</button>
-                                        </form>
+                                    <div class="text-right" style="display:flex; float:right">
+                                            <?php
+                                            if($p->konf_admin == 0){
+                                                echo '<button class="btn btn-success mr-1" data-toggle="modal" data-target="#exampleModal">Konfirmasi</button>';
+                                            }else if($p->konf_admin == 1){
+                                                echo '<button class="btn btn-warning mr-1" data-toggle="modal" data-target="#batal">Batal Konfirmasi</button>';
+                                            }
+                                            ?>
+                                        <a href="{{route('Lihatinvoice', $p->id)}}" target="_blank" type="button" class="btn btn-primary">
+                                           Cetak Invoice
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+                            {{-- Modal 1 --}}
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Transaksi</b></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Apakah anda yakin akan mengkonfirmasi transaksi ini?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="{{route('verifBayar', $p->id)}}" method="post" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-success">Konfirmasi</button>
+                                        </form>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            {{-- Modal 2 --}}
+                            <div class="modal fade" id="batal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Batalkan Konfirmasi Transaski</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Apakah anda yakin akan membatalkan Konfirmasi transaksi ini?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form action="{{route('verifBatal', $p->id)}}" method="post" enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-danger">Batalkan Konfirmasi</button>
+                                            </form>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </div>
+                            <div class="modal fade" id="buka" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <form action="{{route('verifBayar', $p->id)}}" method="post" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penjualan</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6>Apakah anda yakin akan mengkonfirmasi penjualan ini?</h6>
+                                    <div class="modal-footer">
+                                      <button type="submit" class="btn btn-danger">Konfirmasi</button>
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                    </div>
+                                </form>
+                                  </div>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      ...
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <br>
             <br>
             <footer class="footer">
                 <div class="container-fluid">

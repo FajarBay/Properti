@@ -14,7 +14,7 @@
                     <ul class="navbar-nav topbar-nav md-auto align-items-center">
                         <li class="nav-item">
                             <a class="nav-link" href="/daftarIklan" role="button">
-                                Daftar Iklan
+                                Daftar Kategori
                             </a>
                         </li>
                     </ul>
@@ -71,15 +71,15 @@
                     <li class="nav-item">
                         <a href="/daftarPembayaran">
                             <i class="la la-money"></i>
-                            <p>Pembayaran</p>
+                            <p>Transaksi</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="laporan">
-                            <i class="la la-file-pdf-o"></i>
-                            <p>Laporan</p>
+                    <li class="nav-item">
+                        <a href="/daftarPengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Daftar Pengembalian</p>
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -106,7 +106,7 @@
                                         <div class="card-title">Detail Kategori</div>
                                 </div>
                                     <div class="card-body">
-                                        <form action="{{route('update', $kategori->id)}}" method="post">
+                                        <form action="{{route('update', $kategori->id)}}" method="post" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -118,6 +118,13 @@
                                                                     <td width="20px">:</td>
                                                                     <td><input type="text" name="nama_kat" value="{{$kategori->nama_kat}}" placeholder="Input" class="form-control" /></td>
                                                                 </tr>
+                                                                {{--  <tr>
+                                                                    <td width="200px">Foto</td>
+                                                                    <td width="20px">:</td>
+                                                                    <td><td>
+                                                                        <input type="file" name="gambar" />
+                                                                    </td></td>
+                                                                </tr>  --}}
                                                                 <tr>
                                                                     <td width="200px">Keterangan</td>
                                                                     <td width="20px">:</td>

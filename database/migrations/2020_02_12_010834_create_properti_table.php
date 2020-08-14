@@ -15,8 +15,8 @@ class CreatePropertiTable extends Migration
     {
         Schema::create('properti', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_user');
-            $table->integer('id_kat');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_kat');
             $table->string('nama_prop');
             $table->integer('harga');
             $table->string('deskripsi');

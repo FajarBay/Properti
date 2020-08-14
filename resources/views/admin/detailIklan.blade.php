@@ -71,15 +71,15 @@
                     <li class="nav-item">
                         <a href="/daftarPembayaran">
                             <i class="la la-money"></i>
-                            <p>Pembayaran</p>
+                            <p>Transaksi</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="laporan">
-                            <i class="la la-file-pdf-o"></i>
-                            <p>Laporan</p>
+                    <li class="nav-item">
+                        <a href="/daftarPengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Daftar Pengembalian</p>
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -103,12 +103,19 @@
                             @foreach($properti as $p)
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Detail Iklan Anda
+                                    <div class="card-title">Detail Iklan
+                                        <?php
+                                            if($p->iklan->sold == 0){
+                                               echo "<span class=\"badge badge-primary float-right\">Belum Terjual</span>";
+                                            }else {
+                                               echo "<span class=\"badge badge-danger float-right\">Terjual</span>";
+                                            }
+                                        ?>
                                         <?php
                                             if($p->iklan->status == 0){
-                                               echo "<span class=\"badge badge-warning float-right\">Menunggu</span>";
+                                               echo "<span class=\"badge badge-warning float-right mr-1\">Menunggu</span>";
                                             }else {
-                                               echo "<span class=\"badge badge-success float-right\">Terverifikasi</span>";
+                                               echo "<span class=\"badge badge-success float-right mr-1\">Terverifikasi</span>";
                                             }
                                         ?>
                                     </div>
@@ -189,8 +196,9 @@
                                                                 <td width="250px">Tanggal</td>
                                                                 <td>
                                                                     <?php
+                                                                    setlocale(LC_ALL, 'IND');
                                                                     $date = new DateTime($p->created_at);
-                                                                        echo $date->format('d F Y');
+                                                                    echo strftime("%d %B %Y", $date->getTimestamp());
                                                                     ?>
                                                                 </td>
                                                             </tr>
@@ -216,17 +224,6 @@
                                                                 </td>
                                                             </tr>
                                                             <tr>
-                                                                <td width="250px">Terjual</td>
-                                                                <td><?php
-                                                                    if($p->iklan->sold == 1){
-                                                                        echo "Belum Terjual";
-                                                                    }else {
-                                                                        echo "Terjual";
-                                                                    }
-                                                                ?>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
                                                                 <td width="250px">Nego</td>
                                                                 <td>
                                                                     @if($p->iklan->nego == 0)
@@ -240,11 +237,10 @@
                                                     </table>
                                                     <hr>
                                                     <div class="text-right" style="display:flex; float:right">
-                                                    {{-- <a href="{{route('iklan.edit', $p->id)}}"> --}}
                                                     @if($p->iklan->status == 0)
                                                         <form action="{{route('verifIklan', $p->iklan->id)}}" method="post" enctype="multipart/form-data">
                                                         {{ csrf_field() }}
-                                                        <button type="submit" class="btn btn-success mr-1">Verifikasi</button>
+                                                    <button type="submit" class="btn btn-success mr-1">Verifikasi</button>
                                                         </form>
                                                     @else
                                                     <form action="{{route('batalVerif', $p->iklan->id)}}" method="post" enctype="multipart/form-data">
@@ -268,6 +264,7 @@
                     </div>
                 </div>
             </div>
+            <br>
             <br>
             <footer class="footer">
                 <div class="container-fluid">

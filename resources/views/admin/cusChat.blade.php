@@ -79,13 +79,13 @@
                     <li class="nav-item">
                         <a href="daftarPembayaran">
                             <i class="la la-money"></i>
-                            <p>Pembayaran</p>
+                            <p>Transaksi</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="laporan">
-                            <i class="la la-file-pdf-o"></i>
-                            <p>Laporan</p>
+                        <a href="/daftarPengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Daftar Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">

@@ -136,10 +136,11 @@
                     <p>{{$d->user->name}}</p><br>
                     <p><b>{{$d->user->name}}</b> merupakan pengiklan yang Terdaftar sejak tanggal 
                     <?php
+                        setlocale(LC_ALL, 'IND');
                         $date = new DateTime($d->user->created_at);
-                        echo $date->format('d F Y');
+                        echo strftime("%d %B %Y", $date->getTimestamp());
                     ?>.</p>
-                    <p>Untuk melihat kelengkapan data dari pengiklan, Silahkan Klik <b>Lihat pengiklan.</b></p>
+                    {{--  <p>Untuk melihat kelengkapan data dari pengiklan, Silahkan Klik <b>Lihat pengiklan.</b></p>  --}}
                      
                 </div>
             </div>
@@ -147,8 +148,9 @@
                 <div class="single-testimonial text-left card-body">
                     <p>
                         Dipasang pada tanggal <?php
+                        setlocale(LC_ALL, 'IND');
                         $date = new DateTime($d->created_at);
-                        echo $date->format('d F Y');
+                        echo strftime("%d %B %Y", $date->getTimestamp());
                         ?>
                     </p>
                     <p><b>Data bisa berubah sewaktu-waktu</b></p>
@@ -199,24 +201,53 @@
                         {{$iklan->dilihat}} kali
                     </p><br>
                     <div class="text-center">
+                        
                     <?php
                         if(Auth::check()){
-                            if($iklan->book == 1 || $iklan->book == 2){
-                                echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Sudah Dipesan</button>';
-                            }else if($iklan->sold == 0){
-                                echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Iklan Terjual</button>';
-                            }else {
-                                echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Pesan</button>';
+                            if(Auth::user()->profil == null || Auth::user()->ktp == null || Auth::user()->provinsi == null ||
+                            Auth::user()->kabupaten == null || Auth::user()->kecamatan == null || Auth::user()->bank == null ||
+                            Auth::user()->no_rek == null){
+                                echo '<button class="btn btn-danger" data-toggle="modal" data-target="#lengkapi">Pesan</button>';
+                            }else{
+                                if($iklan->book == 1 && $iklan->sold == 2){
+                                    echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Sudah Dipesan</button>';
+                                }else if($iklan->sold == 1){
+                                    echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Iklan Terjual</button>';
+                                }else if($book == $d->id && $usr == Auth::user()->id){
+                                    echo '<button class="btn btn-danger" data-toggle="modal" data-target="#SudahPesan">Pesan</button>';
+                                }else {
+                                    echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Pesan</button>';
+                                }
                             }
-                        }else if($iklan->book == 1 || $iklan->book == 2){
+                        }
+                        else if($iklan->book == 1 && $iklan->sold ==2){
                             echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" disabled>Sudah Dipesan</button>';
-                        }else if($iklan->sold == 0){
+                        }else if($iklan->sold == 1){
                             echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter" disabled>Iklan Terjual</button>';
-                        }else{
+                        }else if($book == $d->id && $usr == Auth::user()->id){
+                            echo '<button class="btn btn-danger" data-toggle="modal" data-target="#SudahPesan">Pesan</button>';
+                        }else {
                             echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Pesan</button>';
                         }
                     ?>
-                        {{-- <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Pesan</button> --}}
+                    <?php
+                     if(Auth::check()){
+                        if($iklan->book == 1 && $iklan->sold == 1){
+                            echo '<button class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter" disabled>Kirim Pesan</button>';
+                        }else {
+                            if((DB::table('messages')->where('from', $d->user->id)->where('to', Auth::user()->id)->count() != 0) || 
+                            (DB::table('messages')->where('to', $d->user->id)->where('from', Auth::user()->id)->count() != 0)){
+                                echo '<button class="btn btn-secondary" data-toggle="modal" data-target="#pesan">Kirim Pesan</button>';
+                            }else{
+                                echo '<button class="btn btn-secondary" data-toggle="modal" data-target="#pesan">Kirim Pesan</button>';
+                            }
+                        }
+                     }else if($iklan->book == 1 && $iklan->sold == 2){
+                        echo '<button class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal" disabled>Kirim Pesan</button>';
+                     }else{
+                        echo '<button class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Kirim Pesan</button>';
+                     }
+                    ?>
                     </div>
                 </div>
             </div>
@@ -256,8 +287,8 @@
                 </div>
                 <div class="modal-body">
                     Apakah anda akan memesan properti ini? properti ini akan di simpan di <b>daftar pesanan</b> anda.
-                    Setelah memesan, harap menghubingi pemilik properti sebelum melakukan pembelian.<hr>
-                    <b>Jika dalam 1x24 jam anda tidak menyelesaikan pembelian, maka iklan akan hangus!</b>
+                    Setelah memesan, harap menghubungi pemilik properti sebelum melakukan pembelian.<hr>
+                    Setelah sepakat dengan pengiklan, <b>segera upload bukti pembayaran!</b>
                 </div>
                 <form action="{{route('book', $d->id)}}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
@@ -267,11 +298,98 @@
                 @endif
                 <input type="hidden" name="id_prop" value="{{ $d->id }}">
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger">Hubungi Penjual</button>
+                    <button type="submit" class="btn btn-danger">Pesan Sekarang</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
                 </form>
             </div>
+        </div>
+    </div>
+    {{-- Modal 3 --}}
+    <div class="modal fade" id="pesan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form action="{{route('pesanPertama')}}" method="post" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Hubungi Pengiklan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    Setelah mengirim salah satu pesan dibawah, anda akan terhubung dengan pengiklan secara langsung melalui chatroom dashboard.
+                    <hr>
+                    <div class="form-group">
+                        <input type="radio" id="message1" name="message" value="Judul Iklan : {{$d->nama_prop}}. Saya butuh secepatya. Bisa pesan sekarang?">
+                        <label for="message1">Saya butuh secepatnya. Bisa pesan sekarang?</label><br>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" id="message2" name="message" value="Judul Iklan : {{$d->nama_prop}}. Saya ingin bertanya-tanya dulu.">
+                        <label for="message2">Saya ingin bertanya-tanya dulu.</label><br>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" id="message3" name="message" value="Judul Iklan : {{$d->nama_prop}}. Apakah bisa nego?">
+                        <label for="message3">Apakah bisa nego?</label><br>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" id="message4" name="message" value="Judul Iklan : {{$d->nama_prop}}. Alamat lengkapnya ada dimana?">
+                        <label for="message4">Alamat lengkapnya ada dimana?</label><br>
+                    </div>
+                    @if (Auth::check())
+                    <input type="hidden" name="from" value="{{ Auth::user()->id }}">
+                    @endif
+                    <input type="hidden" name="to" value="{{$d->user->id}}">
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">Kirim</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{-- Modal 4 --}}
+    <div class="modal fade" id="SudahPesan" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Pesan Properti</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    Anda sudah melakukan pemesanan pada iklan ini? properti ini di simpan di <b>daftar pesanan</b> anda.
+                    <hr>
+                    Setelah sepakat dengan pengiklan, <b>segera upload bukti pembayaran!</b>
+                </div>
+                <div class="modal-footer">
+                    <a href="/pesanan"><button type="submit" class="btn btn-danger">Buka Pesanan</button></a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--  Modal 5  --}}
+    <div class="modal fade" id="lengkapi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Data Diri Belum Lengkap</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <p>Untuk menambah iklan, anda harus melengkapi data diri terlebih dahulu.</p>
+                <p>Silahkan lengkapi data diri anda pada menu <b>Profil</b></p>
+            </div>
+            <div class="modal-footer">
+                <a href="/cek"><button type="button" class="btn btn-danger">Buka Profil</button></a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+            </div>
+        </div>
         </div>
     </div>
 </section>
@@ -295,11 +413,9 @@
                 <div class="single-footer-widget mail-chimp">
                     <h6 class="mb-20">Informasi <b style="font-size:14px">Properti</b></h6>
                     <ul class="nav-menui">
-                        <li><a href="">Perumahan</a></li>
-                        <li><a href="">Pertanahan</a></li>
-                        <li><a href="">Apartement</a></li>
-                        <li><a href="">Kos-kosan</a></li>
-                        <li><a href="">Pertokoan</a></li>
+                        @foreach($kat as $k)
+                        <li><a href="">{{$k->nama_kat}}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

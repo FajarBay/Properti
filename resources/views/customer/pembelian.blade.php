@@ -39,19 +39,19 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="dashboard">
+                        <a href="/dashboard">
                             <i class="la la-dashboard"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="iklan">
+                        <a href="/iklan">
                             <i class="la la-tags"></i>
                             <p>Daftar Iklan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -81,7 +81,7 @@
                     </li>
                     <li class="nav-item active">
                         <a href="pembelian">
-                            <i class="la la-dollar"></i>
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -89,6 +89,12 @@
                         <a href="penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -123,8 +129,9 @@
                                                 <th scope="col">No</th>
                                                 <th scope="col">Invoice</th>
                                                 <th scope="col">Nama</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Harga</th>
                                                 <th scope="col">Tanggal</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Aksi</th>
                                             </tr>
                                         </thead>
@@ -135,17 +142,23 @@
                                                 <td>{{$no++}}</td>
                                                 <td>{{$d->invoice}}</td>
                                                 <td>{{$d->proper->nama_prop}}</td>
+                                                <td>
+                                                    <?php 		
+                                                        echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($d->proper->harga)),3)));
+                                                    ?>    
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    setlocale(LC_ALL, 'IND');
+                                                    $date = new DateTime($d->created_at);
+                                                    echo strftime("%d %B %Y", $date->getTimestamp());
+                                                    ?>
+                                                </td>
                                                 @if($d->konf_admin == 0)
                                                     <td>Belum Dikonfirmasi</td>
                                                 @else
                                                     <td>Dikonfirmasi</td>
                                                 @endif
-                                                <td>
-                                                    <?php
-                                                    $date = new DateTime($d->created_at);
-                                                    echo $date->format('d F Y');
-                                                    ?>
-                                                </td>
                                                 <td>
                                                     <a href="{{route('detailPembelian', $d->id)}}">
                                                         <button class="btn btn-primary btn-xs">Detail</button>
@@ -154,7 +167,7 @@
                                             </tr>
                                             @empty
                                             <tr>
-                                                <td class="text-center" colspan="6">
+                                                <td class="text-center" colspan="7">
                                                     <h6 class="alert alert-warning"><strong>Maaf!</strong> Belum ada data yang ditampilkan.</h6>
                                                 </td>
                                             </tr> 

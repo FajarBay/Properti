@@ -39,19 +39,19 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a href="dashboard">
+                        <a href="/dashboard">
                             <i class="la la-dashboard"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a href="iklan">
+                        <a href="/iklan">
                             <i class="la la-tags"></i>
                             <p>Daftar Iklan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -67,12 +67,12 @@
                         <div class="collapse in" id="collapseExample1" aria-expanded="true" style="">
                             <ul class="nav">
                                 <li>
-                                    <a href="chatAdmin">
+                                    <a href="/chatAdmin">
                                         <span class="link-collapse">Pesan Admin</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="chatCustomer">
+                                    <a href="/chatCustomer">
                                         <span class="link-collapse">Pesan</span>
                                     </a>
                                 </li>
@@ -80,15 +80,21 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="pembelian">
-                            <i class="la la-dollar"></i>
+                        <a href="/pembelian">
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="penjualan">
+                        <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -142,33 +148,33 @@
                                                <select class="form-control" id="propinsi">
                                                    <option selected="" value="">-- Pilih Provinsi --</option>
                                                </select>
-                                               <small id="namaHelp" class="form-text text-muted">Contoh : Rumah Idaman.</small>
+                                               <small id="namaHelp" class="form-text text-muted">Pilih provinsi lokasi iklan.</small>
                                            </div>
                                            <div class="form-group">
                                                <label for="squareSelect">Kabupaten</label>
                                                <select class="form-control" id="kabupaten">
                                                    <option selected="" value="">-- Pilih Kabupaten --</option>
                                                </select>
-                                               <small id="hargaHelp" class="form-text text-muted">Hanya masukan angka.</small>
+                                               <small id="hargaHelp" class="form-text text-muted">Pilih kabupaten lokasi iklan.</small>
                                            </div>
                                            <div class="form-group">
                                                <label for="squareSelect">Kecamatan</label>
                                                <select class="form-control" id="kecamatan">
                                                    <option selected="" value="">-- Pilih Kecamatan --</option>
                                                </select>
-                                               <small id="hargaHelp" class="form-text text-muted">Hanya masukan angka.</small>
+                                               <small id="hargaHelp" class="form-text text-muted">Pilih kecamatan lokasi iklan.</small>
                                            </div>
                                        </div>
                                        <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="comment">Alamat</label>
-                                            <textarea class="form-control" name="alamat" id="comment" rows="3" placeholder="Alamat lengkap">{{ session()->get('properti.alamat') }}</textarea>
+                                            <label for="comment">Alamat Lengkap</label>
+                                            <textarea class="form-control" name="alamat" id="comment" rows="3" placeholder="Masukan alamat lengkap">{{ session()->get('properti.alamat') }}</textarea>
                                             <small id="deskripsiHelp" class="form-text text-muted">Contoh : Jalan Mangga No.29C, Karanggayam, Caturtunggal, Depok, Sleman, Yogyakarta.</small>
                                         </div>
                                            <div class="form-group">
                                                <label for="comment">Alamat Maps</label>
-                                               <textarea class="form-control" name="alamatmaps" id="comment" rows="3" placeholder="Alamat maps jika ada">{{ session()->get('properti.alamatmaps') }}</textarea>
-                                               <small id="fasilitasHelp" class="form-text text-muted">Contoh : Salin alamat dari google mapas</small>
+                                               <textarea class="form-control" name="alamatmaps" id="comment" rows="3" placeholder="Masukan alamat maps">{{ session()->get('properti.alamatmaps') }}</textarea>
+                                               <small id="fasilitasHelp" class="form-text text-muted">Salin alamat dari google maps, jika tidak ada tulis tidak ada.</small>
                                            </div>
                                            <input id="prop" type="hidden" name="provinsi" value="{{$properti->provinsi}}">
                                            <input id="kab" type="hidden" name="kabupaten" value="{{$properti->kabupaten}}">
@@ -196,6 +202,8 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">

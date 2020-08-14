@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/assetfonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
 
     <!-- STYLE CSS -->
-    <link rel="stylesheet" href="asset/css/regis.css">
+    <link rel="stylesheet" href="{{ asset('assets/img/icon.png') }}">
     <style>
         .a{
             text-decoration: none;

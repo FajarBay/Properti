@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -81,7 +81,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="/pembelian">
-                            <i class="la la-dollar"></i>
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -89,6 +89,12 @@
                         <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -122,7 +128,7 @@
                                             <tr>
                                                 <th scope="col">No</th>
                                                 <th scope="col">Invoice</th>
-                                                <th scope="col">Judul Iklan</th>
+                                                <th scope="col">Nama</th>
                                                 <th scope="col">Pembeli</th>
                                                 <th scope="col">Konfirmasi Admin</th>
                                                 <th scope="col">Tanggal</th>
@@ -145,8 +151,9 @@
                                                     {{-- {{$p->konf_admin}}</td> --}}
                                                 <td>
                                                     <?php
+                                                        setlocale(LC_ALL, 'IND');
                                                         $date = new DateTime($p->created_at);
-                                                        echo $date->format('d F Y');
+                                                        echo strftime("%d %B %Y", $date->getTimestamp());
                                                         ?>
                                                 </td>
                                                 <td>

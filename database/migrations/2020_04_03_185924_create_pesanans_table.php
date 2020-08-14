@@ -15,8 +15,10 @@ class CreatePesanansTable extends Migration
     {
         Schema::create('pesanans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('id_pemesan');
+            $table->unsignedBigInteger('id_pemesan');
             $table->string('id_prop');
+            $table->tinyInteger('bayar');
+            $table->tinyInteger('is_delete');
             $table->timestamps();
         });
     }

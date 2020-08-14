@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class IklanController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
+    
     public function index(Request $request)
     {
         $request->session()->forget('iklan');
@@ -36,6 +46,7 @@ class IklanController extends Controller
             'sold' => 'required',
             'status' => 'required',
             'dilihat' => 'required',
+            'transaksi' => 'required',
         ]);
         if(empty($request->session()->get('iklan'))){
             $iklan = new Iklan();

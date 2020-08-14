@@ -71,15 +71,15 @@
                     <li class="nav-item">
                         <a href="/daftarPembayaran">
                             <i class="la la-money"></i>
-                            <p>Pembayaran</p>
+                            <p>Transaksi</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="laporan">
-                            <i class="la la-file-pdf-o"></i>
-                            <p>Laporan</p>
+                    <li class="nav-item">
+                        <a href="/daftarPengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Daftar Pengembalian</p>
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -103,14 +103,14 @@
                             <div class="card">
                                 <div class="card-header">
                                     @foreach($user as $u)
-                                    <div class="card-title">Informasi Pengguna
-                                        <?php
-                                                if($u->active == 1){
-                                                   echo "<span class=\"badge badge-success float-right\">Terverifikasi</span>";
-                                                }else {
-                                                   echo "<span class=\"badge badge-warning float-right\">Belum Terverifikasi</span>";
-                                                }
-                                            ?>
+                                    <div class="card-title">Informasi User
+                                        
+                                        {{--  if($u->active == 1){
+                                            echo "<span class=\"badge badge-success float-right\">Aktif</span>";
+                                        }else {
+                                            echo "<span class=\"badge badge-warning float-right\">Tidak Aktif</span>";
+                                        }  --}}
+                                            
                                     </div>
                                     @endforeach
                                 </div>
@@ -144,6 +144,16 @@
                                                         <td>{{$u->provinsi}}, {{$u->kabupaten}}, {{$u->kecamatan}}</td>
                                                     </tr>
                                                     <tr>
+                                                        <td width="150px">Nama Bank</td>
+                                                        <td width="20px">:</td>
+                                                        <td>{{$u->bank}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="150px">Nomor Rekening</td>
+                                                        <td width="20px">:</td>
+                                                        <td>{{$u->no_rek}}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td width="150px">Foto KTP</td>
                                                         <td width="20px">:</td>
                                                         <td><img alt="Product Image" width="350" height="200" src="{{ URL::to('/') }}/ktp/{{ $u->ktp }}"/></td>
@@ -151,19 +161,52 @@
                                                 </tbody>
                                             </table>
                                             <div class="form-group">
-                                                <?php 
-                                                    if($u->active == 1){
-                                                        echo "<button class=\"btn btn-warning\">Batal Verifikasi</button>";
+                                                
+                                                    {{--  if($u->active == 1){
+                                                        echo '<button class="btn btn-warning">Batal Verifikasi</button>';
                                                     }else{
-                                                        echo "<button class=\"btn btn-success\">Verifikasi</button>";
-                                                    } 
+                                                        echo '<button class="btn btn-success">Verifikasi</button>';
+                                                    }   --}}
+
+                                                <?php
+                                                if((DB::table('messages')->where('from', $u->id)->where('to', Auth::user()->id)->count() != 0) || 
+                                                (DB::table('messages')->where('to', $u->id)->where('from', Auth::user()->id)->count() != 0)){
+                                                    echo'<a href="/adminChat"><button class="btn btn-danger">Hubungi User</button></a>';
+                                                }else{
+                                                    echo '<button class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLabel">Hubungi User</button>';
+                                                }
                                                 ?>
-                                                {{-- <a href="{{route('editProfil', $u->id)}}"> --}}
-                                                    <button class="btn btn-danger">Hubungi Pengguna</button>
-                                                {{-- </a> --}}
                                             </div>
                                         </div>
                                     </div>
+                                    {{--  Modal  --}}
+                                <div class="modal fade" id="exampleModalLabel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                    <form method="POST" action="{{route('pesanAdmin')}}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Kirim pesan pertama untuk {{$u->name}}</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                              <div class="form-group">
+                                                <label for="message-text" class="col-form-label">Pesan:</label>
+                                                <textarea type="text" name="message" placeholder="Masukan pesan anda" class="form-control" rows="3"></textarea>
+                                              </div>
+                                        </div>
+                                            <input type="hidden" name="from" value="{{Auth::user()->id}}">
+                                            <input type="hidden" name="to" value="{{$u->id}}">
+                                        <div class="modal-footer">
+                                          <button type="submit" class="btn btn-danger">Kirim</button>
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                        </div>
+                                    </form>
+                                      </div>
+                                    </div>
+                                </div>
                                     @endforeach
                                     </div>
                                 </div>
@@ -172,6 +215,8 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
             <footer class="footer">
                 <div class="container-fluid">
                     <nav class="pull-left">

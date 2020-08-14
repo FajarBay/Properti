@@ -9,7 +9,7 @@ class Transaksi extends Model
     protected $guarded = [];
 
     public function proper(){
-        return $this->hasOne('App\Properti', 'id', 'id_prop');
+        return $this->belongsTo('App\Properti', 'id_prop');
     }
 
     public function penjual(){
@@ -21,6 +21,6 @@ class Transaksi extends Model
     }
 
     public function bukti(){
-        return $this->belongsTo('App\Bukti', 'id', 'id_transaksi');
+        return $this->belongsTo('App\Bukti');
     }
 }

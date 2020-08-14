@@ -20,14 +20,15 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->integer('phone')->nullable();
-            $table->string('code')->nullable();
-            $table->boolean('active')->default(0);
+            // $table->boolean('active')->default(0);
             $table->string('password');
             $table->string('profile')->default('user.jpg');
             $table->string('ktp')->default('user.jpg');
             $table->string('provinsi');
             $table->string('kabupaten');
             $table->string('kecamatan');
+            $table->string('bank');
+            $table->string('no_rek');
             $table->rememberToken();
             $table->timestamps();
         });

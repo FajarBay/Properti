@@ -39,19 +39,19 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item active">
-                        <a href="dashboard">
+                        <a href="/dashboard">
                             <i class="la la-dashboard"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="iklan">
+                        <a href="/iklan">
                             <i class="la la-tags"></i>
                             <p>Daftar Iklan</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -67,12 +67,12 @@
                         <div class="collapse in" id="collapseExample1" aria-expanded="true" style="">
                             <ul class="nav">
                                 <li>
-                                    <a href="chatAdmin">
+                                    <a href="/chatAdmin">
                                         <span class="link-collapse">Pesan Admin</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="chatCustomer">
+                                    <a href="/chatCustomer">
                                         <span class="link-collapse">Pesan</span>
                                     </a>
                                 </li>
@@ -80,15 +80,21 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a href="pembelian">
-                            <i class="la la-dollar"></i>
+                        <a href="/pembelian">
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="penjualan">
+                        <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -135,13 +141,13 @@
                                     <div class="row">
                                         <div class="col-5">
                                             <div class="icon-big text-center">
-                                                <i class="la la-envelope-o"></i>
+                                                <i class="la la-bookmark"></i>
                                             </div>
                                         </div>
                                         <div class="col-7 d-flex align-items-center">
                                             <div class="numbers">
-                                                <p class="card-category">Pesan</p>
-                                                <h4 class="card-title">1</h4>
+                                                <p class="card-category">Pesanan</p>
+                                                <h4 class="card-title">{{$pesanan}}</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -200,14 +206,14 @@
                                                 <th scope="col">No</th>
                                                 <th scope="col">Nama</th>
                                                 <th scope="col">Harga</th>
-                                                <th scope="col">Status</th>
                                                 <th scope="col">Tanggal</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @php $no = ($data->currentpage()-1) * $data->perPage() + 1; @endphp
-                                            @foreach($data as $d)
+                                            @forelse($data as $d)
                                             <tr>
                                                 <td>{{$no++}}</td>
                                                 <td>{{$d->nama_prop}}</td>
@@ -218,7 +224,7 @@
                                                 </td>
                                                 <td>
                                                     <?php
-                                                        if($d->iklan->id == 0){
+                                                        if($d->iklan->status == 0){
                                                         echo "Menunggu";
                                                         }else if($d->iklan->status == 1){
                                                         echo "Aktif";
@@ -229,8 +235,9 @@
                                                 </td>
                                                 <td>
                                                     <?php
+                                                    setlocale(LC_ALL, 'IND');
                                                     $date = new DateTime($d->created_at);
-                                                    echo $date->format('d F Y');
+                                                    echo strftime("%d %B %Y", $date->getTimestamp());
                                                     ?>
                                                 </td>
                                                 <td>
@@ -239,7 +246,13 @@
                                                     </a>
                                                 </td>
                                             </tr>
-                                            @endforeach
+                                            @empty
+                                            <tr>
+                                                <td class="text-center" colspan="6">
+                                                    <h6 class="alert alert-warning"><strong>Maaf!</strong> Belum ada data yang ditampilkan.</h6>
+                                                </td>
+                                            </tr> 
+                                            @endforelse
                                         </tbody>
                                     </table>
                                     {{ $data->links("pagination::bootstrap-4") }}

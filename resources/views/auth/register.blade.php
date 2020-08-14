@@ -4,7 +4,7 @@
 <div class="wrapper" style="background-image: url('asset/img/14836.jpg'); background-size: cover;">
     <div class="inner">
         <div class="image-holder">
-            <img src="asset/img/1.jpg" alt="">
+            <a href="/utama"><img src="asset/img/1.jpg" alt=""></a>
         </div>
         <form method="POST" action="{{ route('register') }}">
             @csrf
@@ -29,9 +29,7 @@
                 <input type="password" placeholder="Ulang Kata Sandi" class="form-control" name="password_confirmation" required>
                 <i class="zmdi zmdi-lock"></i>
             </div>
-            <button>Daftar
-                <i class="zmdi zmdi-arrow-right"></i>
-            </button><br>
+            <button>Daftar</button><br>
             <p class="text-center">Sudah punya akun? <a class="a" href="{{ route('login') }}">Masuk</a></p>
         </form>
     </div>

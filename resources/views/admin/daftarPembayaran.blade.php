@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="wrapper">
-    <div class="main-header">
+        <div class="main-header">
             <div class="logo-header">
                 <a href="/utama" class="logo"><img src="{{asset ('asset/img/logo-nav.png') }}"></a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -14,7 +14,7 @@
                     <ul class="navbar-nav topbar-nav md-auto align-items-center">
                         <li class="nav-item">
                             <a class="nav-link" href="/daftarPembayaran" role="button">
-                                Pembayaran
+                                Daftar Transaksi
                             </a>
                         </li>
                     </ul>
@@ -71,15 +71,15 @@
                     <li class="nav-item  active">
                         <a href="/daftarPembayaran">
                             <i class="la la-money"></i>
-                            <p>Pembayaran</p>
+                            <p>Transaksi</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="laporan">
-                            <i class="la la-file-pdf-o"></i>
-                            <p>Laporan</p>
+                    <li class="nav-item">
+                        <a href="/daftarPengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Daftar Pengembalian</p>
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -102,9 +102,9 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="card-title">Pembayaran
+                                    <div class="card-title">Daftar Transaksi
                                         <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                                            Iklan Berdasarkan
+                                            Transaksi Berdasarkan
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                                             <li class="nav-item dropdown hidden-caret">
@@ -134,14 +134,14 @@
                                                 <th scope="col">Invoice</th>
                                                 <th scope="col">Nama</th>
                                                 <th scope="col">Harga</th>
-                                                <th scope="col">Status</th>
                                                 <th scope="col">Tanggal</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php $no = ($penjualan->currentpage()-1) * $penjualan->perPage() + 1; @endphp
                                             @forelse ($penjualan as $p)
-                                            @php $no = 1; @endphp
                                             <tr>
                                                 <td>{{$no++}}</td>
                                                 <td>{{$p->invoice}}</td>
@@ -151,17 +151,19 @@
                                                             echo 'Rp. '.strrev(implode('.',str_split(strrev(strval($p->proper->harga)),3)));
                                                         ?> 
                                                 </td>
+                                                <td>
+                                                    <?php
+                                                        setlocale(LC_ALL, 'IND');
+                                                        $date = new DateTime($p->created_at);
+                                                        echo strftime("%d %B %Y", $date->getTimestamp());
+                                                        ?>
+                                                </td>
                                                     @if($p->konf_admin == 0)
                                                         <td>Belum Dikonfirmasi</td>
                                                     @else
                                                         <td>Dikonfirmasi</td>
                                                     @endif
-                                                <td>
-                                                    <?php
-                                                        $date = new DateTime($p->created_at);
-                                                        echo $date->format('d F Y');
-                                                        ?>
-                                                </td>
+                                                
                                                 <td>
                                                     <a href="{{route('detailPembayaran', $p->id)}}">
                                                         <button class="btn btn-primary btn-xs">Detail</button>
@@ -177,6 +179,7 @@
                                             @endforelse
                                         </tbody>
                                     </table>
+                                    {{ $penjualan->links("pagination::bootstrap-4") }}
                                 </div>
                             </div>
                         </div>

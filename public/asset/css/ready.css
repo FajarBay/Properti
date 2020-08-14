@@ -2685,7 +2685,7 @@ body {
 }
 
 .main-panel .content {
-    padding: 30px 15px;
+    padding: 15px 15px;
     min-height: calc(100% - 123px);
     margin-top: 55px;
 }
@@ -6726,6 +6726,7 @@ body {
     color: #ffffff;
     position: relative;
     padding-left: 65px;
+    text-align: center;
 }
 
 .alert [data-notify="icon"] {
@@ -7478,6 +7479,22 @@ body {
     }
     .profile-pic span {
         display: none;
+    }
+    .invoice {
+        width: 200px;
+    }
+    .isi {
+        width: 250px;
+    }
+    .catatan {
+        width: 450px;
+    }
+    .tengah {
+        display: flex;
+        align-items: center;
+    }
+    .ukuran {
+        margin-top: 10px;
     }
 }
 

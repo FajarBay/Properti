@@ -28,7 +28,7 @@
                     <img src="{{ URL::to('/') }}/profil/{{ Auth::user()->profil }}">
                 </div>
                 <div class="info">
-                    <a class="" href="cek">
+                    <a class="" href="/cek">
                         <span>
                             {{Auth::user()->name}}
                                 <span class="user-level">Pengguna</span>
@@ -51,7 +51,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/grafik">
+                        <a href="/pesanan">
                             <i class="la la-shopping-cart"></i>
                             <p>Pesanan</p>
                         </a>
@@ -81,7 +81,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="/pembelian">
-                            <i class="la la-dollar"></i>
+                            <i class="la la-cart-plus"></i>
                             <p>Pembelian</p>
                         </a>
                     </li>
@@ -89,6 +89,12 @@
                         <a href="/penjualan">
                             <i class="la la-money"></i>
                             <p>Penjualan</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/pengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Pengembalian</p>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -110,8 +116,8 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
+                        @foreach($transaksi as $p)
                         <div class="col-md-12">
-                                @foreach($transaksi as $p)
                                 <div class="card">
                                     <div class="card-header">
                                         <div class="card-title">Detail Penjualan
@@ -119,21 +125,48 @@
                                                 if($p->konf_admin == 0){
                                                     echo "<span class=\"badge badge-warning float-right\">Menunggu Konfirmasi Admin</span>";
                                                 }else{
-                                                    echo "<span class=\"badge badge-success float-right\">Dikonfirmasi</span>";
+                                                    echo "<span class=\"badge badge-success float-right\">Sudah Dikonfirmasi</span>";
                                                 }
                                             ?>
                                         </div>
                                     </div>
                                     <div class=" card-body table-responsive ">
+                                        <div id="carouselExampleIndicators" class="carousel slide w-75 mx-auto" data-ride="carousel">
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                                            </ol>
+                                            <div class="carousel-inner" style="height: 400px;">
+                                                <div class="carousel-item active">
+                                                    <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto1/{{ $p->proper->foto1 }}" alt="First slide">
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto2/{{ $p->proper->foto2 }}" alt="Second slide">
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto3/{{ $p->proper->foto3 }}" alt="Third slide">
+                                                </div>
+                                                <div class="carousel-item">
+                                                    <img class="d-block w-100 img-fluid" src="{{ URL::to('/') }}/foto4/{{ $p->proper->foto4 }}" alt="Third slide">
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                        <hr>
                                         <table class="table table-striped table-hover ">
                                             <tbody>
                                                 <tr>
-                                                    <td width="250px">Nomor Invoice</td>
+                                                    <td width="250px">Nomor Transaksi</td>
                                                     <td>{{$p->invoice}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="250px">Pembeli</td>
-                                                    <td><a style="text-decoration: none;" href="">{{$p->pembeli->name}}</a></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="250px">Judul Iklan</td>
@@ -144,6 +177,19 @@
                                                             <input class="sub" type="submit" value="{{$p->proper->nama_prop}}"></button>
                                                         </form>
                                                         {{--  <a href="{{route('lihat', $p->proper->id)}}">{{$p->proper->nama_prop}}</a>  --}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Pembeli</td>
+                                                    <td>
+                                                        <form action="{{route('pesanPertama')}}" method="post" enctype="multipart/form-data">
+                                                            {{ csrf_field() }}
+                                                            {{$p->pembeli->name}}
+                                                            <input type="hidden" name="message" value="{{$p->invoice}} : {{$p->proper->nama_prop}}">
+                                                            <input type="hidden" name="from" value="{{$p->pembeli->id}}">
+                                                            <input type="hidden" name="to" value="{{ Auth::user()->id }}">
+                                                        <button type="submit" class="btn btn-danger btn-sm">Hubungi Pembeli</button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -197,8 +243,9 @@
                                                         <td width="250px">Tanggal</td>
                                                         <td>
                                                             <?php
-                                                            $date = new DateTime($b->created_at);
-                                                            echo $date->format('d F Y');
+                                                                setlocale(LC_ALL, 'IND');
+                                                                $date = new DateTime($b->created_at);
+                                                                echo strftime("%d %B %Y", $date->getTimestamp());
                                                             ?>
                                                         </td>
                                                     </tr>
@@ -230,28 +277,46 @@
                                             </tbody>
                                         </table>
                                         <div class="text-right" style="display:flex; float:right">
-                                            <form action="{{route('verifikasiPenjualan', $p->id)}}" method="post" enctype="multipart/form-data">
-                                                {{ csrf_field() }}
-                                                <?php
-                                                    if($p->konf_penjual == 0){
-                                                        echo '<button type="submit" class="btn btn-success mr-1">Verifikasi</button>';
-                                                    }else{
-                                                        echo '<button type="submit" class="btn btn-secondary mr-1" disabled>Sudah diverifikasi</button>';
-                                                    }
-                                                ?>
-                                            </form>
-                                            <a href="editIklan.html">
-                                                <button class="btn btn-danger ">Kembali</button>
+                                                @if($p->konf_user == 0)
+                                                    <button class="btn btn-success mr-1" data-toggle="modal" data-target="#buka">Konfirmasi</button>
+                                                @else
+                                                    <button class="btn btn-secondary mr-1" disabled>Sudah dikonfirmasi</button>
+                                                @endif
+                                            <a href="{{route('invoice', $p->id)}}" target="_blank">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cetak Invoice</button>
                                             </a>
                                         </div>
                                         
                                     </div>
                                 </div>
-                                @endforeach
+                            </div>
+                        <div class="modal fade" id="buka" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <form action="{{route('verifikasiPenjualan', $p->id)}}" method="post" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penjualan</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h6>Apakah anda yakin akan mengkonfirmasi penjualan ini? Pastikan seluruh pembayaran sudah lunas</h6>
+                                <div class="modal-footer">
+                                  <button type="submit" class="btn btn-danger">Konfirmasi</button>
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                </div>
+                            </form>
+                              </div>
+                            </div>
                         </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
+        </div>
+        <br>
             <br>
             <footer class="footer">
                 <div class="container-fluid">

@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Iklan;
 use App\Transaksi;
+use App\Bukti;
+use App\Mail\konfMail;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -41,9 +44,9 @@ class AdminController extends Controller
     }
 
     public function terjual(){
-        $temp = Iklan::where('sold', '0')->get();
+        $temp = Iklan::where('sold', '1')->get();
         $iklan = $temp->pluck('id_prop');
-        if($iklan == null) {
+        if($iklan != null) {
             $products = Properti::whereIn('id', $iklan->all())->orderBy('id', 'desc')->paginate(5);
         }else{
             $products = Properti::where('id_kat', '9999')->orderBy('harga', 'desc')->paginate(5);
@@ -56,7 +59,7 @@ class AdminController extends Controller
     }
 
     public function belumTerjual(){
-        $temp = Iklan::where('sold', '1')->get();
+        $temp = Iklan::where('sold', '0')->get();
         $iklan = $temp->pluck('id_prop');
         $products = Properti::whereIn('id', $iklan->all())->orderBy('id', 'desc')->paginate(5);
         // dd($products);
@@ -114,6 +117,9 @@ class AdminController extends Controller
         $kategori = Kategori::where('id', $id)->first();
 
         $kategori->nama_kat = $request->nama_kat;
+        // $nama = 'gambar'.time().'.'.request()->gambar->getClientOriginalExtension();
+        // $request->gambar->move('gambar',$nama);
+        // $kategori->gambar = $nama;
         $kategori->keterangan_kat = $request->keterangan_kat;
 
         $kategori->save();
@@ -144,7 +150,7 @@ class AdminController extends Controller
     }
 
     public function transaksi(){
-        $penjualan = Transaksi::orderBy('id', 'desc')->paginate(5);
+        $penjualan = Transaksi::where('berhasil', '1')->orderBy('id', 'desc')->paginate(5);
         // dd($penjualan);
         return view('admin.daftarPembayaran', compact('penjualan'));
     }
@@ -152,54 +158,40 @@ class AdminController extends Controller
     public function cariTransaksi(Request $request){
         $cari = $request->cari;
 
-        $status = Iklan::where('status', '1')->get();
-        $iklan = $status->pluck('id_prop');
-
         $penjualan = Transaksi::join('propertis', 'transaksis.id_prop', '=','propertis.id')->where(function ($q) use($cari){
             $q->where('invoice', 'like', "%".$cari."%")->orWhere('propertis.nama_prop', 'like', "%".$cari."%")
             ->orWhere('propertis.harga', 'like', "%".$cari."%")->orWhere('transaksis.created_at', 'like', "%".$cari."%");
-        })->orderBy('propertis.harga', 'asc')->select('transaksis.*', 'propertis.harga')->paginate(5);
+        })->where('berhasil', '1')->orderBy('propertis.harga', 'asc')->select('transaksis.*', 'propertis.harga')->paginate(5);
 
         return view('admin.daftarPembayaran', compact('penjualan'));
     }
 
     // MULAI SHORT
     public function terendah(){
-        $status = Iklan::where('status', '1')->get();
-        $iklan = $status->pluck('id_prop');
 
-        $penjualan = Transaksi::where('id_prop', '=', $iklan->all())->join('propertis', 'transaksis.id_prop', '=',
+        $penjualan = Transaksi::where('berhasil', '1')->join('propertis', 'transaksis.id_prop', '=',
         'propertis.id')->orderBy('propertis.harga', 'asc')->select('transaksis.*', 'propertis.harga')->paginate(5);
-
-        // dd($penjualan);
 
         return view('admin.daftarPembayaran', compact('penjualan'));
     }
 
     public function tertinggi(){
-        $status = Iklan::where('status', '1')->get();
-        $iklan = $status->pluck('id_prop');
 
-        $penjualan = Transaksi::where('id_prop', '=', $iklan->all())->join('propertis', 'transaksis.id_prop', '=',
+        $penjualan = Transaksi::where('berhasil', '1')->join('propertis', 'transaksis.id_prop', '=',
         'propertis.id')->orderBy('propertis.harga', 'desc')->select('transaksis.*', 'propertis.harga')->paginate(5);
-
         return view('admin.daftarPembayaran', compact('penjualan'));
     }
 
     public function sudah_konf(){
-        $status = Iklan::where('status', '1')->get();
-        $iklan = $status->pluck('id_prop');
 
-        $penjualan = Transaksi::where('id_prop', '=', $iklan->all())->where('konf_admin', '1')->orderBy('id', 'desc')->paginate(5);
+        $penjualan = Transaksi::where('berhasil', '1')->where('konf_admin', '1')->where('berhasil', '1')->orderBy('id', 'desc')->paginate(5);
 
         return view('admin.daftarPembayaran', compact('penjualan'));
     }
 
     public function belum_konf(){
-        $status = Iklan::where('status', '1')->get();
-        $iklan = $status->pluck('id_prop');
 
-        $penjualan = Transaksi::where('id_prop', '=', $iklan->all())->where('konf_admin', '0')->orderBy('id', 'desc')->paginate(5);
+        $penjualan = Transaksi::where('berhasil', '1')->where('konf_admin', '0')->where('berhasil', '1')->orderBy('id', 'desc')->paginate(5);
 
         return view('admin.daftarPembayaran', compact('penjualan'));
     }
@@ -216,20 +208,38 @@ class AdminController extends Controller
         $iklan = Properti::find($id)->iklan;
         $iklan->status = 0;
         $iklan->save();
-        return back();
+        return redirect('/daftarIklan');
     }
 
     public function detailPembayaran($id){
         $transaksi = Transaksi::where('id', $id)->orderBy('id', 'desc')->get();
-        return view('admin.detailPembayaran', compact('transaksi'));
+        $trans = Transaksi::where('id', $id)->first();
+        $nominal = Bukti::where('id_transaksi', '=', $trans->id)->sum('nominal');
+        $bukti = Bukti::where('id_transaksi', $trans->id)->get();
+        return view('admin.detailPembayaran', compact('transaksi', 'bukti', 'nominal'));
     }
 
     public function verifBayar($id){
         $transaksi = Transaksi::where('id', $id)->first();
         $transaksi->konf_admin = 1;
         $iklan = Transaksi::find($id)->proper->iklan;
+        $email1 = Transaksi::find($id)->penjual->email;
+        $email2 = Transaksi::find($id)->pembeli->email;
+        $iklan->sold = 1;
+        // $iklan->book = 99;
+        $transaksi->save();
+        $iklan->save();
+        Mail::to($email1)->send(new KonfMail());
+        Mail::to($email2)->send(new KonfMail());
+        return back();
+    }
+
+    public function verifBatal($id){
+        $transaksi = Transaksi::where('id', $id)->first();
+        $transaksi->konf_admin = 0;
+        $iklan = Transaksi::find($id)->proper->iklan;
         $iklan->sold = 0;
-        $iklan->book = 99;
+        // $iklan->book = 99;
         $transaksi->save();
         $iklan->save();
         return back();
@@ -252,5 +262,47 @@ class AdminController extends Controller
         })->orderBy('id', 'desc')->paginate(5);
 
         return view('admin.daftarUser', compact('user'));
+    }
+
+    public function invoice_lihat($id){
+        set_time_limit(0);
+        $transaksi = Transaksi::where('id', $id)->orderBy('id', 'desc')->get();
+
+        $trans = Transaksi::where('id', $id)->first();
+        $nominal = Bukti::where('id_transaksi', '=', $trans->id)->sum('nominal');
+        
+        $bukti = Bukti::where('id_transaksi', $trans->id)->get();
+
+        return view('lihatInvoice', compact('transaksi', 'bukti', 'nominal'));
+    }
+
+    public function daftarPengembalian(){
+        $penjualan = Transaksi::where('berhasil', '0')->orderBy('id', 'desc')->paginate(5);
+        $trans = Transaksi::where('berhasil', '0')->pluck('id');
+        $bukti = Bukti::whereIn('id_transaksi', $trans->all())->where('refund', '0')->value('id');
+        return view('admin.daftarPengembalian', compact('penjualan', 'bukti'));
+    }
+
+    public function detailRefund($id){
+        $transaksi = Transaksi::where('id', $id)->orderBy('id', 'desc')->get();
+        $trans = Transaksi::where('id', $id)->first();
+        $nominal = Bukti::where('id_transaksi', '=', $trans->id)->where('refund', '1')->sum('nominal');
+        
+        $bukti = Bukti::where('id_transaksi', $trans->id)->where('refund', '2')->get();
+        $img = Bukti::where('id_transaksi', $trans->id)->where('refund', '1')->value('bukti');
+        
+        // dd($img);
+
+        return view('admin.detailRefund', compact('transaksi', 'bukti', 'nominal', 'img'));
+    }
+
+    public function cariPengembalian(Request $request){
+        $cari = $request->cari;
+
+        $penjualan = Transaksi::join('propertis', 'transaksis.id_prop', '=','propertis.id')->where(function ($q) use($cari){
+            $q->where('propertis.nama_prop', 'like', "%".$cari."%")->orWhere('transaksis.created_at', 'like', "%".$cari."%");
+        })->where('berhasil', '0')->orderBy('propertis.harga', 'asc')->select('transaksis.*', 'propertis.harga')->paginate(5);
+
+        return view('admin.daftarIklan', compact('penjualan'));
     }
 }

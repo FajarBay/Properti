@@ -71,15 +71,15 @@
                     <li class="nav-item">
                         <a href="/daftarPembayaran">
                             <i class="la la-money"></i>
-                            <p>Pembayaran</p>
+                            <p>Transaksi</p>
                         </a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a href="laporan">
-                            <i class="la la-file-pdf-o"></i>
-                            <p>Laporan</p>
+                    <li class="nav-item">
+                        <a href="/daftarPengembalian">
+                            <i class="la la-dollar"></i>
+                            <p>Daftar Pengembalian</p>
                         </a>
-                    </li> --}}
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('logout') }}"
                             onclick="event.preventDefault();
@@ -167,7 +167,7 @@
                                         </div>
                                         <div class="col-7 d-flex align-items-center">
                                             <div class="numbers">
-                                                <p class="card-category">Pembayaran</p>
+                                                <p class="card-category">Transaksi</p>
                                                 <h4 class="card-title">1</h4>
                                             </div>
                                         </div>
@@ -189,7 +189,7 @@
                                                 <th scope="col">No</th>
                                                 <th scope="col">Nama</th>
                                                 <th scope="col">Harga</th>
-                                                <th scope="col">Waktu</th>
+                                                <th scope="col">Tanggal</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Aksi</th>
                                             </tr>
@@ -207,9 +207,10 @@
                                                 </td>
                                                 <td>
                                                     <?php
-                                                    $date = new DateTime($data->created_at);
-                                                    echo $date->format('d F Y');
-                                                    ?>
+                                                        setlocale(LC_ALL, 'IND');
+                                                        $date = new DateTime($data->created_at);
+                                                        echo strftime("%d %B %Y", $date->getTimestamp());
+                                                        ?>
                                                 </td>
                                                 <td>
                                                     <?php
@@ -236,6 +237,7 @@
                     </div>
                 </div>
             </div>
+            <br>
             <br>
             <footer class="footer">
                 <div class="container-fluid">

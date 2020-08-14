@@ -8,9 +8,20 @@ use Illuminate\Support\Facades\DB;
 use App\Properti;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Pesanan;
 
 class PropertiController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -32,11 +43,15 @@ class PropertiController extends Controller
     {
         $data = Properti::where('id_user', '=', Auth::user()->id)->orderBy('id', 'desc')->paginate(3);
 
+        $status = Iklan::where('book', '1')->get();
+        $iklan = $status->pluck('id_prop');
+        $pesanan = Pesanan::whereIn('id_prop', $iklan->all())->where('id_user', '=', Auth::user()->id)->count();
+
         // $kat = Kategori::where('id', '=', DB::table('properti')->id_kat)->get();
 
         $user = Auth::user();
 
-        return view('customer.dashboard', compact('data', 'user'));
+        return view('customer.dashboard', compact('data', 'user', 'pesanan'));
     }
 
     public function createStep1(Request $request)

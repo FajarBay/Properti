@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    // protected $redirectTo = '/utama';
 
     /**
      * Create a new controller instance.
@@ -40,36 +41,21 @@ class LoginController extends Controller
     }
     public function login(Request $request)
     {
-        $this->validateLogin($request);
-        if($this->hasTooManyLoginAttempts($request)){
-            $this->fireLockoutResponse($request);
-            return $this->sendLockoutResponse($request);
-        }
-         //-------------------
-
-               if($this->guard()->validate($this->credentials($request))){
-                $user=$this->guard()->getLastAttempted();
-                if($user->active && $this->attemptLogin($request)){
-                    $user = User::where('email', $user->email)->first();
-                    if($user->is_admin()){
+        if(Auth::attempt([
+            'email' => $request->email,
+            'password' => $request->password
+        ]))
+        {
+            $user = User::where('email', $request->email)->first();
+            if($user->email_verified_at == null){
+                return redirect('/email/verify');
+            }else {
+                if($user->is_admin()){
                     return redirect()->route('adminDash');
                 }
                 return redirect()->route('utama');
-                }
-              
-               else{
-                $this->incrementLoginAttempts($request);
-                $user->code=SendOTP::sendOTP($user->phone);
-                if($user->save()){
-                    return redirect('/verify?phone='.$user->phone);
-                }
-               }
-               }
-        //-----------
-       $this->incrementLoginAttempts($request);
-       return $this->sendFailedLoginResponse($request);
-
-
-
+            }
+        }
+        return redirect()->back();
     }
 }

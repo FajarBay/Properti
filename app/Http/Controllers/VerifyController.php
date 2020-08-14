@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 
 class VerifyController extends Controller
 {
@@ -16,10 +17,11 @@ class VerifyController extends Controller
             $user->active=1;
             $user->code=null;
             $user->save();
-            return view('customer/dashboard')->withMessage('Your account is active');
+            Auth::login($user, true);
+            return redirect('/utama')->withMessage('Akun anda sudah aktif');
         }
         else{
-            return back()->withMessage('verify code is not correct. Please try again');
+            return back()->withMessage('Kode yang anda masukan salah');
         }
     }
 }
